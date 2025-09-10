@@ -1,17 +1,22 @@
 from flask import Flask,render_template
+from projects.models import db, Market
 
 def create_app():
 
     app = Flask(__name__)
     
-    app = create_app()
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.init_app(app)
     
-    if __name__ == "__main__":
-        app.run(debug=True)
+    with app.app_context():
+        db.create_all()
 
     @app.route("/", methods=["GET","POST"])
     def home():
-        return render_template("home.html")
+        markets = Market.query.all()
+        return render_template("home.html", markets=markets)
     
     @app.route("/events", methods=["GET","POST"])
     def events():
