@@ -3,10 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Page</title>
+    <title>Mzanzi Market</title>
 </head>
 <body>
-    <h1>Welcome to My Page</h1>
-    <p>This is a paragraph of text.</p>
+    <div class="profile-container">
+        <div class="profile-header">
+            <span style="font-size: 32px;">👤</span>
+            <h1>Welcome, {{ user.username }}</h1>
+        </div>
+
+        <!-- Username -->
+        <div class="field">
+            <span class="label">Username:</span>
+            <span class="value">{{ user.username }}</span>
+            <span class="edit-icon">✏️</span>
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+            <span class="label">Email:</span>
+            <span class="value">{{ user.email }}</span>
+            <span class="edit-icon">✏️</span>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+            <span class="label">Password:</span>
+            <span class="value">********************</span>
+            <span class="edit-icon">✏️</span>
+        </div>
+
+        <!-- Notifications -->
+        <div class="field" style="align-items: flex-start;">
+            <span class="label">Notify me of:</span>
+            <ul class="notify-list">
+                {% for market in user.markets_to_notify %}
+                <li>✅ {{ market.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <a href="/become-vendor" class="btn">Become a Vendor</a>
+        <a href="/register-market" class="btn">Register Your Market</a>
+    </div>
 </body>
 </html>

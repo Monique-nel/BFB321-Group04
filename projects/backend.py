@@ -1,5 +1,5 @@
-from flask import Flask,render_template
-from projects.models import db, Market
+from flask import Flask,render_template,Response
+from projects.models import db, Market, User
 
 def create_app():
 
@@ -32,7 +32,8 @@ def create_app():
     
     @app.route("/userpage", methods=["GET","POST"])
     def userpage():
-        return render_template("userpage.html")
+        user = User.query.all()
+        return render_template("userpage.html", user=user)
     
     @app.route("/vendors", methods=["GET","POST"])
     def vendors():
