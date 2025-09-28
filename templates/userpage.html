@@ -1,51 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mzanzi Market</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mzanzi Market</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <span style="font-size: 32px;">👤</span>
-            <h1>Welcome, {{ user.username }}</h1>
-        </div>
-
-        <!-- Username -->
-        <div class="field">
-            <span class="label">Username:</span>
-            <span class="value">{{ user.username }}</span>
-            <span class="edit-icon">✏️</span>
-        </div>
-
-        <!-- Email -->
-        <div class="field">
-            <span class="label">Email:</span>
-            <span class="value">{{ user.email }}</span>
-            <span class="edit-icon">✏️</span>
-        </div>
-
-        <!-- Password -->
-        <div class="field">
-            <span class="label">Password:</span>
-            <span class="value">********************</span>
-            <span class="edit-icon">✏️</span>
-        </div>
-
-        <!-- Notifications -->
-        <div class="field" style="align-items: flex-start;">
-            <span class="label">Notify me of:</span>
-            <ul class="notify-list">
-                {% for market in user.markets_to_notify %}
-                <li>✅ {{ market.name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <!-- Buttons -->
-        <a href="/become-vendor" class="btn">Become a Vendor</a>
-        <a href="/register-market" class="btn">Register Your Market</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container-fluid px-5 py-2">
+      <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!--Links-->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item fw-bold fs-5"><a class="nav-link active" aria-current="page" href="home.html">Home</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="events.html">Upcoming Events</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="userpage.html">Register</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
+
+  <div class="container text-center p-5">
+    <div class="row">
+      <div class="col">
+        <div class="card shadow-sm" style="width: 24rem;">
+        <img src="..." class="card-img-top" alt="4 Ways Farmers Market">
+        <div class="card-body">
+            <h4 class="card-title mb-5">4 Ways Farmers Market</h4>
+          <ul class="list-unstyled mb-3 text-start">
+            <li>🕰️ Every Saturday and Sunday 9AM - 7 PM</li>
+            <li>✅ Dog friendly</li>
+            <li>✅ Food and Drinks</li>
+            <li>✅ Live music</li>
+            <li>✅ Shopping and Groceries</li>
+            <li>💰 Entry fee: R20</li>
+          </ul>
+          <a href="https://www.google.com/maps/place/Fourways+Farmers+Market/data=!4m2!3m1!1s0x0:0x5eb7a55e9cfc99?sa=X&ved=1t:2428&ictx=111" class="d-block mb-3 text-decoration-none">📌 Modderfontein, Johannesburg</a>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-success flex-fill">Market Map</a>
+            <a href="#" class="btn btn-success flex-fill">Visit Stalls</a>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card shadow-sm" style="width: 24rem;">
+        <img src="..." class="card-img-top" alt="4 Ways Farmers Market">
+        <div class="card-body">
+            <h4 class="card-title mb-5">Hazelwood Food Market</h4>
+          <ul class="list-unstyled mb-3 text-start">
+            <li>At Hazel Food Market we continue to provide you with the best food products Pretoria has to offer and aim to always offer exciting new tastes to make your Saturday mornings something to look forward to.</li>
+            <li>🕰️ Every Saturday 8AM - 2PM</li>
+          </ul>
+          <a href="https://www.google.com/maps/place/Hazel+Food+Market./@-25.760521,28.2523416,17z/data=!3m1!4b1!4m6!3m5!1s0x1e9560fc141b162f:0x42392b14603d66!8m2!3d-25.760521!4d28.2523416!16s%2Fg%2F11b6bj07n2!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D" class="d-block mb-3 text-decoration-none">📌 Lynnwood, Pretoria</a>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-success flex-fill">Market Map</a>
+            <a href="#" class="btn btn-success flex-fill">Visit Stalls</a>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card shadow-sm" style="width: 24rem;">
+        <img src="..." class="card-img-top" alt="4 Ways Farmers Market">
+        <div class="card-body">
+            <h4 class="card-title mb-5">Montana Family Market</h4>
+          <ul class="list-unstyled mb-3 text-start">
+            <li>🕰️ Every Saturday and Sunday 9AM - 7 PM</li>
+            <li>✅ Dog friendly</li>
+            <li>✅ Food and Drinks</li>
+            <li>✅ Live music</li>
+            <li>✅ Shopping and Groceries</li>
+            <li>💰 Entry fee: R20</li>
+          </ul>
+          <a href="https://www.google.com/maps/place/Montana+Family+Market/@-25.6806466,28.25222,17z/data=!3m1!4b1!4m6!3m5!1s0x1ebfdfaa4fc47921:0x172fe9981782c24e!8m2!3d-25.6806466!4d28.2547949!16s%2Fg%2F1tpmdf93!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D" class="d-block mb-3 text-decoration-none">📌 Montana, Pretoria</a>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-success flex-fill">Market Map</a>
+            <a href="#" class="btn btn-success flex-fill">Visit Stalls</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+    <div class="container text-center p-5">
+    <div class="row">
+      <div class="col">
+        <div class="card shadow-sm" style="width: 24rem;">
+        <img src="..." class="card-img-top" alt="4 Ways Farmers Market">
+        <div class="card-body">
+            <h4 class="card-title mb-5">4 Ways Farmers Market</h4>
+          <ul class="list-unstyled mb-3 text-start">
+            <li>🕰️ Every Saturday and Sunday 9AM - 7 PM</li>
+            <li>✅ Dog friendly</li>
+            <li>✅ Food and Drinks</li>
+            <li>✅ Live music</li>
+            <li>✅ Shopping and Groceries</li>
+            <li>💰 Entry fee: R20</li>
+          </ul>
+          <a href="https://www.google.com/maps/place/Fourways+Farmers+Market/data=!4m2!3m1!1s0x0:0x5eb7a55e9cfc99?sa=X&ved=1t:2428&ictx=111" class="d-block mb-3 text-decoration-none">📌 Modderfontein, Johannesburg</a>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-success flex-fill">Market Map</a>
+            <a href="#" class="btn btn-success flex-fill">Visit Stalls</a>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card shadow-sm" style="width: 24rem;">
+        <img src="..." class="card-img-top" alt="4 Ways Farmers Market">
+        <div class="card-body">
+            <h4 class="card-title mb-5">Hazelwood Food Market</h4>
+          <ul class="list-unstyled mb-3 text-start">
+            <li>At Hazel Food Market we continue to provide you with the best food products Pretoria has to offer and aim to always offer exciting new tastes to make your Saturday mornings something to look forward to.</li>
+            <li>🕰️ Every Saturday 8AM - 2PM</li>
+          </ul>
+          <a href="https://www.google.com/maps/place/Hazel+Food+Market./@-25.760521,28.2523416,17z/data=!3m1!4b1!4m6!3m5!1s0x1e9560fc141b162f:0x42392b14603d66!8m2!3d-25.760521!4d28.2523416!16s%2Fg%2F11b6bj07n2!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D" class="d-block mb-3 text-decoration-none">📌 Lynnwood, Pretoria</a>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-success flex-fill">Market Map</a>
+            <a href="#" class="btn btn-success flex-fill">Visit Stalls</a>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card shadow-sm" style="width: 24rem;">
+        <img src="..." class="card-img-top" alt="4 Ways Farmers Market">
+        <div class="card-body">
+            <h4 class="card-title mb-5">Montana Family Market</h4>
+          <ul class="list-unstyled mb-3 text-start">
+            <li>🕰️ Every Saturday and Sunday 9AM - 7 PM</li>
+            <li>✅ Dog friendly</li>
+            <li>✅ Food and Drinks</li>
+            <li>✅ Live music</li>
+            <li>✅ Shopping and Groceries</li>
+            <li>💰 Entry fee: R20</li>
+          </ul>
+          <a href="https://www.google.com/maps/place/Montana+Family+Market/@-25.6806466,28.25222,17z/data=!3m1!4b1!4m6!3m5!1s0x1ebfdfaa4fc47921:0x172fe9981782c24e!8m2!3d-25.6806466!4d28.2547949!16s%2Fg%2F1tpmdf93!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D" class="d-block mb-3 text-decoration-none">📌 Montana, Pretoria</a>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-success flex-fill">Market Map</a>
+            <a href="#" class="btn btn-success flex-fill">Visit Stalls</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <footer class="border-top py-3" style="background-color: #c8f7c5;">
+      <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <!-- Left side -->
+        <p class="col-md-4 mb-0 text-muted">&copy; 2025 Group 04</p>
+
+        <!-- Center logo -->
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+          <svg class="bi" width="32" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"/>
+          </svg>
+        </a>
+
+        <!-- Right side navigation -->
+        <ul class="nav col-md-3 justify-content-end">
+          <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item fw-semibold"><a href="events.html" class="nav-link px-2 text-muted">Upcoming Events</a></li>
+          <li class="nav-item fw-semibold"><a href="vendors.html" class="nav-link px-2 text-muted">Vendor Community</a></li>
+          <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">FAQs</a></li>
+          <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+      </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
