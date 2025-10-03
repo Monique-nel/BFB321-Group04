@@ -6,7 +6,7 @@
   <title>Mzanzi Market</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container d-flex justify-content-between align-items-center">
       <!-- Logo -->
@@ -38,76 +38,201 @@
     </div>
   </nav>
 
- <div class="container py-5">
-    <div class="vendor-card d-flex align-items-center">
-      <!-- Left Logo -->
-      <div class="me-4 text-center">
-        <img src="images/Peach_logo.png" alt="Peach & Pip Logo" class="vendor-logo" height="100">
-      </div>
+  <!-- Search -->
+  <div class="container my-4">
+    <div class="input-group shadow-sm" style="max-width:1500px; margin:auto;">
+      <input id="searchInput" type="text" class="form-control form-control-lg" placeholder="Search vendors..." style="font-size:1.2rem; height:60px;">
+      <button class="btn btn-success btn-lg" type="button" onclick="searchVendors()" style="height:60px;">Search
+        <i class="bi bi-search" style="font-size:1.5rem;"></i>
+      </button>
+    </div>
+  </div>
 
-      <!-- Middle Info -->
-      <div class="col-md-8 px-5">
-        <p class="vendor-title fw-bold fs-4">Peach & Pip</p>
-        <p>A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</p>
-        <p><strong>Stall Number & Market Name:</strong> Stall B12, Montana Family Market</p>
-        <p class="vendor-contact">Contact us: 01254545454 <br> peachandpip@gmail.com</p>
-        <p><strong>Type:</strong> Food vendor</p>
-      </div>
+  <div class="container" id="vendorList">
 
-      <!-- Right Image -->
-      <div class="col-md-2">
-        <img src="images/Peach_vendor.png" alt="Peach & Pip Stall" class="vendor-image" height="200">
+    <!-- Vendor Card Template -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
+      <div class="card-body d-flex flex-column flex-md-row align-items-center">
+
+        <!-- Logo -->
+        <div class="me-md-4 mb-3 mb-md-0 text-center">
+          <img src="images/Peach_vendor.png" alt="Peach & Pip Logo" class="img-fluid rounded shadow-sm" style="max-height:100px;">
+        </div>
+
+        <!-- Info -->
+        <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
+          <h5 class="fw-bold text-success">Peach & Pip</h5>
+          <p class="mb-1">A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</p>
+          <p class="mb-1"><strong>Stall Number & Market Name:</strong> B12, Montana Family Market</p>
+          <p class="mb-1"><strong>Contact:</strong> 012 545 45454 · peachandpip@gmail.com</p>
+          <span class="badge bg-success">Food vendor</span>
+        </div>
+
+        <!-- Carousel -->
+        <div id="carouselPeach" class="carousel slide carousel-fade shadow rounded" data-bs-ride="carousel" style="max-width:300px; min-width:250px;">
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active"><img src="images/Peach_vendor.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/Peach&Pip.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/Peach.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/Peachs.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselPeach" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselPeach" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselPeach" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselPeach" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselPeach" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#carouselPeach" data-bs-slide-to="3"></button>
+          </div>
+        </div>
+
       </div>
     </div>
- </div>
 
-  <div class="container py-5">
-    <div class="vendor-card d-flex align-items-center">
-      <!-- Left Logo -->
-      <div class="me-4 text-center">
-        <img src="images/Peach_logo.png" alt="Peach & Pip Logo" class="vendor-logo" height="100">
-      </div>
-
-      <!-- Middle Info -->
-      <div class="col-md-8 px-5">
-        <p class="vendor-title fw-bold fs-4">Peach & Pip</p>
-        <p>A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</p>
-        <p><strong>Stall Number & Market Name:</strong> Stall B12, Montana Family Market</p>
-        <p class="vendor-contact">Contact us: 01254545454 <br> peachandpip@gmail.com</p>
-        <p><strong>Type:</strong> Food vendor</p>
-      </div>
-
-      <!-- Right Image -->
-      <div class="col-md-2">
-        <img src="images/Peach_vendor.png" alt="Peach & Pip Stall" class="vendor-image" height="200">
+    <!-- Sunny Spring -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
+      <div class="card-body d-flex flex-column flex-md-row align-items-center">
+        <div class="me-md-4 mb-3 mb-md-0 text-center">
+          <img src="images/SunnyLogo.png" alt="Sunny Logo" class="img-fluid rounded shadow-sm" style="max-height:100px;">
+        </div>
+        <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
+          <h5 class="fw-bold text-success">Sunny Spring</h5>
+          <p class="mb-1">A cheerful vendor offering fresh herbs, potted plants, and natural wellness goodies.</p>
+          <p class="mb-1"><strong>Stall Number & Market Name:</strong> A22, Lavender Kontrei Mark</p>
+          <p class="mb-1"><strong>Contact:</strong> 012 111 1111 · sunnysprig@gmail.com</p>
+          <span class="badge bg-success">Wellness vendor</span>
+        </div>
+        <div class="shadow rounded" style="max-width:300px; min-width:250px;">
+          <img src="images/Sunny.png" alt="Sunny Spring Stall" class="img-fluid rounded" style="height:200px; width:100%; object-fit:cover;">
+        </div>
       </div>
     </div>
- </div>
 
-  <div class="container py-5">
-    <div class="vendor-card d-flex align-items-center">
-      <!-- Left Logo -->
-      <div class="me-4 text-center">
-        <img src="images/Peach_logo.png" alt="Peach & Pip Logo" class="vendor-logo" height="100">
-      </div>
-
-      <!-- Middle Info -->
-      <div class="col-md-8 px-5">
-        <p class="vendor-title fw-bold fs-4">Peach & Pip</p>
-        <p>A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</p>
-        <p><strong>Stall Number & Market Name:</strong> Stall B12, Montana Family Market</p>
-        <p class="vendor-contact">Contact us: 01254545454 <br> peachandpip@gmail.com</p>
-        <p><strong>Type:</strong> Food vendor</p>
-      </div>
-
-      <!-- Right Image -->
-      <div class="col-md-2">
-        <img src="images/Peach_vendor.png" alt="Peach & Pip Stall" class="vendor-image" height="200">
+    <!-- TinyNest -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
+      <div class="card-body d-flex flex-column flex-md-row align-items-center">
+        <div class="me-md-4 mb-3 mb-md-0 text-center">
+          <img src="images/VendorDefault.png" alt="TinyNest Logo" class="img-fluid rounded shadow-sm" style="max-height:100px;">
+        </div>
+        <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
+          <h5 class="fw-bold text-success">TinyNest</h5>
+          <p class="mb-1">Cozy handmade home décor and accessories that make small spaces feel warm.</p>
+          <p class="mb-1"><strong>Stall Number & Market Name:</strong> B12, Montana Family Market</p>
+          <p class="mb-1"><strong>Contact:</strong> 012 234 5556 · tinynest@gmail.com</p>
+          <span class="badge bg-success">Home décor vendor</span>
+        </div>
+        <div id="carouselTiny" class="carousel slide carousel-fade shadow rounded" data-bs-ride="carousel" style="max-width:300px; min-width:250px;">
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active"><img src="images/tiny2.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/Tiny1.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselTiny" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselTiny" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselTiny" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselTiny" data-bs-slide-to="1"></button>
+          </div>
+        </div>
       </div>
     </div>
- </div>
 
-  <footer class="border-top py-3" style="background-color: #c8f7c5;">
+    <!-- BumbleBean -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
+      <div class="card-body d-flex flex-column flex-md-row align-items-center">
+        <div class="me-md-4 mb-3 mb-md-0 text-center">
+          <img src="images/BubbleBean_logo.png" alt="BumbleBean Logo" class="img-fluid rounded shadow-sm" style="max-height:100px;">
+        </div>
+        <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
+          <h5 class="fw-bold text-success">BumbleBean</h5>
+          <p class="mb-1">Freshly roasted coffee beans, honey, and cute bee-themed treats.</p>
+          <p class="mb-1"><strong>Stall Number & Market Name:</strong> B12, Montana Family Market</p>
+          <p class="mb-1"><strong>Contact:</strong> 076 982 3333 · bumblebean@gmail.com</p>
+          <span class="badge bg-success">Food vendor</span>
+        </div>
+        <div id="carouselBumble" class="carousel slide carousel-fade shadow rounded" data-bs-ride="carousel" style="max-width:300px; min-width:250px;">
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active"><img src="images/Bumble1.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/Bumble2.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/Bumble3.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselBumble" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselBumble" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselBumble" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselBumble" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselBumble" data-bs-slide-to="2"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DaisyDot -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
+      <div class="card-body d-flex flex-column flex-md-row align-items-center">
+        <div class="me-md-4 mb-3 mb-md-0 text-center">
+          <img src="images/daisyLogo.png" alt="DaisyDot Logo" class="img-fluid rounded shadow-sm" style="max-height:100px;">
+        </div>
+        <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
+          <h5 class="fw-bold text-success">DaisyDot</h5>
+          <p class="mb-1">Bright and playful accessories, from hair clips to handmade jewelry.</p>
+          <p class="mb-1"><strong>Stall Number & Market Name:</strong> B12, Montana Family Market</p>
+          <p class="mb-1"><strong>Contact:</strong> 082 700 4000 · daisydot@gmail.com</p>
+          <span class="badge bg-success">Accessories vendor</span>
+        </div>
+        <div id="carouselDaisy" class="carousel slide carousel-fade shadow rounded" data-bs-ride="carousel" style="max-width:300px; min-width:250px;">
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active"><img src="images/daisy1.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/daisy2.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/daisy3.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/daisy4.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselDaisy" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselDaisy" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselDaisy" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselDaisy" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselDaisy" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#carouselDaisy" data-bs-slide-to="3"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nacho Yours -->
+    <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
+      <div class="card-body d-flex flex-column flex-md-row align-items-center">
+        <div class="me-md-4 mb-3 mb-md-0 text-center">
+          <img src="images/VendorDefault.png" alt="Nacho Yours Logo" class="img-fluid rounded shadow-sm" style="max-height:100px;">
+        </div>
+        <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
+          <h5 class="fw-bold text-success">Nacho Yours</h5>
+          <p class="mb-1">Nachos can go on anything, and that is what we do!</p>
+          <p class="mb-1"><strong>Stall Number & Market Name:</strong> B12, Montana Family Market</p>
+          <p class="mb-1"><strong>Contact:</strong> 010 005 4554 · nachoyours@gmail.com</p>
+          <span class="badge bg-success">Food vendor</span>
+        </div>
+        <div id="carouselNacho" class="carousel slide carousel-fade shadow rounded" data-bs-ride="carousel" style="max-width:300px; min-width:250px;">
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active"><img src="images/nacho1.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/nacho2.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/nacho3.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+            <div class="carousel-item"><img src="images/nacho4.png" class="d-block w-100 object-fit-cover" style="height:200px;" alt=""></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselNacho" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselNacho" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselNacho" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselNacho" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselNacho" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#carouselNacho" data-bs-slide-to="3"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    <footer class="border-top py-3" style="background-color: #c8f7c5;">
       <div class="container d-flex flex-wrap justify-content-between align-items-center">
         <!-- Left side -->
         <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
@@ -121,6 +246,42 @@
         </ul>
       </div>
   </footer>
+
+<!-- Search Script -->
+  <script>
+  function searchVendors() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let vendorCards = document.querySelectorAll(".vendor-card");
+    let found = false;
+
+    vendorCards.forEach(card => {
+      let text = card.innerText.toLowerCase();
+      if (text.includes(input)) {
+        card.style.display = "block";  
+        found = true;
+      } else {
+        card.style.display = "none";   
+      }
+    });
+
+    // Show "No vendors found" if nothing matches
+    if (!found && input.trim() !== "") {
+      if (!document.getElementById("noResults")) {
+        let msg = document.createElement("div");
+        msg.id = "noResults";
+        msg.className = "alert alert-warning text-center";
+        msg.innerText = "No vendors found.";
+        document.getElementById("vendorList").appendChild(msg);
+      }
+    } else {
+      let msg = document.getElementById("noResults");
+      if (msg) msg.remove();
+    }
+  }
+
+  // Live search as user types
+  document.getElementById("searchInput").addEventListener("keyup", searchVendors);
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
