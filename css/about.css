@@ -1,0 +1,179 @@
+/* about.css */
+
+/* Custom styles for the About page */
+main {
+    min-height: 80vh;
+    padding: 40px 0;  
+}
+
+h1, h2 {
+    color: #2d5a27;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    border-bottom: 3px solid #2d5a27;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid #2d5a27;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+hr {
+    border: 0;
+    height: 3px;
+    background: #2d5a27;
+    opacity: 0.7;
+}
+
+.list-unstyled li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.8rem;
+}
+
+.list-unstyled li::before {
+    content: "•";
+    color: #2d5a27;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -0.2rem;
+}
+
+/* Contact section styling */
+.fw-semibold {
+    color: #2d5a27;
+}
+
+/* Image placeholder styles */
+.image-placeholder {
+    background: linear-gradient(45deg, #f8f9fa 25%, #e9f5e9 25%, #e9f5e9 50%, #f8f9fa 50%, #f8f9fa 75%, #e9f5e9 75%, #e9f5e9);
+    background-size: 20px 20px;
+    border: 2px dashed #2d5a27;
+    border-radius: 8px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-placeholder:hover {
+    background-color: #f0f8f0;
+    border-color: #1e3e1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+/* Placeholder text when no image is loaded */
+.image-placeholder:empty::before,
+.image-placeholder:has(img[src=""])::before,
+.image-placeholder:not(:has(img[src]))::before {
+    content: "Add Image";
+    color: #2d5a27;
+    font-style: italic;
+    text-align: center;
+    font-weight: 500;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+/* Hide the actual img element when no src is provided */
+.image-placeholder img[src=""],
+.image-placeholder img:not([src]) {
+    opacity: 0;
+}
+
+/* Specific placeholder styles for different sections */
+.who-we-are {
+    min-height: 280px;
+}
+
+.our-goals {
+    min-height: 280px;
+}
+
+.our-story {
+    min-height: 280px;
+}
+
+.contact-us {
+    min-height: 280px;
+}
+
+/* Animation for image loading */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.image-placeholder img:not([src=""]) {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.6rem;
+    }
+    
+    .fs-5 {
+        font-size: 1rem !important;
+    }
+    
+    .d-flex.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .d-flex.align-items-center .fw-semibold {
+        min-width: auto !important;
+        margin-bottom: 0.2rem;
+    }
+    
+    .image-placeholder {
+        min-height: 150px;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .order-md-1,
+    .order-md-2 {
+        order: 0 !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .image-placeholder {
+        min-height: 120px;
+    }
+}
