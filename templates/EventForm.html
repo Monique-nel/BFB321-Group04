@@ -38,51 +38,42 @@
     </div>
   </nav>
 
-  <!-- Market Section -->
-  <div id="marketSection" class="py-3">
-    <h3 class="fw-bold text-success text-center mb-3">Add your Market</h3>
+  <!-- Event Section -->
+  <div id="eventSection" class="py-3">
+    <h3 class="fw-bold text-success text-center mb-3">Add Your Event</h3>
 
     <div class="text-center mb-3">
-      <i class="bi bi-shop-window fs-1 text-success"></i>
-      <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your market dashboard! Please fill in your market details below.</p>
+      <i class="bi bi-calendar-event fs-1 text-success"></i>
+      <p class="mt-2 mb-3 fs-6 text-secondary">
+        Welcome to your event dashboard! Please fill in your event details below.
+      </p>
     </div>
 
     <div class="card shadow-sm border-0 p-4 mx-auto" style="max-width: 700px;">
-      <form id="marketForm">
-        <!-- Market Name -->
+      <form id="eventForm">
+
+        <!-- Event Name -->
         <div class="mb-3">
-          <label for="marketName" class="form-label fw-semibold">Market Name <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="marketName" placeholder="Enter market name" required>
+          <label for="eventName" class="form-label fw-semibold">Event Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="eventName" placeholder="Enter event name" maxlength="100" required>
         </div>
 
-        <!-- Market Description -->
+        <!-- Event Description -->
         <div class="mb-3">
-          <label for="marketDescription" class="form-label fw-semibold">Market Description <span class="text-danger">*</span></label>
-          <textarea class="form-control" id="marketDescription" rows="3" placeholder="Describe your market" required></textarea>
+          <label for="eventDescription" class="form-label fw-semibold">Event Description <span class="text-danger">*</span></label>
+          <textarea class="form-control" id="eventDescription" rows="3" placeholder="Describe your event" maxlength="200" required></textarea>
         </div>
 
-        <!-- Market Location -->
+        <!-- Event Date -->
         <div class="mb-3">
-          <label for="marketLocation" class="form-label fw-semibold">Market Location <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="marketLocation" placeholder="Enter location" required>
+          <label for="eventDate" class="form-label fw-semibold">Event Date <span class="text-danger">*</span></label>
+          <input type="datetime-local" class="form-control" id="eventDate" required>
         </div>
 
-        <!-- Entry Fee -->
+        <!-- Event Days -->
         <div class="mb-3">
-          <label for="marketEntryFee" class="form-label fw-semibold">Market Entry Fee (R)</label>
-          <input type="number" class="form-control" id="marketEntryFee" placeholder="e.g. 20" min="0">
-        </div>
-
-        <!-- Market Date -->
-        <div class="mb-3">
-          <label for="marketDate" class="form-label fw-semibold">Market Date <span class="text-danger">*</span></label>
-          <input type="datetime-local" class="form-control" id="marketDate" required>
-        </div>
-
-        <!-- Market Days -->
-        <div class="mb-3">
-          <label for="marketDays" class="form-label fw-semibold">Market Days <span class="text-danger">*</span></label>
-          <select class="form-select" id="marketDays" required>
+          <label for="eventDays" class="form-label fw-semibold">Event Days <span class="text-danger">*</span></label>
+          <select class="form-select" id="eventDays" required>
             <option selected disabled>Select day(s)</option>
             <option>Monday</option>
             <option>Tuesday</option>
@@ -95,35 +86,24 @@
           </select>
         </div>
 
-        <!-- Poster Upload -->
+        <!-- Event Booking Link -->
         <div class="mb-3">
-          <label for="marketPoster" class="form-label fw-semibold">Market Poster</label>
-          <input class="form-control" type="file" id="marketPoster" accept="image/*">
+          <label for="eventBookingLink" class="form-label fw-semibold">Event Booking Link</label>
+          <input type="url" class="form-control" id="eventBookingLink" placeholder="https://yourbookinglink.com">
         </div>
 
-        <!-- Market Map -->
+        <!-- Event Poster -->
         <div class="mb-3">
-          <label for="marketMap" class="form-label fw-semibold">Market Map (optional)</label>
-          <input class="form-control" type="file" id="marketMap" accept="image/*,application/pdf">
-        </div>
-
-        <!-- Instagram -->
-        <div class="mb-3">
-          <label for="marketInstagram" class="form-label fw-semibold">Instagram Link</label>
-          <input type="url" class="form-control" id="marketInstagram" placeholder="https://www.instagram.com/yourpage">
-        </div>
-
-        <!-- Facebook -->
-        <div class="mb-3">
-          <label for="marketFacebook" class="form-label fw-semibold">Facebook Link</label>
-          <input type="url" class="form-control" id="marketFacebook" placeholder="https://www.facebook.com/yourpage">
+          <label for="eventPoster" class="form-label fw-semibold">Event Poster</label>
+          <input class="form-control" type="file" id="eventPoster" accept="image/*">
         </div>
 
         <!-- Buttons -->
         <div class="d-flex justify-content-center gap-3">
-          <a href="userpage.html" class="btn btn-outline-danger px-4">Back</a>
-          <button type="submit" class="btn btn-success px-4">Save Market</button>
+          <a href="userpageWhenMarket.html" class="btn btn-outline-danger px-4">Back</a>
+          <button type="submit" class="btn btn-success px-4">Save Event</button>
         </div>
+
       </form>
     </div>
   </div>
@@ -142,6 +122,7 @@
         </ul>
       </div>
   </footer>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

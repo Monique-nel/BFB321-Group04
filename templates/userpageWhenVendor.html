@@ -30,7 +30,7 @@
           <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
           <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
           <li class="nav-item fw-bold fs-5">
-            <a class="nav-link active d-flex align-items-center" href="userpage.html">
+            <a class="nav-link active d-flex align-items-center" href="login.html">
               <img src="images/usericon.png" alt="user" height="30" class="me-2">
               <span>Ize</span>
             </a>
@@ -42,7 +42,7 @@
 
   <!-- Profile card -->
   <div class="container my-5">
-    <div class="card shadow border-0 mx-auto" style="max-width: 800px;">
+    <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
       <div class="card-body">
         
         <!-- Header -->
@@ -138,115 +138,132 @@
         </div>
 
     <!-- Vendor Info Section -->
-    <div id="vendorSection" class="container mt-5" style="max-width: 600px;">
+      <!-- Vendor-only section -->
+        <div id="vendorSection" class="mt-5">
+          <hr class="mb-4">
+          <h3 class="fw-bold text-success text-center mb-3">Vendor Dashboard</h3>
 
-    <div id="vendorSection" class="d-none mt-5">
-        <hr class="mb-4">
-        <h3 class="fw-bold text-success text-center mb-3">Vendor Dashboard</h3>
+          <div class="text-center mb-3">
+            <i class="bi bi-shop fs-1 text-success"></i>
+            <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your vendor dashboard!</p>
+          </div>
 
-        <div class="text-center mb-3">
-        <i class="bi bi-shop fs-1 text-success"></i>
-        <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your vendor dashboard!</p>
-        </div>
-    </div>
+              <!-- Vendor Info Section -->
+                <div id="vendorSection" class="container mt-5" style="max-width: 600px;">
 
-    <!-- Vendor Name -->
-    <div class="mb-3 editable-field">
-        <h5 class="fw-semibold">Vendor Name</h5>
-        <div class="d-flex align-items-center justify-content-between view-mode">
-        <span id="vendorNameDisplay" class="text-muted">Peach & Pip</span>
-        <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
-        </div>
-        <div class="edit-mode d-none input-group">
-        <input type="text" id="vendorNameInput" class="form-control" value="Monique’s Crafts">
-        <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
-        <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
-        </div>
-    </div>
+                <div id="vendorSection" class="d-none mt-5">
+                    <hr class="mb-4">
+                    <h3 class="fw-bold text-success text-center mb-3">Vendor Dashboard</h3>
 
-    <!-- Stall Description -->
-    <div class="mb-3 editable-field">
-        <h5 class="fw-semibold">Stall Description</h5>
-        <div class="d-flex align-items-center justify-content-between view-mode">
-        <span id="vendorDescDisplay" class="text-muted">A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</span>
-        <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
-        </div>
-        <div class="edit-mode d-none input-group">
-        <input type="text" id="vendorDescInput" class="form-control" value="Custom handmade art pieces, jewelry, and home décor.">
-        <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
-        <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
-        </div>
-    </div>
+                    <div class="text-center mb-3">
+                    <i class="bi bi-shop fs-1 text-success"></i>
+                    <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your vendor dashboard!</p>
+                    </div>
+                </div>
 
-    <!-- Vendor Type -->
-    <div class="mb-3 editable-field">
-    <h5 class="fw-semibold">Vendor Type</h5>
-    
-    <!-- View Mode -->
-    <div class="d-flex align-items-center justify-content-between view-mode">
-        <span id="vendorTypeDisplay" class="text-muted">Food and Drink</span>
-        <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
-    </div>
+                <!-- Vendor Name -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Vendor Name</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorNameDisplay" class="text-muted">Peach & Pip</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorNameInput" class="form-control" value="Monique’s Crafts">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
 
-    <!-- Edit Mode (Dropdown) -->
-    <div class="edit-mode d-none input-group">
-        <select id="vendorTypeSelect" class="form-select">
-        <option value="Food and Drink" selected>Food and Drink</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Personal Health">Personal Health</option>
-        <option value="Clothes">Clothes</option>
-        <option value="Antiques">Antiques</option>
-        <option value="Technology">Technology</option>
-        <option value="Accessories">Accessories</option>
-        <option value="Other">Other</option>
-        </select>
-        <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
-        <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
-    </div>
-    </div>
+                <!-- Stall Description -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Stall Description</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorDescDisplay" class="text-muted">A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorDescInput" class="form-control" value="Custom handmade art pieces, jewelry, and home décor.">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
 
-    <!-- Contact Number -->
-    <div class="mb-3 editable-field">
-        <h5 class="fw-semibold">Contact Number</h5>
-        <div class="d-flex align-items-center justify-content-between view-mode">
-        <span id="vendorContactDisplay" class="text-muted">01254545454</span>
-        <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
-        </div>
-        <div class="edit-mode d-none input-group">
-        <input type="text" id="vendorContactInput" class="form-control" value="+27 82 555 1234">
-        <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
-        <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
-        </div>
-    </div>
+                <!-- Vendor Type -->
+                <div class="mb-3 editable-field">
+                <h5 class="fw-semibold">Vendor Type</h5>
+                
+                <!-- View Mode -->
+                <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorTypeDisplay" class="text-muted">Food and Drink</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                </div>
 
-    <!-- Instagram -->
-    <div class="mb-3 editable-field">
-        <h5 class="fw-semibold">Instagram</h5>
-        <div class="d-flex align-items-center justify-content-between view-mode">
-        <a id="vendorInstagramDisplay" href="https://www.instagram.com/peach.and.pip/" target="_blank" class="text-muted text-decoration-none">@moniquescrafts</a>
-        <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
-        </div>
-        <div class="edit-mode d-none input-group">
-        <input type="url" id="vendorInstagramInput" class="form-control" value="https://instagram.com/moniquescrafts">
-        <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
-        <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
-        </div>
-    </div>
+                <!-- Edit Mode (Dropdown) -->
+                <div class="edit-mode d-none input-group">
+                    <select id="vendorTypeSelect" class="form-select">
+                    <option value="Food and Drink" selected>Food and Drink</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Personal Health">Personal Health</option>
+                    <option value="Clothes">Clothes</option>
+                    <option value="Antiques">Antiques</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Other">Other</option>
+                    </select>
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                </div>
+                </div>
 
-    <!-- Market -->
-    <div class="mb-3 editable-field">
-        <h5 class="fw-semibold">Market</h5>
-        <div class="d-flex align-items-center justify-content-between view-mode">
-        <span id="vendorMarketDisplay" class="text-muted">4Ways Farmers Market</span>
-        <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                <!-- Contact Number -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Contact Number</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorContactDisplay" class="text-muted">01254545454</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorContactInput" class="form-control" value="+27 82 555 1234">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Instagram -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Instagram</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <a id="vendorInstagramDisplay" href="https://www.instagram.com/peach.and.pip/" target="_blank" class="text-muted text-decoration-none">@moniquescrafts</a>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="url" id="vendorInstagramInput" class="form-control" value="https://instagram.com/moniquescrafts">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Market -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Market</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorMarketDisplay" class="text-muted">4Ways Farmers Market</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorMarketInput" class="form-control" value="4Ways Farmers Market">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+                </div>
         </div>
-        <div class="edit-mode d-none input-group">
-        <input type="text" id="vendorMarketInput" class="form-control" value="4Ways Farmers Market">
-        <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
-        <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+
+        <div class="d-grid gap-3 mt-4">
+          <a href="marketrequestfrom.html" class="btn btn-success btn-lg">Register Your Market</a>
         </div>
-    </div>
-    </div>
+
     </div>
     </div>
   </div>
