@@ -46,11 +46,11 @@
         <h3 class="text-center text-success mb-4">Sign In</h3>
         <p class="text-center text-muted mb-4">Don’t have an account? <a href="register.html" class="text-success fw-bold">Register here</a>.</p>
 
-        <form>
+        <form id="loginForm">
           <!-- Username -->
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter your username">
+            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
           </div>
 
           <!-- Email -->
@@ -63,16 +63,17 @@
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <div class="input-group">
-              <input type="password" class="form-control" id="password" placeholder="Enter your password">
-              <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                Show
-              </button>
+              <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+              <button type="button" class="btn btn-outline-secondary" id="togglePassword">Show</button>
             </div>
           </div>
 
+          <!-- Error Message -->
+          <div id="errorMsg" class="text-danger text-center mb-3 d-none fw-semibold"></div>
+
           <!-- Buttons -->
           <div class="d-flex justify-content-center">
-            <a href="userpage.html" class="btn btn-success flex-fill">Sign in</a>
+            <button type="submit" class="btn btn-success flex-fill">Sign in</button>
           </div>
         </form>
       </div>
@@ -102,6 +103,29 @@
       const type = passwordField.type === 'password' ? 'text' : 'password';
       passwordField.type = type;
       this.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+
+    // Simple front-end login redirect
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent page refresh
+
+      const username = document.getElementById('username').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.classList.add('d-none');
+
+      // Decide which page to go to based on username
+      if (username.toLowerCase() === 'monique') {
+        window.location.href = 'userpage.html';
+      } else if (username.toLowerCase() === 'lana') {
+        window.location.href = 'userpageWhenMarket.html';
+      } else if (username.toLowerCase() === 'ize') {
+        window.location.href = 'userpageWhenVendor.html';
+        } else if (username.toLowerCase() === 'beate') {
+        window.location.href = 'userpagewhenmarketandvendor.html';
+      } else {
+        errorMsg.textContent = 'Invalid username or password. Please try again.';
+        errorMsg.classList.remove('d-none');
+      }
     });
 
     document.getElementById('toggleConfirmPassword').addEventListener('click', function () {

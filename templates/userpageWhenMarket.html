@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mzanzi Market</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container d-flex justify-content-between align-items-center">
+      <!-- Logo -->
+      <a class="navbar-brand" href="home.html">
+        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
+      </a>
+
+      <!-- Toggle for mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links + user -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav d-flex align-items-center">
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="home.html">Home</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="events.html">Upcoming Events</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
+          <li class="nav-item fw-bold fs-5">
+            <a class="nav-link active d-flex align-items-center" href="userpage.html">
+              <img src="images/usericon.png" alt="user" height="30" class="me-2">
+              <span>Lana</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile card -->
+  <div class="container my-5">
+    <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        
+        <!-- Header -->
+        <div class="text-center mb-4">
+          <div class="fs-1">👤</div>
+          <h4 class="fw-bold">Welcome, Lana</h4>
+        </div>
+
+        <!-- Username (editable) -->
+        <div class="container" style="max-width: 500px;">
+          <div class="mb-3 editable-field">
+
+            <div class="text-left fs-5">
+              <h4 class="fw-bold">Username</h4>
+            </div>
+
+            <!-- Display mode -->
+            <div class="d-flex align-items-center justify-content-between view-mode">
+              <span class="text-muted">Lana</span>
+              <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+
+            <!-- Edit mode (hidden by default) -->
+            <div class="edit-mode d-none input-group">
+              <input type="text" class="form-control" value="Lana">
+              <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+              <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email (editable) -->
+        <div class="container" style="max-width: 500px;">
+          <div class="mb-3 editable-field">
+
+            <div class="text-left fs-5">
+              <h4 class="fw-bold">Email</h4>
+            </div>
+
+            <!-- Display mode -->
+            <div class="d-flex align-items-center justify-content-between view-mode">
+              <span class="text-muted">u12345678@tuks.co.za</span>
+              <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+
+            <!-- Edit mode (hidden by default) -->
+            <div class="edit-mode d-none input-group">
+              <input type="text" class="form-control" value="Monique">
+              <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+              <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password (editable) -->
+        <div class="container" style="max-width: 500px;">
+          <div class="mb-3 editable-field">
+
+            <div class="text-left fs-5">
+              <h4 class="fw-bold">Password</h4>
+            </div>
+
+            <!-- Display mode -->
+            <div class="d-flex align-items-center justify-content-between view-mode">
+              <span class="text-muted">************</span>
+              <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+
+            <!-- Edit mode (hidden by default) -->
+            <div class="edit-mode d-none input-group">
+              <input type="text" class="form-control" value="Monique">
+              <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+              <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notify -->
+        <div class="ms-5 mb-3">
+          <label class="fw-semibold d-block mb-2 fs-5">Notify me of:</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label fs-6">4 Ways Market</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label fs-6">Montana Family Market</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label fs-6">Montana Family Market</label>
+          </div>
+        </div>
+
+        <!-- Vendor-only section -->
+        <div id="vendorSection" class=" mt-5">
+          <hr class="mb-4">
+          <h3 class="fw-bold text-success text-center mb-3">Vendor Dashboard</h3>
+
+          <div class="text-center mb-3">
+            <i class="bi bi-shop fs-1 text-success"></i>
+            <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your vendor dashboard!</p>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-3 mt-4">
+          <a href="vendorrequestform.html" class="btn btn-success btn-lg">Become a Vendor</a>
+        </div>
+
+        <!-- Market only section -->
+        <div id="marketSection" class="mt-5">
+            <hr class="mb-4">
+            <h3 class="fw-bold text-success text-center mb-3">Market Dashboard</h3>
+
+            <div class="text-center mb-3">
+                <i class="bi bi-shop-window fs-1 text-success"></i>
+                <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your market dashboard!</p>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="border-top py-3" style="background-color: #c8f7c5;">
+      <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <!-- Left side -->
+        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
+
+        <!-- Right side navigation -->
+        <ul class="nav col-md-5 justify-content-end">
+          <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item fw-semibold"><a href="generalpolicies.html" class="nav-link px-2 text-muted">General Policies</a></li>
+          <li class="nav-item fw-semibold"><a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a></li>
+          <li class="nav-item fw-semibold"><a href="About.html" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+      </div>
+  </footer>   
+
+  <script>
+    document.querySelectorAll('.mb-3').forEach(section => {
+      const viewMode = section.querySelector('.view-mode');
+      const editMode = section.querySelector('.edit-mode');
+      const span = viewMode.querySelector('span');
+      const input = editMode.querySelector('input');
+      const editBtn = viewMode.querySelector('.edit-btn');
+      const saveBtn = editMode.querySelector('.save-btn');
+      const cancelBtn = editMode.querySelector('.cancel-btn');
+
+      // Switch to edit mode
+      editBtn.addEventListener('click', () => {
+        input.value = span.textContent.trim();
+        viewMode.classList.add('d-none');
+        editMode.classList.remove('d-none');
+        input.focus();
+      });
+
+      // Save changes
+      saveBtn.addEventListener('click', () => {
+        span.textContent = input.value.trim() || "—";
+        viewMode.classList.remove('d-none');
+        editMode.classList.add('d-none');
+      });
+
+      // Cancel changes
+      cancelBtn.addEventListener('click', () => {
+        viewMode.classList.remove('d-none');
+        editMode.classList.add('d-none');
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
