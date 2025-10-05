@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mzanzi Market</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container d-flex justify-content-between align-items-center">
+      <!-- Logo -->
+      <a class="navbar-brand" href="home.html">
+        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
+      </a>
+
+      <!-- Toggle for mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links + user -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav d-flex align-items-center">
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="home.html">Home</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="events.html">Upcoming Events</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
+          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
+          <li class="nav-item fw-bold fs-5">
+            <a class="nav-link active d-flex align-items-center" href="userpage.html">
+              <img src="images/usericon.png" alt="user" height="30" class="me-2">
+              <span>Beate</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container my-5">
+    <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        
+        <!-- Header -->
+        <div class="text-center mb-4">
+          <div class="fs-1">👤</div>
+          <h4 class="fw-bold">Welcome, Beate</h4>
+        </div>
+
+        <!-- Username (editable) -->
+        <div class="container" style="max-width: 500px;">
+          <div class="mb-3 editable-field">
+
+            <div class="text-left fs-5">
+              <h4 class="fw-bold">Username</h4>
+            </div>
+
+            <!-- Display mode -->
+            <div class="d-flex align-items-center justify-content-between view-mode">
+              <span class="text-muted">Beate</span>
+              <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+
+            <!-- Edit mode (hidden by default) -->
+            <div class="edit-mode d-none input-group">
+              <input type="text" class="form-control" value="Beate">
+              <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+              <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email (editable) -->
+        <div class="container" style="max-width: 500px;">
+          <div class="mb-3 editable-field">
+
+            <div class="text-left fs-5">
+              <h4 class="fw-bold">Email</h4>
+            </div>
+
+            <!-- Display mode -->
+            <div class="d-flex align-items-center justify-content-between view-mode">
+              <span class="text-muted">u12345678@tuks.co.za</span>
+              <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+
+            <!-- Edit mode (hidden by default) -->
+            <div class="edit-mode d-none input-group">
+              <input type="text" class="form-control" value="Monique">
+              <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+              <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password (editable) -->
+        <div class="container" style="max-width: 500px;">
+          <div class="mb-3 editable-field">
+
+            <div class="text-left fs-5">
+              <h4 class="fw-bold">Password</h4>
+            </div>
+
+            <!-- Display mode -->
+            <div class="d-flex align-items-center justify-content-between view-mode">
+              <span class="text-muted">************</span>
+              <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+
+            <!-- Edit mode (hidden by default) -->
+            <div class="edit-mode d-none input-group">
+              <input type="text" class="form-control" value="Monique">
+              <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+              <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notify -->
+        <div class="ms-5 mb-3">
+          <label class="fw-semibold d-block mb-2 fs-5">Notify me of:</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label fs-6">4 Ways Market</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label fs-6">Montana Family Market</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label fs-6">Montana Family Market</label>
+          </div>
+        </div>
+
+  <!-- Vendor-only section -->
+        <div id="vendorSection" class="mt-5">
+          <hr class="mb-4">
+          <h3 class="fw-bold text-success text-center mb-3">Vendor Dashboard</h3>
+
+          <div class="text-center mb-3">
+            <i class="bi bi-shop fs-1 text-success"></i>
+            <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your vendor dashboard!</p>
+          </div>
+
+              <!-- Vendor Info Section -->
+                <div id="vendorSection" class="container mt-5" style="max-width: 600px;">
+
+                <div id="vendorSection" class="d-none mt-5">
+                    <hr class="mb-4">
+                    <h3 class="fw-bold text-success text-center mb-3">Vendor Dashboard</h3>
+
+                    <div class="text-center mb-3">
+                    <i class="bi bi-shop fs-1 text-success"></i>
+                    <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your vendor dashboard!</p>
+                    </div>
+                </div>
+
+                <!-- Vendor Name -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Vendor Name</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorNameDisplay" class="text-muted">Peach & Pip</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorNameInput" class="form-control" value="Monique’s Crafts">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Stall Description -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Stall Description</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorDescDisplay" class="text-muted">A sweet little stall selling homemade jams, fruity treats, and fresh baked goods.</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorDescInput" class="form-control" value="Custom handmade art pieces, jewelry, and home décor.">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Vendor Type -->
+                <div class="mb-3 editable-field">
+                <h5 class="fw-semibold">Vendor Type</h5>
+                
+                <!-- View Mode -->
+                <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorTypeDisplay" class="text-muted">Food and Drink</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                </div>
+
+                <!-- Edit Mode (Dropdown) -->
+                <div class="edit-mode d-none input-group">
+                    <select id="vendorTypeSelect" class="form-select">
+                    <option value="Food and Drink" selected>Food and Drink</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Personal Health">Personal Health</option>
+                    <option value="Clothes">Clothes</option>
+                    <option value="Antiques">Antiques</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Other">Other</option>
+                    </select>
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                </div>
+                </div>
+
+                <!-- Contact Number -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Contact Number</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorContactDisplay" class="text-muted">01254545454</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorContactInput" class="form-control" value="+27 82 555 1234">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Instagram -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Instagram</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <a id="vendorInstagramDisplay" href="https://www.instagram.com/peach.and.pip/" target="_blank" class="text-muted text-decoration-none">@moniquescrafts</a>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="url" id="vendorInstagramInput" class="form-control" value="https://instagram.com/moniquescrafts">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+
+                <!-- Market -->
+                <div class="mb-3 editable-field">
+                    <h5 class="fw-semibold">Market</h5>
+                    <div class="d-flex align-items-center justify-content-between view-mode">
+                    <span id="vendorMarketDisplay" class="text-muted">4Ways Farmers Market</span>
+                    <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+                    </div>
+                    <div class="edit-mode d-none input-group">
+                    <input type="text" id="vendorMarketInput" class="form-control" value="4Ways Farmers Market">
+                    <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+                    </div>
+                </div>
+                </div>
+        </div>
+
+        <!-- Market Details Form -->
+        <div id="marketSection" class="mt-5">
+        <hr class="mb-4">
+        <h3 class="fw-bold text-success text-center mb-3">Market Dashboard</h3>
+
+        <div class="text-center mb-3">
+            <i class="bi bi-shop-window fs-1 text-success"></i>
+            <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your market dashboard!</p>
+        </div>
+
+        <div class="container" style="max-width: 600px;">
+            <!-- Market Name -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Name</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">Irene Village Market</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="text" class="form-control" value="Mzanzi Street Market">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Description -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Description</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">The Irene Village Market at The Big Red Barn is an arts and crafts market celebrating our 36th year. The market is famous for its locally handmade arts and crafts and is situated in a beautiful forest area.</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <textarea class="form-control" rows="2">The Irene Village Market at The Big Red Barn is an arts and crafts market celebrating our 36th year. The market is famous for its locally handmade arts and crafts and is situated in a beautiful forest area.</textarea>
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Location -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Location</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">Sunlawns AH, Olifantsfontein</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="text" class="form-control" value="Sunlawns AH, Olifantsfontein">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Entry Fee -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Entry Fee (R)</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">None</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="number" class="form-control" value="None">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Date -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Date *</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">2025-10-05 8AM - 2PM</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="date" class="form-control" value="2025-10-20">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Days -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Days *</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">Saturday</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="text" class="form-control" value="Saturday & Sunday">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Poster -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Poster</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">poster.jpg</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="file" class="form-control">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Market Map -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Market Map (optional)</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">map.png</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="file" class="form-control">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Instagram Link -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Instagram Link</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">https://instagram.com/mzanzi_market</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="url" class="form-control" value="https://instagram.com/mzanzi_market">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+
+            <!-- Facebook Link -->
+            <div class="mb-3 editable-field">
+            <h4 class="fw-bold">Facebook Link</h4>
+            <div class="d-flex align-items-center justify-content-between view-mode">
+                <span class="text-muted">https://facebook.com/mzanzi_market</span>
+                <i class="bi bi-pencil-square text-success fs-5 edit-btn" role="button"></i>
+            </div>
+            <div class="edit-mode d-none input-group">
+                <input type="url" class="form-control" value="https://facebook.com/mzanzi_market">
+                <button class="btn btn-outline-danger cancel-btn"><i class="bi bi-x-lg"></i></button>
+                <button class="btn btn-outline-success save-btn"><i class="bi bi-check-lg"></i></button>
+            </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+          <a href="EventForm.html" class="btn btn-success btn-lg">Add a Event</a>
+        </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+
+  <!-- Footer -->
+  <footer class="border-top py-3" style="background-color: #c8f7c5;">
+      <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <!-- Left side -->
+        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
+
+        <!-- Right side navigation -->
+        <ul class="nav col-md-5 justify-content-end">
+          <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item fw-semibold"><a href="generalpolicies.html" class="nav-link px-2 text-muted">General Policies</a></li>
+          <li class="nav-item fw-semibold"><a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a></li>
+          <li class="nav-item fw-semibold"><a href="About.html" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+      </div>
+  </footer>   
+
+  <script>
+    document.querySelectorAll('.mb-3').forEach(section => {
+      const viewMode = section.querySelector('.view-mode');
+      const editMode = section.querySelector('.edit-mode');
+      const span = viewMode.querySelector('span');
+      const input = editMode.querySelector('input');
+      const editBtn = viewMode.querySelector('.edit-btn');
+      const saveBtn = editMode.querySelector('.save-btn');
+      const cancelBtn = editMode.querySelector('.cancel-btn');
+
+      // Switch to edit mode
+      editBtn.addEventListener('click', () => {
+        input.value = span.textContent.trim();
+        viewMode.classList.add('d-none');
+        editMode.classList.remove('d-none');
+        input.focus();
+      });
+
+      // Save changes
+      saveBtn.addEventListener('click', () => {
+        span.textContent = input.value.trim() || "—";
+        viewMode.classList.remove('d-none');
+        editMode.classList.add('d-none');
+      });
+
+      // Cancel changes
+      cancelBtn.addEventListener('click', () => {
+        viewMode.classList.remove('d-none');
+        editMode.classList.add('d-none');
+      });
+    });
+  </script>
+
+    <!-- JS to handle edit/save/cancel actions -->
+    <script>
+    document.querySelectorAll('.editable-field').forEach(field => {
+    const editBtn = field.querySelector('.edit-btn');
+    const cancelBtn = field.querySelector('.cancel-btn');
+    const saveBtn = field.querySelector('.save-btn');
+    const viewMode = field.querySelector('.view-mode');
+    const editMode = field.querySelector('.edit-mode');
+
+    editBtn.addEventListener('click', () => {
+        viewMode.classList.add('d-none');
+        editMode.classList.remove('d-none');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        editMode.classList.add('d-none');
+        viewMode.classList.remove('d-none');
+    });
+
+    saveBtn.addEventListener('click', () => {
+        const input = editMode.querySelector('input, textarea');
+        if (input) {
+        field.querySelector('.view-mode span').textContent = input.value.split('\\').pop();
+        }
+        editMode.classList.add('d-none');
+        viewMode.classList.remove('d-none');
+    });
+    });
+    </script> 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

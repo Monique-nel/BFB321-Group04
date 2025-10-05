@@ -30,7 +30,7 @@
           <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
           <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
           <li class="nav-item fw-bold fs-5">
-            <a class="nav-link active d-flex align-items-center" href="userpage.html">
+            <a class="nav-link active d-flex align-items-center" href="login.html">
               <img src="images/usericon.png" alt="user" height="30" class="me-2">
               <span>Monique</span>
             </a>
@@ -139,13 +139,14 @@
 
         <!-- Buttons -->
         <div class="d-grid gap-3 mt-4">
-          <button class="btn btn-success btn-lg">Become a Vendor</button>
-          <button class="btn btn-success btn-lg">Register Your Market</button>
+          <a href="vendorrequestform.html" class="btn btn-success btn-lg">Become a Vendor</a>
+          <a href="marketrequestfrom.html" class="btn btn-success btn-lg">Register Your Market</a>
         </div>
 
       </div>
     </div>
   </div>
+
 
   <!-- Footer -->
   <footer class="border-top py-3" style="background-color: #c8f7c5;">
@@ -162,6 +163,30 @@
         </ul>
       </div>
   </footer>   
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const vendorSection = document.getElementById('vendorSection');
+    const becomeVendorBtn = document.querySelector('a[href="vendorrequestform.html"]');
+    const vendorInfo = document.getElementById('vendorInfo');
+
+    // If user is a vendor, show vendor section and hide "Become a Vendor" button
+    if (localStorage.getItem('isVendor') === 'true') {
+      vendorSection.classList.remove('d-none');
+      becomeVendorBtn.classList.add('d-none');
+
+      const data = JSON.parse(localStorage.getItem('vendorData'));
+      if (data) {
+        document.getElementById('vendorNameDisplay').textContent = data.name || '';
+        document.getElementById('vendorTypeDisplay').textContent = data.type || '';
+        document.getElementById('vendorDescDisplay').textContent = data.description || '';
+        document.getElementById('vendorContactDisplay').textContent = data.contact || '';
+        document.getElementById('vendorWebsiteDisplay').textContent = data.website || '';
+        document.getElementById('vendorWebsiteDisplay').href = data.website || '#';
+      }
+    }
+  });
+  </script>
 
   <script>
     document.querySelectorAll('.mb-3').forEach(section => {
