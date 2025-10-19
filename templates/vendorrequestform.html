@@ -153,35 +153,6 @@
   </footer>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("vendorForm");
-  if (!form) {
-    console.error("vendorForm not found in HTML");
-    return;
-  }
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault(); // Prevent page refresh
-
-    // Collect form data
-    const vendorData = {
-      name: document.getElementById("vendorName")?.value.trim() || "",
-      type: document.getElementById("vendorType")?.value.trim() || "",
-      description: document.getElementById("vendorDescription")?.value.trim() || "",
-      contact: document.getElementById("vendorContact")?.value.trim() || "",
-      website: document.getElementById("vendorWebsite")?.value.trim() || ""
-    };
-
-    // Save to localStorage
-    localStorage.setItem("vendorData", JSON.stringify(vendorData));
-    localStorage.setItem("isVendor", "true");
-
-    alert("✅ Your vendor request has been submitted successfully!");
-    window.location.href = "userpage.html";
-  });
-});
-</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
