@@ -249,42 +249,6 @@
       </div>
   </footer>
 
-<!-- Search Script -->
-  <script>
-  function searchVendors() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let vendorCards = document.querySelectorAll(".vendor-card");
-    let found = false;
-
-    vendorCards.forEach(card => {
-      let text = card.innerText.toLowerCase();
-      if (text.includes(input)) {
-        card.style.display = "block";  
-        found = true;
-      } else {
-        card.style.display = "none";   
-      }
-    });
-
-    // Show "No vendors found" if nothing matches
-    if (!found && input.trim() !== "") {
-      if (!document.getElementById("noResults")) {
-        let msg = document.createElement("div");
-        msg.id = "noResults";
-        msg.className = "alert alert-warning text-center";
-        msg.innerText = "No vendors found.";
-        document.getElementById("vendorList").appendChild(msg);
-      }
-    } else {
-      let msg = document.getElementById("noResults");
-      if (msg) msg.remove();
-    }
-  }
-
-  // Live search as user types
-  document.getElementById("searchInput").addEventListener("keyup", searchVendors);
-  </script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
