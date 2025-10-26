@@ -6,273 +6,335 @@
   <title>Mzanzi Market</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-    <div class="container d-flex justify-content-between align-items-center">
-      <!-- Logo -->
-      <a class="navbar-brand" href="home.html">
-        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
-      </a>
+<body class="bg-light">
 
-      <!-- Toggle for mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2">
+    <div class="container-fluid px-4">
+        <!-- Left side: Logo + Links -->
+        <a class="navbar-brand d-flex align-items-center me-3" href="home.html">
+        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-2">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+        </button>
 
-      <!-- Links + user -->
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav d-flex align-items-center">
-          <li class="nav-item fw-bold fs-5"><a class="nav-link active" href="home.html">Home</a></li>
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="events.html">Upcoming Events</a></li>
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
-          <li class="nav-item fw-bold fs-5">
-            <a class="nav-link d-flex align-items-center" href="login.html">
-              <img src="images/usericon.png" alt="user" height="30" class="me-2">
-              <span>User</span>
-            </a>
-          </li>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left-aligned links (next to logo) -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link fw-semibold fs-5 active" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link fw-semibold fs-5" href="events.html">Upcoming Events</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link fw-semibold fs-5" href="vendors.html">Vendor Community</a>
+            </li>
         </ul>
+
+        <!-- Right side: Search + User -->
+        <div class="d-flex align-items-center">
+            <!-- Search -->
+            <form class="d-flex me-3" role="search">
+            <input class="form-control me-2 rounded-pill px-3 py-1 fs-5" type="search" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-light rounded-pill px-3 py-1 fs-5" type="submit">Search</button>
+            </form>
+
+            <!-- User section -->
+            <ul class="navbar-nav d-flex align-items-center mb-0">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center fw-semibold fs-5" href="login.html">
+                <img src="images/usericon.png" alt="User" height="30" class="me-1 rounded-circle border border-light p-1">
+                <span>User</span>
+                </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-success bg-gradient text-white text-center py-5 mb-5">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Welcome to Mzanzi Market</h1>
+      <p class="lead mb-4">Discover the heart of local markets — food, crafts, and community across South Africa.</p>
+      <a href="#markets" class="btn btn-light btn-lg rounded-pill shadow">Explore Markets</a>
+    </div>
+  </section>
+
+  <!-- Testimonial Carousel -->
+  <section class="container my-5">
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner text-center bg-white rounded shadow py-5 px-3">
+        <div class="carousel-item active">
+          <blockquote class="blockquote">
+            <p class="fs-5 fst-italic mb-4">“Mzanzi Market helped me find the best weekend markets — it's my go-to guide now!”</p>
+            <footer class="blockquote-footer">Nomsa, Johannesburg</footer>
+          </blockquote>
+        </div>
+        <div class="carousel-item">
+          <blockquote class="blockquote">
+            <p class="fs-5 fst-italic mb-4">“As a vendor, my sales doubled after listing on Mzanzi Market.”</p>
+            <footer class="blockquote-footer">Thabo, Pretoria</footer>
+          </blockquote>
+        </div>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <div class="container p-4">
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100" style="width: 24rem;">
-          <div class="container-fluid py-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <h6 class="mb-0 fw-bold fs-5">4 Ways Farmers Market</h6>
-              <div class="d-flex gap-0">
+    <!-- Back to Top Button -->
+    <button type="button" class="btn btn-success btn-lg position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
+            id="backToTopBtn" style="display: none; width: 60px; height: 60px;">
+        ↑
+    </button>
+
+    <!-- MARKET SECTION -->
+    <section id="markets" class="container py-5">
+    <h2 class="text-center fw-bold text-success mb-5">
+        Explore South Africa’s Favorite Markets
+    </h2>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- 4 Ways Farmers Market -->
+        <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">4 Ways Farmers Market</h5>
+            <div>
                 <a href="https://www.instagram.com/4waysfarmersmarket/?hl=en">
-                  <img src="images/instagram.png" alt="instagram" height="30" class="me-4">
+                <img src="images/instagram.png" alt="instagram" height="25" class="me-2">
                 </a>
                 <a href="https://www.facebook.com/TheFourwaysFarmersMarket">
-                  <img src="images/facebook.png" alt="facebook" height="30" class="me-4">
+                <img src="images/facebook.png" alt="facebook" height="25">
                 </a>
-              </div>
             </div>
-          </div>
+            </div>
 
-          <img src="images/4_ways.png" class="card-img-top w-100" 
-              alt="4 Ways Farmers Market" 
-              style="height: 200px; object-fit: contain; background-color: #ffffff;">
+            <img src="images/4_ways.png" class="card-img-top img-fluid bg-white p-3 rounded" alt="4 Ways Farmers Market">
 
-          <!-- Make card-body flex column -->
-          <div class="card-body d-flex flex-column">
-            <ul class="list-unstyled mb-3 text-start">
-              <li>🕰️ Every Saturday and Sunday 9AM - 7 PM</li>
-              <li>✅ Dog friendly</li>
-              <li>✅ Food and Drinks</li>
-              <li>✅ Live music</li>
-              <li>✅ Shopping and Groceries</li>
-              <li>💰 Entry fee: R20</li>
+            <div class="card-body d-flex flex-column">
+            <ul class="list-unstyled mb-3">
+                <li>🕰️ Every Saturday and Sunday 9AM - 7PM</li>
+                <li>✅ Dog friendly</li>
+                <li>✅ Food and Drinks</li>
+                <li>✅ Live music</li>
+                <li>✅ Shopping and Groceries</li>
+                <li>💰 Entry fee: R20</li>
             </ul>
 
-            <a href="https://www.google.com/maps/place/Fourways+Farmers+Market/@-26.0636371,28.1209609,17z/data=!3m1!4b1!4m6!3m5!1s0x1e9576aeb2c33a03:0x5eb7a55e9cfc99!8m2!3d-26.0636371!4d28.1235358!16s%2Fg%2F11b6w9d2h_?entry=ttu&g_ep=EgoyMDI1MDkyOC4wIKXMDSoASAFQAw%3D%3D" 
-              class="d-block mb-3 text-decoration-none">📌 Modderfontein, Johannesburg</a>
+            <a href="https://www.google.com/maps/place/Fourways+Farmers+Market/@-26.0636371,28.1209609,17z" 
+                class="text-decoration-none mb-3 fw-semibold">📌 Modderfontein, Johannesburg</a>
 
-            <!-- Buttons stay at bottom -->
-            <div class="d-flex gap-2 mt-auto">
-              <a href="Map_4way.html" class="btn btn-success flex-fill">Market Map</a>
-              <a href="vendors.html" class="btn btn-success flex-fill">Visit Stalls</a>
+            <div class="d-grid gap-2 mt-auto">
+                <a href="Map_4way.html" class="btn btn-success">Market Map</a>
+                <a href="vendors.html" class="btn btn-outline-success">Visit Stalls</a>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col md-4">
-        <div class="card shadow-sm h-100" style="width: 24rem;">
-          <div class="container-fluid py-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <h6 class="mb-0 fw-bold fs-5">Pretoria Boeremark</h6>
-              <div class="d-flex gap-0">
-                <a href="https://www.instagram.com/pretoriaboeremark/" class="text-dark fs-6"><img src="images/instagram.png" alt="instagram" height="30" class="me-4"></a>
-                <a href="https://www.facebook.com/ptaboeremark" class="text-dark fs-6"><img src="images/facebook.png" alt="facebook" height="30" class="me-4"></a>
-              </div>
             </div>
-          </div>
-        
-        <img src="images/PretoriaBoeremark.png" class="card-img-top w-100" alt="Montana Family Market" style="height: 200px; object-fit: contain; background-color: #ffffff;">
-        <div class="card-body">
-          <ul class="list-unstyled mb-3 text-start">
-            <li>Wanneer die meeste mense nog slaap op `n Saterdagoggend is die Boeremarkterrein reeds `n miernes van bedrywighede waar uitstallers hulle stalletjies opstel en opvul met vars groente, vrugte, vleis, gebak en mooi handwerk items. Die Boeremark word reeds vir 31 jaar suksesvol aangebied.</li>
-            <li>🕰️ Elke Saterdag 05:30 – 09:30 AM</li>
-            <li>💰 Entry fee: None</li>
-          </ul>
-          <a href="https://www.google.com/maps/place/Pretoria+Boeremark/@-25.7283808,28.3071248,17z/data=!3m1!4b1!4m6!3m5!1s0x1e955fdc90d50b33:0x4b3f005a0ca29dd!8m2!3d-25.7283808!4d28.3071248!16s%2Fg%2F1x5cwtjr?entry=ttu&g_ep=EgoyMDI1MDkyOC4wIKXMDSoASAFQAw%3D%3D" class="d-block mb-3 text-decoration-none">📌 Silverton, Pretoria</a>
-          <div class="d-flex gap-2">
-            <a href="Map_pretoria.html" class="btn btn-success flex-fill">Market Map</a>
-            <a href="vendors.html" class="btn btn-success flex-fill">Visit Stalls</a>
-          </div>
         </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100" style="width: 24rem;">
-          <div class="container-fluid py-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <h6 class="mb-0 fw-bold fs-5">Montana Family Market</h6>
-              <div class="d-flex gap-0">
-                <a href="https://www.instagram.com/montana_family_market/" class="text-dark fs-6">
-                  <img src="images/instagram.png" alt="instagram" height="30" class="me-4">
+
+        <!-- Pretoria Boeremark -->
+        <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Pretoria Boeremark</h5>
+            <div>
+                <a href="https://www.instagram.com/pretoriaboeremark/">
+                <img src="images/instagram.png" alt="instagram" height="25" class="me-2">
                 </a>
-                <a href="https://www.facebook.com/montanafamilymarket" class="text-dark fs-6">
-                  <img src="images/facebook.png" alt="facebook" height="30" class="me-4">
+                <a href="https://www.facebook.com/ptaboeremark">
+                <img src="images/facebook.png" alt="facebook" height="25">
                 </a>
-              </div>
             </div>
-          </div>
+            </div>
 
-          <img src="images/Montana_Family.png" class="card-img-top w-100" alt="Montana Family Market" style="height: 200px; object-fit: contain; background-color: #ffffff;">
+            <img src="images/PretoriaBoeremark.png" class="card-img-top img-fluid bg-white p-3 rounded" alt="Pretoria Boeremark">
 
-          <!-- Make card-body flex column -->
-          <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column">
             <ul class="list-unstyled mb-3 text-start">
-              <li>
-                Montana Family Market is a permanent flea-market-style shopping 
-                complex located in the heart of Montana. We strive to offer a diverse 
-                shopping experience and to make the family the centre of our retail and events community.
-              </li>
-              <li>🕰️ Every Tuesday - Sunday 9AM - 5PM</li>
-              <li>💰 Entry fee: R50/R100 </li>
+                <li>Wanneer die meeste mense nog slaap op 'n Saterdagoggend, is die Boeremarkterrein reeds 'n miernes van bedrywighede...</li>
+                <li>🕰️ Elke Saterdag 05:30 – 09:30 AM</li>
+                <li>💰 Entry fee: None</li>
             </ul>
 
-            <a href="https://www.google.com/maps/place/Montana+Family+Market/data=!4m2!3m1!1s0x0:0x172fe9981782c24e?sa=X&ved=1t:2428&ictx=111" 
-              class="d-block mb-3 text-decoration-none">📌 Montana, Pretoria</a>
+            <a href="https://www.google.com/maps/place/Pretoria+Boeremark" class="text-decoration-none mb-3 fw-semibold">
+                📌 Silverton, Pretoria
+            </a>
 
-            <!-- Buttons pushed to bottom -->
-            <div class="d-flex gap-2 mt-auto">
-              <a href="Map_montana.html" class="btn btn-success flex-fill">Market Map</a>
-              <a href="vendors.html" class="btn btn-success flex-fill">Visit Stalls</a>
+            <div class="d-grid gap-2 mt-auto">
+                <a href="Map_pretoria.html" class="btn btn-success">Market Map</a>
+                <a href="vendors.html" class="btn btn-outline-success">Visit Stalls</a>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100" style="width: 24rem;">
-          <div class="container-fluid py-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <h6 class="mb-0 fw-bold fs-5">Hazel Food Market</h6>
-              <div class="d-flex gap-0">
+        </div>
+
+        <!-- Montana Family Market -->
+        <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Montana Family Market</h5>
+            <div>
+                <a href="https://www.instagram.com/montana_family_market/">
+                <img src="images/instagram.png" alt="instagram" height="25" class="me-2">
+                </a>
+                <a href="https://www.facebook.com/montanafamilymarket">
+                <img src="images/facebook.png" alt="facebook" height="25">
+                </a>
+            </div>
+            </div>
+
+            <img src="images/Montana_Family.png" class="card-img-top img-fluid bg-white p-3 rounded" alt="Montana Family Market">
+
+            <div class="card-body d-flex flex-column">
+            <ul class="list-unstyled mb-3 text-start">
+                <li>Montana Family Market is a permanent flea-market-style shopping complex located in the heart of Montana.</li>
+                <li>🕰️ Every Tuesday - Sunday 9AM - 5PM</li>
+                <li>💰 Entry fee: R50/R100</li>
+            </ul>
+
+            <a href="https://www.google.com/maps/place/Montana+Family+Market" 
+                class="text-decoration-none mb-3 fw-semibold">📌 Montana, Pretoria</a>
+
+            <div class="d-grid gap-2 mt-auto">
+                <a href="Map_montana.html" class="btn btn-success">Market Map</a>
+                <a href="vendors.html" class="btn btn-outline-success">Visit Stalls</a>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Hazel Food Market -->
+        <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Hazel Food Market</h5>
+            <div>
                 <a href="https://www.instagram.com/hazelfood_arts_crafts/">
-                  <img src="images/instagram.png" alt="instagram" height="30" class="me-4">
+                <img src="images/instagram.png" alt="instagram" height="25" class="me-2">
                 </a>
                 <a href="https://www.facebook.com/hazelfoodmarket">
-                  <img src="images/facebook.png" alt="facebook" height="30" class="me-4">
+                <img src="images/facebook.png" alt="facebook" height="25">
                 </a>
-              </div>
             </div>
-          </div>
+            </div>
 
-          <img src="images/HazelwoodFood.png" class="card-img-top w-100" 
-              alt="4 Ways Farmers Market" 
-              style="height: 200px; object-fit: contain; background-color: #ffffff;">
+            <img src="images/HazelwoodFood.png" class="card-img-top img-fluid bg-white p-3 rounded" alt="Hazel Food Market">
 
-          <!-- Make card-body flex column -->
-          <div class="card-body d-flex flex-column">
-            <ul class="list-unstyled mb-3 text-start">
-              <li>Providing the best food #Pretoria has 2 offer making your Saturday mornings something to look forward to.</li>
-              <li>🕰️ Every Saturday 8AM - 2PM</li>
-              <li>💰 Entry fee: None</li>
+            <div class="card-body d-flex flex-column">
+            <ul class="list-unstyled mb-3">
+                <li>Providing the best food #Pretoria has to offer, making your Saturday mornings something to look forward to.</li>
+                <li>🕰️ Every Saturday 8AM - 2PM</li>
+                <li>💰 Entry fee: None</li>
             </ul>
 
             <a href="https://www.google.com/maps/place/Fourways+Farmers+Market" 
-              class="d-block mb-3 text-decoration-none">📌 Lynnwood, Pretoria</a>
+                class="text-decoration-none mb-3 fw-semibold">📌 Lynnwood, Pretoria</a>
 
-            <!-- Buttons stay at bottom -->
-            <div class="d-flex gap-2 mt-auto">
-              <a href="map_hazelwood.html" class="btn btn-success flex-fill">Market Map</a>
-              <a href="vendors.html" class="btn btn-success flex-fill">Visit Stalls</a>
+            <div class="d-grid gap-2 mt-auto">
+                <a href="map_hazelwood.html" class="btn btn-success">Market Map</a>
+                <a href="vendors.html" class="btn btn-outline-success">Visit Stalls</a>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col md-4">
-        <div class="card shadow-sm h-100" style="width: 24rem;">
-          <div class="container-fluid py-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <h6 class="mb-0 fw-bold fs-5">Irene Village Market</h6>
-              <div class="d-flex gap-0">
-                <a href="https://www.instagram.com/irenemarket/" class="text-dark fs-6"><img src="images/instagram.png" alt="instagram" height="30" class="me-4"></a>
-                <a href="https://www.facebook.com/irenevillagemarket" class="text-dark fs-6"><img src="images/facebook.png" alt="facebook" height="30" class="me-4"></a>
-              </div>
             </div>
-          </div>
-        
-        <img src="images/irene.png" class="card-img-top w-100" alt="Montana Family Market" style="height: 200px; object-fit: contain; background-color: #ffffff;">
-        <div class="card-body">
-          <ul class="list-unstyled mb-3 text-start">
-            <li>The Irene Village Market at The Big Red Barn is an arts and crafts market celebrating our 36th year. The market is famous for its locally handmade arts and crafts and is situated in a beautiful forest area.</li>
-            <li>🕰️ Every Saterday 8AM - 2PM</li>
-            <li>💰 Entry fee: None</li>
-          </ul>
-          <a href="https://www.google.com/maps/place/Irene+Village+Market/data=!4m2!3m1!1s0x0:0x4e62e40d2871fcf6?sa=X&ved=1t:2428&ictx=111" class="d-block mb-3 text-decoration-none">📌 Sunlawns AH, Olifantsfontein</a>
-          <div class="d-flex gap-2">
-            <a href="map_irene.html" class="btn btn-success flex-fill">Market Map</a>
-            <a href="vendors.html" class="btn btn-success flex-fill">Visit Stalls</a>
-          </div>
         </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100" style="width: 24rem;">
-          <div class="container-fluid py-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <h6 class="mb-0 fw-bold fs-5">The Vintage Square Thrift Fair</h6>
-              <div class="d-flex gap-0">
-                <a href="https://www.instagram.com/thevintagesquarethriftfair/" class="text-dark fs-6">
-                  <img src="images/instagram.png" alt="instagram" height="30" class="me-4">
+
+        <!-- Irene Village Market -->
+        <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Irene Village Market</h5>
+            <div>
+                <a href="https://www.instagram.com/irenemarket/">
+                <img src="images/instagram.png" alt="instagram" height="25" class="me-2">
                 </a>
-                <a href="https://www.facebook.com/vintagesquarethriftfair/" class="text-dark fs-6">
-                  <img src="images/facebook.png" alt="facebook" height="30" class="me-4">
+                <a href="https://www.facebook.com/irenevillagemarket">
+                <img src="images/facebook.png" alt="facebook" height="25">
                 </a>
-              </div>
             </div>
-          </div>
+            </div>
 
-          <img src="images/Vintage.png" class="card-img-top w-100" 
-              alt="Montana Family Market" 
-              style="height: 200px; object-fit: contain; background-color: #ffffff;">
+            <img src="images/irene.png" class="card-img-top img-fluid bg-white p-3 rounded" alt="Irene Village Market">
 
-          <!-- Make card-body flex column -->
-          <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column">
             <ul class="list-unstyled mb-3 text-start">
-              <li>
-                Pretoria's original and largest vintage thrift clothing market. Open on the first Saturday of every month. Shop over 50+ clothing stalls!
-              </li>
-              <li>🕰️ Every Saterday 9AM - 3PM</li>
-              <li>💰 Entry fee: None </li>
+                <li>The Irene Village Market at The Big Red Barn celebrates 36 years of locally handmade arts and crafts in a forest setting.</li>
+                <li>🕰️ Every Saturday 8AM - 2PM</li>
+                <li>💰 Entry fee: None</li>
             </ul>
 
-            <a href="https://www.google.com/maps/place/The+Vintage+Square+Thrift+Fair/data=!4m2!3m1!1s0x0:0x5b8f2c5b3e4084df?sa=X&ved=1t:2428&ictx=111" 
-              class="d-block mb-3 text-decoration-none">📌 Brooklyn, Pretoria</a>
+            <a href="https://www.google.com/maps/place/Irene+Village+Market" 
+                class="text-decoration-none mb-3 fw-semibold">📌 Sunlawns AH, Olifantsfontein</a>
 
-            <!-- Buttons pushed to bottom -->
-            <div class="d-flex gap-2 mt-auto">
-              <a href="map_vintage.html" class="btn btn-success flex-fill">Market Map</a>
-              <a href="vendors.html" class="btn btn-success flex-fill">Visit Stalls</a>
+            <div class="d-grid gap-2 mt-auto">
+                <a href="map_irene.html" class="btn btn-success">Market Map</a>
+                <a href="vendors.html" class="btn btn-outline-success">Visit Stalls</a>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
-    </div> 
-  </div>
+        </div>
 
-  <footer class="border-top py-3" style="background-color: #c8f7c5;">
-      <div class="container d-flex flex-wrap justify-content-between align-items-center">
-        <!-- Left side -->
-        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
+        <!-- The Vintage Square Thrift Fair -->
+        <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">The Vintage Square Thrift Fair</h5>
+            <div>
+                <a href="https://www.instagram.com/thevintagesquarethriftfair/">
+                <img src="images/instagram.png" alt="instagram" height="25" class="me-2">
+                </a>
+                <a href="https://www.facebook.com/vintagesquarethriftfair/">
+                <img src="images/facebook.png" alt="facebook" height="25">
+                </a>
+            </div>
+            </div>
 
-        <!-- Right side navigation -->
-        <ul class="nav col-md-5 justify-content-end">
-          <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
-          <li class="nav-item fw-semibold"><a href="generalpolicies.html" class="nav-link px-2 text-muted">General Policies</a></li>
-          <li class="nav-item fw-semibold"><a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a></li>
-          <li class="nav-item fw-semibold"><a href="About.html" class="nav-link px-2 text-muted">About</a></li>
-        </ul>
+            <img src="images/Vintage.png" class="card-img-top img-fluid bg-white p-3 rounded" alt="The Vintage Square Thrift Fair">
+
+            <div class="card-body d-flex flex-column">
+            <ul class="list-unstyled mb-3">
+                <li>Pretoria's original and largest vintage thrift clothing market. Shop over 50+ clothing stalls!</li>
+                <li>🕰️ Every Saturday 9AM - 3PM</li>
+                <li>💰 Entry fee: None</li>
+            </ul>
+
+            <a href="https://www.google.com/maps/place/The+Vintage+Square+Thrift+Fair" 
+                class="text-decoration-none mb-3 fw-semibold">📌 Brooklyn, Pretoria</a>
+
+            <div class="d-grid gap-2 mt-auto">
+                <a href="map_vintage.html" class="btn btn-success">Market Map</a>
+                <a href="vendors.html" class="btn btn-outline-success">Visit Stalls</a>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Next button -->
+    <div class="text-center mt-5">
+        <a href="#" class="btn btn-lg btn-success px-5 shadow">Next</a>
+    </div>
+    </section>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-success bg-opacity-10 border-top py-4 mt-auto">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+      <div class="d-flex align-items-center mb-3 mb-md-0">
+        <img src="images/Logo.png" alt="Mzanzi Market" height="60" class="me-3">
+        <span class="fw-bold text-success fs-5">Mzanzi Market</span>
       </div>
+      <ul class="nav">
+        <li class="nav-item"><a href="home.html" class="nav-link text-success fw-semibold">Home</a></li>
+        <li class="nav-item"><a href="generalpolicies.html" class="nav-link text-success fw-semibold">General Policies</a></li>
+        <li class="nav-item"><a href="FAQ.html" class="nav-link text-success fw-semibold">FAQs</a></li>
+        <li class="nav-item"><a href="About.html" class="nav-link text-success fw-semibold">About</a></li>
+      </ul>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

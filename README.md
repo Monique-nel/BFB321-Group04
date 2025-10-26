@@ -66,6 +66,10 @@ npm test
 - Open a pull request with a clear description of changes
 - Ensure tests pass and code is linted
 
+<a href="https://www.instagram.com/montana_family_market/" class="text-dark fs-6">
+                  <img src="images/instagram.png" alt="instagram" height="30" class="me-4">
+                </a>
+
 ## License
 Specify a license (e.g., MIT). Add a LICENSE file to the repository.
 

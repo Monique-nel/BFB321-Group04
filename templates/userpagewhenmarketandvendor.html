@@ -9,37 +9,54 @@
 </head>
 <body class="bg-light">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-    <div class="container d-flex justify-content-between align-items-center">
-      <!-- Logo -->
-      <a class="navbar-brand" href="home.html">
-        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-4">
-      </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2">
+    <div class="container-fluid px-4">
+        <!-- Left side: Logo + Links -->
+        <a class="navbar-brand d-flex align-items-center me-3" href="home.html">
+        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-2">
+        </a>
 
-      <!-- Toggle for mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+        </button>
 
-      <!-- Links + user -->
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav d-flex align-items-center">
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="home.html">Home</a></li>
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="events.html">Upcoming Events</a></li>
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="vendors.html">Vendor Community</a></li>
-          <li class="nav-item fw-bold fs-5"><a class="nav-link" href="login.html">Sign in</a></li>
-          <li class="nav-item fw-bold fs-5">
-            <a class="nav-link active d-flex align-items-center" href="userpage.html">
-              <img src="images/usericon.png" alt="user" height="30" class="me-2">
-              <span>Beate</span>
-            </a>
-          </li>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left-aligned links (next to logo) -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link fw-semibold fs-5 active" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link fw-semibold fs-5" href="events.html">Upcoming Events</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link fw-semibold fs-5" href="vendors.html">Vendor Community</a>
+            </li>
         </ul>
-      </div>
-    </div>
-  </nav>
 
+        <!-- Right side: Search + User -->
+        <div class="d-flex align-items-center">
+            <!-- Search -->
+            <form class="d-flex me-3" role="search">
+            <input class="form-control me-2 rounded-pill px-3 py-1 fs-5" type="search" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-light rounded-pill px-3 py-1 fs-5" type="submit">Search</button>
+            </form>
+
+            <!-- User section -->
+            <ul class="navbar-nav d-flex align-items-center mb-0">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center fw-semibold fs-5" href="login.html">
+                <img src="images/usericon.png" alt="User" height="30" class="me-1 rounded-circle border border-light p-1">
+                <span>User</span>
+                </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    </nav>
+    
     <div class="container my-5">
     <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
       <div class="card-body">
