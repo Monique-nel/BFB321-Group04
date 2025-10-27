@@ -149,32 +149,32 @@ The Relationship between the different entities in the database is explored in t
 ![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 
-## File Structure 
+## File Structure
 ├── static/                      # Holds CSS, JS, and images
 ├── templates/                   # HTML templates rendered by Flask
-│ ├── images/                    # Template-related images
-│ ├── About.html                 # About page
-│ ├── EventForm.html             # Event creation form
-│ ├── events.html                # List of all events
-│ ├── FAQ.html                   # Frequently asked questions page
-│ ├── generalpolicies.html       # Market policies and rules
-│ ├── home.html                  # Home page
-│ ├── login.html                 # User login page
-│ ├── register.html              # New user registration page
-│ ├── userpage.html              # User dashboard
-│ ├── vendors.html               # Vendor dashboard
-│ ├── marketrequestform.html     # Market request submission form
-│ ├── vendorrequestform.html     # Vendor request submission form
-│ ├── map_4way.html              # Map for Fourways market
-│ ├── map_hazelwood.html         # Map for Hazelwood market
-│ ├── map_irene.html             # Map for Irene market
-│ ├── map_montana.html           # Map for Montana market
-│ ├── map_pretoria.html          # Map for Pretoria market
-│ ├── map_vintage.html           # Map for Vintage market
+│   ├── images/                  # Template-related images
+│   ├── About.html               # About page
+│   ├── EventForm.html           # Event creation form
+│   ├── events.html              # List of all events
+│   ├── FAQ.html                 # Frequently asked questions page
+│   ├── generalpolicies.html     # Market policies and rules
+│   ├── home.html                # Home page
+│   ├── login.html               # User login page
+│   ├── register.html            # New user registration page
+│   ├── userpage.html            # User dashboard
+│   ├── vendors.html             # Vendor dashboard
+│   ├── marketrequestform.html   # Market request submission form
+│   ├── vendorrequestform.html   # Vendor request submission form
+│   ├── map_4way.html            # Map for Fourways market
+│   ├── map_hazelwood.html       # Map for Hazelwood market
+│   ├── map_irene.html           # Map for Irene market
+│   ├── map_montana.html         # Map for Montana market
+│   ├── map_pretoria.html        # Map for Pretoria market
+│   ├── map_vintage.html         # Map for Vintage market
 │
 ├── Mzanzi.db                    # SQLite database
 ├── Mzanzi.sql                   # Database schema and sample data
-├── pycache/                     # Compiled Python cache files
+├── __pycache__/                 # Compiled Python cache files
 └── README.md                    # This file
 
 
