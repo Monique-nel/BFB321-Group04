@@ -26,11 +26,13 @@ The application consists of a three-layer integrated architecture, consisting of
 
 Ize, please add the wireframes here later 
 
-##Database Design 
 
-THe database this application functions with contains XXX main tables, integrated with one another. **B, elaborate here, I don't understand it as well as you do** 
+## Database Design 
+
+The database this application functions with contains XXX main tables, integrated with one another. **B, elaborate here, I don't understand it as well as you do** 
 
 The Relationship between the different entities in the database is explored in the ERD below.  
+
 ## Getting started
 
 Prerequisites
