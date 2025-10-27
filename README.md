@@ -34,6 +34,15 @@ The database this application functions with contains XXX main tables, integrate
 The Relationship between the different entities in the database is explored in the ERD below.  
 ![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
+
+## Repository Structure 
+- **static/** -> Holds the CSS, JS and Images
+- **templates/** -> HTML templates and Flask
+- **Something something** -> Flask main application file
+- **Mzanzi.sql** -> Database models
+- **README.md** -> Application description and explaination  of setup
+
+
 ## Getting started
 
 Prerequisites
