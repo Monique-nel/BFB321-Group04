@@ -199,6 +199,14 @@ npm test
 - Deploy backend to your chosen host (Heroku, Vercel, AWS, Azure)
 - Configure environment variables on the host
 
+## Browser Compatibility
+
+The application works with all modern browsers that support HTML5 and CSS3, including:
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
 ## License
 Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria
 
