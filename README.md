@@ -32,7 +32,7 @@ Ize, please add the wireframes here later
 The database this application functions with contains XXX main tables, integrated with one another. **B, elaborate here, I don't understand it as well as you do** 
 
 The Relationship between the different entities in the database is explored in the ERD below.  
-
+![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 ## Getting started
 
