@@ -33,6 +33,7 @@ The database this application functions with contains XXX main tables, integrate
 
 The Relationship between the different entities in the database is explored in the ERD below.  
 
+
 ## Getting started
 
 Prerequisites
