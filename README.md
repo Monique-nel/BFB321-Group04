@@ -1,15 +1,15 @@
 # Mzanzi Market
 
-The Mzanzi Market project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing and user interactions.
+The Mzanzi Market project, completed in accordance with the BFB 321 module requirements, is a web application that addresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project, demonstrating core marketplace features: product listing, browsing, and user interactions.
 
 ## Project owners
-The application was developed in accordance with the BFB 321 module requirements, for Mr Ibrahim Akanbi and Mr Thabang Ngwenya by Project Group 04. The developers are:
+The application was developed in accordance with the BFB 321 module requirements, for **Mr Ibrahim Akanbi** and Mr **Thabang Ngwenya** by **Project Group 04.** The developers are:
 - **Monique Nel** (Project lead): u23614057
 - **Beate du Plessis** : u04659075
 - **Izé Rautenbach** : u23539489
 - **Lana van Rooyen** : u23524342 
 ## Features
-- User authenitication, registration and management
+- User authentication, registration and management
 - User detail pages
 - Product listing and detail pages
 - Admin area for product management (create / edit / remove)
@@ -21,9 +21,9 @@ The application was developed in accordance with the BFB 321 module requirements
 - Basic data analytics for users
 
 
-## System Architechture 
+## System Architecture 
 
-The application consists of a three-layer integrated architecture, consisting of a frontend, backend and database, to ensure functionality. 
+The application has a three-layer architecture comprising a frontend, backend, and database to ensure functionality. 
 - **Frontend** -> Built with Bootstrap, HTML and CSS for an attractive and responsive interface
 - **Backend** -> Not yet applicable for this submission, but will be built with Flask and Python functionality
 - **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, events and product information.  
@@ -36,13 +36,13 @@ https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0
 
 ## Database Design and Setup
 
-The databases used for this project is  discussed below and contains the setup, layout, sample data and visualisation, and an ERD. 
+The databases used for this project are discussed below and include the setup, layout, sample data, visualisation, and an ERD. 
 
 ---
 
 ### Database setup using SQLite Command Line
 
-1. Open command prompt/terminal in the project directory
+1. Open the command prompt/terminal in the project directory
 2. Run the SQL commands:
    ```bash
    Mzanzi.db < Mzanzi.sql
@@ -62,18 +62,18 @@ The database includes 8 tables, those containing data are listed below:
 
 2. **markets**:  
    Represents the various community markets featured on the platform.  
-   Each market entry provides location, scheduling, and contact information, as well as links to its social media pages.  
+   Each market entry includes location, scheduling, and contact information, along with links to its social media pages.  
    - **Fields include**: `MarketID`, `MarketName`, `MarketDescription`, `MarketLocation`, `MarketLocationLink`, `MarketEntryFee`, `MarketDate`, `MarketDays`, `MarketPoster`, `MarketInstagram`, `MarketFacebook`, `MarketMap`, `MarketAdministratorID`  
    - **Purpose**: Enables administrators to list and promote markets with comprehensive detail for customers and vendors.  
 
 3. **vendors**:  
-   Contains details for all participating vendors operating at different markets.  
+   Contains details for all participating vendors operating in different markets.  
    Each vendor is linked to a `UserID` (classified as a Vendor) and may operate at multiple markets.  
    - **Fields include**: `VendorID`, `VendorName`, `VendorStallDescription`, `VendorLocation`, `VendorContactNumber`, `VendorOfferingType`, `VendorDescriptionPicture`, `VendorWebsite`, `VendorFacebook`, `VendorInstagram`, `VendorLogo`, `UserID`  
    - **Purpose**: Allows customers to discover unique stalls, products, and artisans across South African markets.  
 
 4. **events**:  
-   Lists special market events, themed festivals, or seasonal gatherings associated with a specific market.  
+   List special market events, themed festivals, or seasonal gatherings associated with a specific market.  
    Each event provides booking links, promotional posters, and details about the date and day of the week.  
    - **Fields include**: `EventID`, `EventName`, `EventDescription`, `EventDate`, `EventDays`, `EventBookingLink`, `EventPoster`, `MarketID`  
    - **Purpose**: Promotes upcoming market events, enabling customers to view details and vendors to participate in event opportunities.  
@@ -85,7 +85,7 @@ The database includes 8 tables, those containing data are listed below:
 The Mzanzi Market database follows a **relational structure** that connects users, markets, vendors, and events:
 
 - **users → markets**:  
-  Each market is managed by one user classified as a *Market Administrator*.  
+  Each market is managed by a single user, designated as *Market Administrator*.  
 
 - **users → vendors**:  
   Each vendor profile is owned by one user classified as a *Vendor*.  
@@ -96,7 +96,7 @@ The Mzanzi Market database follows a **relational structure** that connects user
 - **markets → events**:  
   Each event is hosted by a specific market (linked through `MarketID` as a foreign key).  
 
-This ensures referential integrity and allows efficient querying of related information — for example, displaying all events hosted at a particular market or showing all vendors under one administrator.
+This ensures referential integrity and enables efficient querying of related information — for example, displaying all events hosted at a particular market or showing all vendors under a single administrator.
 
 ---
 
@@ -135,7 +135,7 @@ Each event record includes:
 ---
 
 ## Data Visualisation
-The database includes sample data for testing. Insert this code into Mzanzi.sql to see current tables filled sample data.
+The database includes sample data for testing. Insert this code into Mzanzi.sql to see the current tables filled with sample data.
 ```bash
 SELECT * FROM "User";
 SELECT * FROM "Market";
@@ -143,18 +143,9 @@ SELECT * FROM "Vendor";
 SELECT * FROM "Events";
 ```
 
-### Sample Data
-
-The database includes sample data for testing:
-
-- **13 Users:** Example user accounts with varied roles and permissions  
-- **7 Markets:** Different market locations showcasing diversity in operation  
-- **8 Vendors:** Sample sellers providing products across multiple markets  
-- **3 Events:** Demonstration of community or promotional events linked to markets  
-
 ## Entity Relationship Diagram
 
-The Relationship between the different entities in the database is explored in the ERD below. The ERD was created in MySQL Workbench. 
+The Relationships between the entities in the database are explored in the ERD below. The ERD was created in MySQL Workbench.  
 ![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 
@@ -194,7 +185,13 @@ Setting up the Mzanzi Market Application locally consists of the following steps
 - Clone the repository to your local drive
 - Open *home.html* in your web browser
 - Navigate through the app to reach the necessary functionality.
-- Click on the User Icon found in the Navigation bar to register or sign in
+- Click on the **User Icon** found in the Navigation bar to register or sign in
+
+## Tech Stack
+- **Frontend:** HTML5, CSS3, Bootstrap 5  
+- **Backend:** Flask (Python) *(in progress)*  
+- **Database:** SQLite  
+- **Design Tools:** Figma, MySQL Workbench
 
 ## Browser Compatibility
 
@@ -205,7 +202,7 @@ The application works with all modern browsers that support HTML5 and CSS3, incl
 - Edge 90+
 
 ## License
-Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria
+Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria.
 
 ## Contact
 Project maintained for BFB 321 — University of Pretoria.
