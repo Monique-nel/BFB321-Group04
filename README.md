@@ -5,7 +5,7 @@ The Mzanzi Market project, completed in accoordance with the BFB 321 module requ
 ## Project owners
 The application was developed in accordance with the BFB 321 module requirements, by Group 04. The developers are:
 - **Monique Nel** (Project lead): u23614057
-- **Beate du Plessis** : u04
+- **Beate du Plessis** : u04659075
 - **Izé Rautenbach** : u23539489
 - **Lana van Rooyen** : u23524342 
 ## Features
@@ -36,6 +36,7 @@ Ize, please add the wireframes here later
 ## Database Design and Setup
 
 The databases used for this project is  discussed below and contains the setup, layout, sample data and visualisation, and an ERD. 
+
 ---
 
 ### Using SQLite Command Line
