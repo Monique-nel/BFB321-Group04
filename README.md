@@ -135,13 +135,22 @@ Each event record includes:
 ---
 
 ## Data Visualisation
-Insert this code into Mzanzi.sql to see current tables.
+The database includes sample data for testing. Insert this code into Mzanzi.sql to see current tables filled sample data.
 ```bash
 SELECT * FROM "User";
 SELECT * FROM "Market";
 SELECT * FROM "Vendor";
 SELECT * FROM "Events";
 ```
+
+### Sample Data
+
+The database includes sample data for testing:
+
+- **13 Users:** Example user accounts with varied roles and permissions  
+- **7 Markets:** Different market locations showcasing diversity in operation  
+- **8 Vendors:** Sample sellers providing products across multiple markets  
+- **3 Events:** Demonstration of community or promotional events linked to markets  
 
 ## Entity Relationship Diagram
 
@@ -183,49 +192,9 @@ The Relationship between the different entities in the database is explored in t
 
 Setting up the Mzanzi Market Application locally consists of the following steps: 
 - Clone the repository to your local drive
-- Open the application from home.html page on the live server.
+- Open *home.html* in your web browser
+- Navigate through the app to reach the necessary functionality.
 - Click on the User Icon found in the Navigation bar to register or sign in
-- Navigate through the app to reach the necessary functionality
-
-## Prerequisites
-What do I need to run this app? 
-
-Quick start (Node + npm example)
-1. Clone the repo
-    git clone <repository-url>
-2. Install dependencies
-    cd mzanzi-market
-    npm install
-3. Environment
-    - Copy .env.example to .env and update DB / API keys
-4. Run locally
-    npm run dev
-5. Open http://localhost:3000 (or configured port)
-
-Adjust the commands to match your actual project scripts.
-
-## Development
-- Follow the project's branching and commit message conventions.
-- Run linters and formatters before pushing.
-- Use feature branches and open pull requests for review.
-
-Common commands (replace as needed)
-- npm run lint
-- npm run test
-- npm run build
-
-## Testing
-- Unit tests for core modules
-- Integration tests for API endpoints
-- Frontend component tests (if applicable)
-
-Run tests:
-npm test
-
-## Deployment
-- Build production assets: npm run build
-- Deploy backend to your chosen host (Heroku, Vercel, AWS, Azure)
-- Configure environment variables on the host
 
 ## Browser Compatibility
 
