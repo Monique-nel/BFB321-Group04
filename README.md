@@ -143,17 +143,39 @@ SELECT * FROM "Vendor";
 SELECT * FROM "Events";
 ```
 
+## Entity Relationship Diagram
 
 The Relationship between the different entities in the database is explored in the ERD below. The ERD was created in MySQL Workbench. 
 ![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 
-## Repository Structure 
-- **static/** -> Holds the CSS, JS and Images
-- **templates/** -> HTML templates and Flask
-- **Something something** -> Flask main application file
-- **Mzanzi.sql** -> Database models
-- **README.md** -> Application description and explaination  of setup
+## File Structure 
+├── static/                      # Holds CSS, JS, and images
+├── templates/                   # HTML templates rendered by Flask
+│ ├── images/                    # Template-related images
+│ ├── About.html                 # About page
+│ ├── EventForm.html             # Event creation form
+│ ├── events.html                # List of all events
+│ ├── FAQ.html                   # Frequently asked questions page
+│ ├── generalpolicies.html       # Market policies and rules
+│ ├── home.html                  # Home page
+│ ├── login.html                 # User login page
+│ ├── register.html              # New user registration page
+│ ├── userpage.html              # User dashboard
+│ ├── vendors.html               # Vendor dashboard
+│ ├── marketrequestform.html     # Market request submission form
+│ ├── vendorrequestform.html     # Vendor request submission form
+│ ├── map_4way.html              # Map for Fourways market
+│ ├── map_hazelwood.html         # Map for Hazelwood market
+│ ├── map_irene.html             # Map for Irene market
+│ ├── map_montana.html           # Map for Montana market
+│ ├── map_pretoria.html          # Map for Pretoria market
+│ ├── map_vintage.html           # Map for Vintage market
+│
+├── Mzanzi.db                    # SQLite database
+├── Mzanzi.sql                   # Database schema and sample data
+├── pycache/                     # Compiled Python cache files
+└── README.md                    # This file
 
 
 ## Getting started
