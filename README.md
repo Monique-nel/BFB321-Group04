@@ -3,7 +3,7 @@
 The Mzanzi marketplace project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing, user interactions and basic order flow. Multiple coding languages and features were used in project completion. 
 
 ## Features
-- User authenitication and management
+- User authenitication, registration and management
 - User detail pages
 - Product listing and detail pages
 - Admin area for product management (create / edit / remove)
@@ -13,6 +13,14 @@ The Mzanzi marketplace project, completed in accoordance with the BFB 321 module
 - Order management functionality
 - Direct communication and connection between users 
 - Basic data analytics for users
+
+
+## System Architechture 
+
+The application consists of a three-layer integrated architecture, consisting of a frontend, backend and database, to ensure functionality. 
+- **Frontend** -> Built with Bootstrap, HTML and CSS for an attractive and responsive interface
+- **Backend** -> Not yet applicable for this submission, but built with Flask and Python functionality
+- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, offerings and event registration information.  
 
 ## Tech (example)
 This README uses a generic stack. Replace the commands below with specifics for your implementation.
