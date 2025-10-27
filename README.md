@@ -1,6 +1,6 @@
 # Mzanzi Market
 
-The Mzanzi Market project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing, user interactions and basic order flow. Multiple coding languages and features were used in project completion. 
+The Mzanzi Market project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing and user interactions.
 
 ## Project owners
 The application was developed in accordance with the BFB 321 module requirements, for Mr Ibrahim Akanbi and Mr Thabang Ngwenyaa by Project Group 04. The developers are:
@@ -25,8 +25,8 @@ The application was developed in accordance with the BFB 321 module requirements
 
 The application consists of a three-layer integrated architecture, consisting of a frontend, backend and database, to ensure functionality. 
 - **Frontend** -> Built with Bootstrap, HTML and CSS for an attractive and responsive interface
-- **Backend** -> Not yet applicable for this submission, but built with Flask and Python functionality
-- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, and product information.  
+- **Backend** -> Not yet applicable for this submission, but will be built with Flask and Python functionality
+- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, events and product information.  
 
 ## User experience 
 
@@ -159,8 +159,8 @@ The Relationship between the different entities in the database is explored in t
 
 Setting up the Mzanzi Market Application locally consists of the following steps: 
 - Clone the repository to your local drive
-- Run the application. It should open on the home.html page on the live server.
-- Click on the Sign In Button to register or sign in
+- Open the application from home.html page on the live server.
+- Click on the User Icon found in the Navigation bar to register or sign in
 - Navigate through the app to reach the necessary functionality
 Prerequisites
 - Node 14+ and npm (if using Node)
