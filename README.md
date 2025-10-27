@@ -3,7 +3,7 @@
 The Mzanzi marketplace project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing, user interactions and basic order flow. Multiple coding languages and features were used in project completion. 
 
 ## Features
-- User authenitication and management
+- User authenitication, registration and management
 - User detail pages
 - Product listing and detail pages
 - Admin area for product management (create / edit / remove)
@@ -14,11 +14,25 @@ The Mzanzi marketplace project, completed in accoordance with the BFB 321 module
 - Direct communication and connection between users 
 - Basic data analytics for users
 
-## Tech (example)
-This README uses a generic stack. Replace the commands below with specifics for your implementation.
-- Frontend: React / Vue / plain HTML+CSS
-- Backend: Node.js + Express / Python Flask / Django
-- Database: MongoDB / PostgreSQL / SQLite
+
+## System Architechture 
+
+The application consists of a three-layer integrated architecture, consisting of a frontend, backend and database, to ensure functionality. 
+- **Frontend** -> Built with Bootstrap, HTML and CSS for an attractive and responsive interface
+- **Backend** -> Not yet applicable for this submission, but built with Flask and Python functionality
+- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, and product information.  
+
+## User experience 
+
+Ize, please add the wireframes here later 
+
+
+## Database Design 
+
+The database this application functions with contains XXX main tables, integrated with one another. **B, elaborate here, I don't understand it as well as you do** 
+
+The Relationship between the different entities in the database is explored in the ERD below.  
+![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 ## Getting started
 
