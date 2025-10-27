@@ -20,14 +20,17 @@ The Mzanzi marketplace project, completed in accoordance with the BFB 321 module
 The application consists of a three-layer integrated architecture, consisting of a frontend, backend and database, to ensure functionality. 
 - **Frontend** -> Built with Bootstrap, HTML and CSS for an attractive and responsive interface
 - **Backend** -> Not yet applicable for this submission, but built with Flask and Python functionality
-- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, offerings and event registration information.  
+- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, and product information.  
 
-## Tech (example)
-This README uses a generic stack. Replace the commands below with specifics for your implementation.
-- Frontend: React / Vue / plain HTML+CSS
-- Backend: Node.js + Express / Python Flask / Django
-- Database: MongoDB / PostgreSQL / SQLite
+## User experience 
 
+Ize, please add the wireframes here later 
+
+##Database Design 
+
+THe database this application functions with contains XXX main tables, integrated with one another. **B, elaborate here, I don't understand it as well as you do** 
+
+The Relationship between the different entities in the database is explored in the ERD below.  
 ## Getting started
 
 Prerequisites
