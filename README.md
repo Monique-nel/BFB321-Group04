@@ -30,7 +30,8 @@ The application consists of a three-layer integrated architecture, consisting of
 
 ## User experience 
 Please find the application wireframes at the link below: 
-(https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0-1&t=Y2KUCGWX4J2IAIZk-1)
+
+https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0-1&t=Y2KUCGWX4J2IAIZk-1
 
 
 ## Database Design and Setup
