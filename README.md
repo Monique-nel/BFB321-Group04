@@ -163,10 +163,9 @@ Setting up the Mzanzi Market Application locally consists of the following steps
 - Open the application from home.html page on the live server.
 - Click on the User Icon found in the Navigation bar to register or sign in
 - Navigate through the app to reach the necessary functionality
-Prerequisites
-- Node 14+ and npm (if using Node)
-- Or the appropriate runtime for your chosen stack
-- Database service configured (MongoDB, Postgres, etc.)
+
+## Prerequisites
+What do I need to run this app? 
 
 Quick start (Node + npm example)
 1. Clone the repo
