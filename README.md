@@ -39,7 +39,7 @@ The databases used for this project is  discussed below and contains the setup, 
 
 ---
 
-### Using SQLite Command Line
+### Database setup using SQLite Command Line
 
 1. Open command prompt/terminal in the project directory
 2. Run the SQL commands:
