@@ -143,7 +143,7 @@ SELECT * FROM "Events";
 ```
 
 
-The Relationship between the different entities in the database is explored in the ERD below.  
+The Relationship between the different entities in the database is explored in the ERD below. The ERD was created in MySQL Workbench. 
 ![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 
@@ -157,6 +157,11 @@ The Relationship between the different entities in the database is explored in t
 
 ## Getting started
 
+Setting up the Mzanzi Market Application locally consists of the following steps: 
+- Clone the repository to your local drive
+- Run the application. It should open on the home.html page on the live server.
+- Click on the Sign In Button to register or sign in
+- Navigate through the app to reach the necessary functionality
 Prerequisites
 - Node 14+ and npm (if using Node)
 - Or the appropriate runtime for your chosen stack
