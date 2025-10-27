@@ -90,7 +90,7 @@ For questions, open an issue or contact the project owner listed in the reposito
    ```bash
    Mzanzi.db < Mzanzi.sql
    ```
-The database includes the following tables:
+The database includes 8 tables, those containing data are listed below:
 
 ### Tables
 
@@ -176,3 +176,12 @@ Each event record includes:
 - A foreign key (`MarketID`) linking the event to its host market  
 
 ---
+
+## Data Visualisation
+Insert this code into Mzanzi.sql to see current tables.
+```bash
+SELECT * FROM "User";
+SELECT * FROM "Market";
+SELECT * FROM "Vendor";
+SELECT * FROM "Events";
+```
