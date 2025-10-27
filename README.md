@@ -150,6 +150,7 @@ The Relationship between the different entities in the database is explored in t
 
 
 ## File Structure
+```
 ├── static/                      # Holds CSS, JS, and images
 ├── templates/                   # HTML templates rendered by Flask
 │   ├── images/                  # Template-related images
@@ -176,7 +177,7 @@ The Relationship between the different entities in the database is explored in t
 ├── Mzanzi.sql                   # Database schema and sample data
 ├── __pycache__/                 # Compiled Python cache files
 └── README.md                    # This file
-
+```
 
 ## Getting started
 
