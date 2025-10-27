@@ -1,7 +1,21 @@
-# Mzanzi Market
+# Mzanzi market 
+## What is mzanzi market 
+Mzanzi market is an online web space that serves as a central informational hub between the consumer and markets in the area, giving you real time information about the location , date and time for all the markets in the Gauteng area. 
 
-A simple marketplace project for the Mzanzi Market module (BFB 321). This repository contains the code and resources for a student project to demonstrate core marketplace features: product listing, browsing, user interactions and basic order flow.
+## Purpose of Mzanzi market 
+The local market space serves as a simple supplychain where the identified bottleneck is the communication between the markets/vendors and the protantial consumer. Furthermore it was found the root cause for rhis bottlenck is the lack of communication between these two parties
 
+With this bottleneck and root cause identified the purpose of Mazanzi Market is to bridge the gap of the communication between the customer and the market. Creating a centrialized informational hub between the two parties and in turn increasing the profits of the markets and the vendors
+
+# Database schema 
+## ERD diagram 
+## Steps on how to run the project 
+## Wireframes
+link to wireframes: https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0-1&t=Y2KUCGWX4J2IAIZk-1
+
+
+
+# Aditional informationS
 ## Features
 - Product catalog with categories and search
 - Product detail pages
