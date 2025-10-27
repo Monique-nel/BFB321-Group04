@@ -27,7 +27,9 @@ The application consists of a three-layer integrated architecture, consisting of
 Ize, please add the wireframes here later 
 
 
-## Database Design 
+## Database Design and Setup
+
+The databases used for this project is  discussed below and contains the setup, layout, sample data and visualisation, and an ERD. 
 
 ## Database Setup
 
