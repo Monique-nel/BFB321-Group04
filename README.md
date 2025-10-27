@@ -1,7 +1,13 @@
 # Mzanzi Market
 
-The Mzanzi marketplace project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing, user interactions and basic order flow. Multiple coding languages and features were used in project completion. 
+The Mzanzi Market project, completed in accoordance with the BFB 321 module requirements, is a web application that adresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project to demonstrate core marketplace features: product listing, browsing, user interactions and basic order flow. Multiple coding languages and features were used in project completion. 
 
+## Project owners
+The application was developed in accordance with the BFB 321 module requirements, by Group 04. The developers are:
+- **Monique Nel** (Project lead): u23614057
+- **Beate du Plessis** : u04
+- **Izé Rautenbach** : u
+- **Lana van Rooyen** : u23524342 
 ## Features
 - User authenitication, registration and management
 - User detail pages
