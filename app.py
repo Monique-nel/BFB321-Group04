@@ -10,7 +10,17 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 with app.app_context():
-    db.create_all()
+    # Use a connection context
+    with db.engine.connect() as conn:
+        result = conn.execute("PRAGMA table_info(User);")
+        for row in result:
+            print(row)
+
+    # Optional: test insert
+    test_user = User(username="test", email="test@test.com", password="1234", classification="Customer")
+    db.session.add(test_user)
+    db.session.commit()
+    print("Test user inserted!")
 
 
 # -------- ROUTES ------------
@@ -19,14 +29,11 @@ with app.app_context():
 def home():
     return render_template("home.html")
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
-
-    # If GET → show register page
     if request.method == "GET":
         return render_template("register.html")
-
+    
     # POST → create user
     username = request.form.get("username")
     email = request.form.get("email")
@@ -36,22 +43,17 @@ def register_user():
     if not username or not email or not password:
         return "Missing required fields", 400
 
-    # CHECK IF USER ALREADY EXISTS
-    existing = User.query.filter(
-        (User.username == username) | (User.email == email)
-    ).first()
-
-    if existing:
-        return "User already exists", 409
-
-    # Create new user
-    new_user = User(username=username, email=email)
-    new_user.set_password(password)
-
+    # Create new user with exact column names
+    new_user = User(
+    username=username,
+    email=email,
+    password=password,
+    classification="Customer"
+    )
     db.session.add(new_user)
     db.session.commit()
 
-    # Send user to login page
+    # Redirect to login page
     return redirect(url_for("login_page"))
 
 
