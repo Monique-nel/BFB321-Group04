@@ -135,7 +135,7 @@ Each event record includes:
 ---
 
 ## Data Visualisation
-The database includes sample data for testing. Insert this code into Mzanzi.sql to see the current tables filled with sample data.
+Insert this code into Mzanzi.sql to see the tables filled with sample data.
 ```bash
 SELECT * FROM "User";
 SELECT * FROM "Market";
