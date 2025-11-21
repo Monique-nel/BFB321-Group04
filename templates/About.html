@@ -62,7 +62,7 @@
     <div class="container-fluid px-4">
         <!-- Left side: Logo + Links -->
         <a class="navbar-brand d-flex align-items-center me-3" href="home.html">
-        <img src="images/Logo.png" alt="Mzanzi Market" height="100" class="me-2">
+        <img src="{{ url_for('static', filename='images/Logo.png')}}"alt="Mzanzi Market" height="100" class="me-2">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -96,7 +96,7 @@
             <ul class="navbar-nav d-flex align-items-center mb-0">
             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center fw-semibold fs-5" href="login.html">
-                <img src="images/usericon.png" alt="User" height="30" class="me-1 rounded-circle border border-light p-1">
+                <img src="{{ url_for('static', filename='images/usericon.png')}}"alt="User" height="30" class="me-1 rounded-circle border border-light p-1">
                 <span>User</span>
                 </a>
             </li>
@@ -117,7 +117,7 @@
             <p class="lead">Mzanzi Market is an online community celebrating South Africa's flourishing market culture since 2025. Connecting people from all paths of life with the shared love for local market communities.</p>
           </div>
           <div class="col-md-6">
-            <img src="images/Market_picture.jpg" 
+            <img src="{{ url_for('static', filename='images/Market_picture.jpg')}}"
                 alt="Vibrant South African market" class="content-img">
           </div>
         </div>
@@ -133,7 +133,7 @@
         <div class="row">
           <div class="col-md-4 mb-4">
             <div class="goal-card">
-              <img src="images/planet-earth.png" 
+              <img src="{{ url_for('static', filename='images/planet-earth.png')}}"
                   alt="Eco-friendly practices" class="content-img">
               <h4>Sustainability</h4>
               <p>Promoting eco-friendly practices in market culture and reducing environmental impact through conscious consumerism.</p>
@@ -141,7 +141,7 @@
           </div>
           <div class="col-md-4 mb-4">
             <div class="goal-card">
-              <img src="images/community (1).png" 
+              <img src="{{ url_for('static', filename='images/community (1).png')}}"
                   alt="Local artisans" class="content-img">
               <h4>Community Support</h4>
               <p>fostering a sense of community through collaboration and shared resources</p>
@@ -149,7 +149,7 @@
           </div>
           <div class="col-md-4 mb-4">
             <div class="goal-card">
-              <img src="images/network (1).png" 
+              <img src="{{ url_for('static', filename='images/network (1).png')}}"
                   alt="Community connections" class="content-img">
               <h4>Supporting local businesses</h4>
               <p>Supporting local businesses and fostering a sense of community through collaboration and shared resources.</p>
@@ -167,7 +167,7 @@
         <h2 class="section-title">Our Story</h2>
         <div class="row">
           <div class="col-md-4">
-            <img src="images/market2.jpg" 
+            <img src="{{ url_for('static', filename='images/market2.jpg')}}"
                 alt="Market beginnings" class="content-img">
           </div>
           <div class="col-md-8">
@@ -199,7 +199,7 @@
             </div>
           </div>
           <div class="col-md-6">
-            <img src="images/market_crowd.jpg" 
+            <img src="{{ url_for('static', filename='images/market_crowd.jpg')}}" 
                 alt="Contact our team" class="content-img">
           </div>
         </div>
@@ -215,7 +215,7 @@
       <!-- Left side -->
       <div class="d-flex align-items-center mb-3 mb-md-0">
         <img
-          src="images/Logo.png"
+          src="{{ url_for('static', filename='images/Logo.png') }}"
           alt="Mzanzi Market"
           height="80"
           class="me-3"
