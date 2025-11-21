@@ -9,20 +9,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
-with app.app_context():
-    # Use a connection context
-    with db.engine.connect() as conn:
-        result = conn.execute("PRAGMA table_info(User);")
-        for row in result:
-            print(row)
-
-    # Optional: test insert
-    test_user = User(username="test", email="test@test.com", password="1234", classification="Customer")
-    db.session.add(test_user)
-    db.session.commit()
-    print("Test user inserted!")
-
-
 # -------- ROUTES ------------
 
 @app.route("/")
@@ -60,3 +46,6 @@ def register_user():
 @app.route("/login")
 def login_page():
     return render_template("login.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
