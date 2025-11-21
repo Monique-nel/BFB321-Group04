@@ -42,6 +42,74 @@ def register_user():
     # Redirect to login page
     return redirect(url_for("login_page"))
 
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+@app.route("/about")
+def about():
+    return render_template("About.html")
+
+@app.route("/event-form")
+def event_form():
+    return render_template("EventForm.html")
+
+@app.route("/events")
+def events():
+    return render_template("events.html")
+
+@app.route("/faq")
+def faq():
+    return render_template("FAQ.html")
+
+@app.route("/general-policies")
+def general_policies():
+    return render_template("generalpolicies.html")
+
+@app.route("/map-4way")
+def map_4way():
+    return render_template("Map_4way.html")
+
+@app.route("/map-hazelwood")
+def map_hazelwood():
+    return render_template("map_hazelwood.html")
+
+@app.route("/map-irene")
+def map_irene():
+    return render_template("map_irene.html")
+
+@app.route("/map-montana")
+def map_montana():
+    return render_template("Map_montana.html")
+
+@app.route("/map-pretorian")
+def map_pretoria():
+    return render_template("Map_pretoria.html")
+
+@app.route("/map-vintage")
+def map_vintage():
+    return render_template("map_vintage.html")
+
+@app.route("/market-request")
+def market_request():
+    return render_template("marketrequestform.html")
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+@app.route("/user-page")
+def user_page():
+    return render_template("userpage.html")
+
+@app.route("/vendor-request")
+def vendor_request():
+    return render_template("vendorrequestform.html")
+
+@app.route("/vendors")
+def vendors():
+    return render_template("vendors.html")
+
 
 @app.route("/login")
 def login_page():
