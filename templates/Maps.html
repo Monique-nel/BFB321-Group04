@@ -59,19 +59,37 @@
   </header>
 
   <main>
-  <div class="container my-4 text-center fs-2">
-  <p>4 Ways Farmers Market Map</p>
-  </div>
+      <!-- Market name -->
+      <div class="container my-4 text-center fs-2">
+          <p>{{ market.name }}</p>
+      </div>
 
-  <!-- Main content -->
-  <div class="container my-4 text-center">
-  <img src="{{ url_for('static', filename='images/4ways.png') }}" alt="Mzanzi Market" class="img-fluid rounded shadow" style="max-width:100%; height:auto;">
-  </div>
+      <!-- Image section with fallback -->
+      <div class="container my-4 text-center">
 
-  <div class="d-flex justify-content-center gap-3 py-3">
-  <a href="home.html" class="btn btn-success btn-lg">Back to Markets</a>
-  <a href="vendors.html" class="btn btn-success btn-lg">Vendors</a>
-  </div>
+          {% if market.image_filename %}
+              <!-- Image exists in DB -->
+              <img src="{{ url_for('static', filename='images/' ~ market.image_filename) }}"
+                  alt="{{ market.name }}"
+                  class="img-fluid rounded shadow"
+                  style="max-width:100%; height:auto;">
+          {% else %}
+              <!-- No image found -->
+              <div class="text-center">
+                  <p class="fs-3 fw-bold">Coming Soon</p>
+                  <img src="{{ url_for('static', filename='images/placeholder.png') }}"
+                      alt="Coming Soon"
+                      class="img-fluid rounded shadow"
+                      style="max-width:100%; height:auto;">
+              </div>
+          {% endif %}
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center gap-3 py-3">
+          <a href="{{ url_for('home') }}" class="btn btn-success btn-lg">Back to Markets</a>
+          <a href="{{ url_for('vendors') }}" class="btn btn-success btn-lg">Vendors</a>
+      </div>
   </main>
 
   <!-- Footer -->
