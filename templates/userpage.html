@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body style="background-color: rgb(202, 245, 216);">
+<body class="bg-light">
 
     <header id="pageTop">
       <nav
@@ -41,7 +41,7 @@
             <!-- Left-aligned links (next to logo) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="home"
+                <a class="nav-link fw-semibold fs-5 active" href=""
                   >Home</a
                 >
               </li>
@@ -78,18 +78,36 @@
               <!-- User section -->
               <ul class="navbar-nav d-flex align-items-center mb-0">
                 <li class="nav-item">
-                  <a
-                    class="nav-link d-flex align-items-center fw-semibold fs-5"
-                    href="login"
-                  >
-                    <img
-                      src="{{ url_for('static', filename='images/usericon.png')}}"
-                      alt="User"
-                      height="30"
-                      class="me-1 rounded-circle border border-light p-1"
-                    />
-                    <span>User</span>
-                  </a>
+                  
+                  {% if session.get('user_id') %}
+                    <a
+                      class="nav-link d-flex align-items-center fw-semibold fs-5"
+                      href="{{ url_for('userpage') }}"
+                    >
+                      <img
+                        src="{{ url_for('static', filename='images/usericon.png')}}"
+                        alt="User"
+                        height="30"
+                        class="me-1 rounded-circle border border-light p-1"
+                      />
+                      <span>{{ session['username'] }}</span>
+                    </a>
+
+                  {% else %}
+                    <a
+                      class="nav-link d-flex align-items-center fw-semibold fs-5"
+                      href="{{ url_for('login') }}"
+                    >
+                      <img
+                        src="{{ url_for('static', filename='images/usericon.png')}}"
+                        alt="User"
+                        height="30"
+                        class="me-1 rounded-circle border border-light p-1"
+                      />
+                      <span>Sign In</span>
+                    </a>
+                  {% endif %}
+
                 </li>
               </ul>
             </div>
@@ -106,9 +124,9 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
-                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                   </div>
                 {% endfor %}
               {% endif %}
@@ -119,169 +137,364 @@
         <div class="row g-4">
 
           <div class="col-lg-4">
-            <div class="card border-0 shadow-lg rounded-4">
+            <div class="card border-0 shadow-sm h-100">
               <div class="card-body text-center p-4">
-                <div class="bg-success bg-opacity-10 d-inline-flex p-4 rounded-circle mb-3">
-                  <i class="bi bi-person-circle fs-1 text-success"></i>
-                </div>
-                <h4 class="fw-bold text-success mb-1">Welcome, {{ user['Username'] }}</h4>
-                <p class="text-muted mb-4">Manage your profile information</p>
-
-                <div class="text-start">
-                  <div class="mb-3">
-                    <h6 class="fw-semibold text-success mb-1">Username</h6>
-                    <div class="border rounded-3 p-3 d-flex justify-content-between align-items-center">
-                      <span class="text-muted">{{ user['Username'] }}</span>
-                      <button type="button" class="btn btn-sm btn-outline-success border-0" data-bs-toggle="modal" data-bs-target="#editUsernameModal">
-                        <i class="bi bi-pencil-square fs-5"></i>
-                      </button>
+                <div class="mb-3">
+                    <div class="d-inline-block p-3 rounded-circle bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-person-circle display-4"></i>
                     </div>
-                  </div>
-                  </div>
-                <a href="/logout" class="btn btn-outline-danger w-100 rounded-pill py-2 mb-2">Logout</a>
+                </div>
+                <h4 class="fw-bold mb-1">{{ user['Username'] }}</h4>
+                <span class="badge bg-success rounded-pill mb-4">{{ user['Classification'] }}</span>
+
+                <div class="text-start d-grid gap-3">
+                    <div class="p-3 bg-light rounded d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Username</small>
+                            <div class="fw-semibold">{{ user['Username'] }}</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="modal" data-bs-target="#editUsernameModal">
+                            <i class="bi bi-pencil-square fs-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="p-3 bg-light rounded d-flex justify-content-between align-items-center">
+                        <div class="text-truncate pe-2">
+                            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Email</small>
+                            <div class="fw-semibold text-truncate">{{ user['Email'] }}</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="modal" data-bs-target="#editEmailModal">
+                             <i class="bi bi-pencil-square fs-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="p-3 bg-light rounded d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Password</small>
+                            <div class="fw-semibold">••••••••</div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="modal" data-bs-target="#editPasswordModal">
+                             <i class="bi bi-pencil-square fs-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger w-100">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </a>
+                <button action="delete_profile" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">
+                    <i class="bi bi-trash3 me-2"></i> Delete Profile
+                </button>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-8 d-flex flex-column gap-4">
+          <div class="col-lg-8">
+            <div class="d-flex flex-column gap-4">
 
             {% if user['Classification'] == 'Vendor' %}
-              <div class="card border-0 shadow-lg rounded-4"><div class="card-body"><h5>Vendor View Placeholder</h5></div></div>
+              <div class="card border-0 shadow-sm overflow-hidden">
+                  <div class="card-header bg-success bg-gradient text-white p-4 border-0">
+                      <div class="d-flex justify-content-between align-items-start">
+                          <div>
+                              <h2 class="fw-bold mb-1">
+                                  <i class="bi bi-shop me-2"></i>
+                                  {{ user['VendorName'] if user['VendorName'] else user['Username'] }}
+                              </h2>
+                              <span class="badge bg-white text-success rounded-pill border border-white">
+                                  {{ user['VendorOfferingType'] if user['VendorOfferingType'] else 'General Vendor' }}
+                              </span>
+                          </div>
+                          <button class="btn btn-light text-success shadow-sm" data-bs-toggle="modal" data-bs-target="#editVendorModal">
+                              <i class="bi bi-pencil-fill me-1"></i> Edit Profile
+                          </button>
+                      </div>
+                  </div>
+
+                  <div class="card-body p-4">
+                      <div class="mb-4">
+                          <h6 class="fw-bold text-secondary text-uppercase small">About the Stall</h6>
+                          <p class="lead fs-6 text-muted">
+                              {{ user['VendorDescription'] if user['VendorDescription'] else 'No description added yet. Click "Edit Profile" to tell customers what you sell!' }}
+                          </p>
+                      </div>
+
+                      <hr class="text-muted opacity-25">
+
+                      <div class="row g-4 mt-2">
+                          <div class="col-md-6">
+                              <h6 class="fw-bold text-secondary text-uppercase small mb-3">Contact Details</h6>
+                              <div class="d-flex align-items-center mb-2">
+                                  <div class="bg-light p-2 rounded-circle me-3 text-success">
+                                      <i class="bi bi-telephone-fill"></i>
+                                  </div>
+                                  <div>
+                                      <small class="d-block text-muted">Phone / WhatsApp</small>
+                                      <span class="fw-semibold">{{ user['VendorContactNumber'] if user['VendorContactNumber'] else 'Not provided' }}</span>
+                                  </div>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                  <div class="bg-light p-2 rounded-circle me-3 text-success">
+                                      <i class="bi bi-envelope-fill"></i>
+                                  </div>
+                                  <div>
+                                      <small class="d-block text-muted">Email</small>
+                                      <span class="fw-semibold">{{ user['Email'] }}</span>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-md-6">
+                              <h6 class="fw-bold text-secondary text-uppercase small mb-3">Social Media</h6>
+                              <div class="d-grid gap-2">
+                                  {% if user['VendorInstagram'] %}
+                                    <a href="{{ user['VendorInstagram'] }}" target="_blank" class="btn btn-outline-danger border-opacity-25 text-start">
+                                        <i class="bi bi-instagram me-2"></i> Instagram
+                                    </a>
+                                  {% else %}
+                                    <button class="btn btn-light text-muted text-start" disabled><i class="bi bi-instagram me-2"></i> No Instagram linked</button>
+                                  {% endif %}
+
+                                  {% if user['VendorFacebook'] %}
+                                    <a href="{{ user['VendorFacebook'] }}" target="_blank" class="btn btn-outline-primary border-opacity-25 text-start">
+                                        <i class="bi bi-facebook me-2"></i> Facebook
+                                    </a>
+                                  {% else %}
+                                    <button class="btn btn-light text-muted text-start" disabled><i class="bi bi-facebook me-2"></i> No Facebook linked</button>
+                                  {% endif %}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
             {% elif user['Classification'] == 'MarketAdministrator' %}
-
-              <div class="card border-0 shadow-lg rounded-4">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
                     <div>
-                        <h5 class="fw-semibold text-success m-0"><i class="bi bi-buildings me-2"></i>
+                        <h5 class="fw-bold text-success mb-1">
                             {{ market['MarketName'] if market else 'Register Your Market' }}
                         </h5>
                         {% if market %}
                             <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> {{ market['MarketLocation'] }}</small>
                         {% endif %}
                     </div>
-                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#editMarketModal">
-                        <i class="bi bi-pencil me-1"></i> {{ 'Edit Details' if market else 'Create Market' }}
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editMarketModal">
+                        <i class="bi bi-pencil-fill me-1"></i> {{ 'Edit' if market else 'Create' }}
                     </button>
                   </div>
 
-                  <div class="row g-3 text-center">
+                  <div class="row g-3 text-center mb-4">
                     <div class="col-md-4">
-                      <div class="border rounded-4 py-3 bg-white">
-                        <i class="bi bi-calendar-check fs-2 text-success"></i>
-                        <div class="fw-semibold text-secondary mt-2">Active Events</div>
-                        <div class="fw-bold text-success fs-5">{{ events|length }}</div>
+                      <div class="p-3 bg-light rounded">
+                        <h3 class="fw-bold text-dark">{{ events|length }}</h3>
+                        <small class="text-muted text-uppercase fw-bold">Events</small>
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <div class="border rounded-4 py-3 bg-white">
-                        <i class="bi bi-people-fill fs-2 text-success"></i>
-                        <div class="fw-semibold text-secondary mt-2">Vendors</div>
-                        <div class="fw-bold text-success fs-5">{{ vendors|length }}</div>
+                      <div class="p-3 bg-light rounded">
+                        <h3 class="fw-bold text-dark">{{ vendors|length }}</h3>
+                        <small class="text-muted text-uppercase fw-bold">Vendors</small>
                       </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="border rounded-4 py-3 bg-white">
-                          <i class="bi bi-ticket-perforated fs-2 text-success"></i>
-                          <div class="fw-semibold text-secondary mt-2">Entry Fee</div>
-                          <div class="fw-bold text-success fs-5">{{ market['MarketEntryFee'] if market else 'Free' }}</div>
+                        <div class="p-3 bg-light rounded">
+                          <h3 class="fw-bold text-dark">{{ market['MarketEntryFee'] if market else '-' }}</h3>
+                          <small class="text-muted text-uppercase fw-bold">Entry Fee</small>
                         </div>
                       </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="card border-0 shadow-lg rounded-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="fw-semibold text-success m-0"><i class="bi bi-calendar-range me-2"></i>Upcoming Events</h5>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editEventModal">
-                            <i class="bi bi-plus-lg me-1"></i> Add Event
+                   <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold">Your Events</h6>
+                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#editEventModal">
+                             <i class="bi bi-plus-lg"></i> Add
                         </button>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
+                   </div>
+                   
+                   <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light"><tr><th>Name</th><th>Date</th><th>Action</th></tr></thead>
+                        <tbody>
+                            {% if events %}
+                                {% for event in events %}
                                 <tr>
-                                    <th>Event Name</th>
-                                    <th>Date</th>
-                                    <th>Days</th>
-                                    <th class="text-end">Actions</th>
+                                    <td>{{ event['EventName'] }}</td>
+                                    <td>{{ event['EventDate'] }}</td>
+                                    <td><button class="btn btn-sm btn-light border"><i class="bi bi-pencil"></i></button></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {% if events %}
-                                    {% for event in events %}
-                                    <tr>
-                                        <td class="fw-semibold">{{ event['EventName'] }}</td>
-                                        <td>{{ event['EventDate'] }}</td>
-                                        <td>{{ event['EventDays'] }}</td>
-                                        <td class="text-end">
-                                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr><td colspan="4" class="text-center text-muted">No events yet.</td></tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-              </div>
-
-              <div class="card border-0 shadow-lg rounded-4">
-                <div class="card-body">
-                    <h5 class="fw-semibold text-success mb-4"><i class="bi bi-shop me-2"></i>Vendors</h5>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Vendor Name</th>
-                                    <th>Offering</th>
-                                    <th>Contact</th>
-                                    <th class="text-end">Socials</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if vendors %}
-                                    {% for vendor in vendors %}
-                                    <tr>
-                                        <td class="fw-semibold">{{ vendor['VendorName'] }}</td>
-                                        <td><span class="badge bg-success bg-opacity-75">{{ vendor['VendorOfferingType'] }}</span></td>
-                                        <td>{{ vendor['VendorContactNumber'] }}</td>
-                                        <td class="text-end">
-                                            {% if vendor['VendorInstagram'] %}<a href="{{ vendor['VendorInstagram'] }}" class="text-success me-2"><i class="bi bi-instagram"></i></a>{% endif %}
-                                            {% if vendor['VendorFacebook'] %}<a href="{{ vendor['VendorFacebook'] }}" class="text-primary"><i class="bi bi-facebook"></i></a>{% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr><td colspan="4" class="text-center text-muted">No vendors registered yet.</td></tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <tr><td colspan="3" class="text-center text-muted">No events found.</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                   </div>
                 </div>
               </div>
 
             {% else %}
-              <div class="card border-0 shadow-lg rounded-4"><div class="card-body text-center p-5"><h3>Welcome!</h3></div></div>
-            {% endif %}
+            
+              <div class="card bg-success text-white border-0 shadow">
+                <div class="card-body p-5 bg-gradient rounded">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="display-6 fw-bold mb-2">Welcome back!</h2>
+                            <p class="lead mb-0 opacity-75">Ready to explore local markets and events?</p>
+                        </div>
+                        <div class="col-md-4 text-center d-none d-md-block">
+                            <i class="bi bi-basket2-fill" style="font-size: 5rem; opacity: 0.5;"></i>
+                        </div>
+                    </div>
+                </div>
+              </div>
 
+              <div class="row g-3">
+                  <div class="col-md-6">
+                      <div class="card h-100 border-0 shadow-sm">
+                          <div class="card-body p-4 d-flex align-items-center">
+                              <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle me-3">
+                                  <i class="bi bi-map-fill fs-3"></i>
+                              </div>
+                              <div>
+                                  <h5 class="fw-bold mb-1">Find Markets</h5>
+                                  <p class="text-muted small mb-0">Browse locations & times.</p>
+                                  <a href="{{ url_for('home') }}" class="stretched-link"></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="card h-100 border-0 shadow-sm">
+                          <div class="card-body p-4 d-flex align-items-center">
+                              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-circle me-3">
+                                  <i class="bi bi-calendar-check-fill fs-3"></i>
+                              </div>
+                              <div>
+                                  <h5 class="fw-bold mb-1">Upcoming Events</h5>
+                                  <p class="text-muted small mb-0">See what's happening.</p>
+                                  <a href="{{ url_for('events') }}" class="stretched-link"></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="card border-0 shadow-sm">
+                  <div class="card-header bg-white border-0 pt-4 pb-0">
+                      <h5 class="fw-bold mb-0">Join the Economy</h5>
+                  </div>
+                  <div class="card-body p-4">
+                      <div class="row g-3">
+                          
+                          <div class="col-md-6">
+                              <div class="border rounded p-3 h-100 bg-light position-relative">
+                                  <div class="d-flex justify-content-between align-items-start mb-2">
+                                      <h6 class="fw-bold text-success">Become a Vendor</h6>
+                                      <i class="bi bi-shop text-success"></i>
+                                  </div>
+                                  <p class="text-muted small mb-3">Register your stall and reach more customers.</p>
+                                  <a href="{{ url_for('vendor_request') }}" class="btn btn-outline-success w-100 btn-sm stretched-link">Register Stall</a>
+                              </div>
+                          </div>
+
+                          <div class="col-md-6">
+                              <div class="border rounded p-3 h-100 bg-light position-relative">
+                                  <div class="d-flex justify-content-between align-items-start mb-2">
+                                      <h6 class="fw-bold text-dark">Register a Market</h6>
+                                      <i class="bi bi-buildings text-dark"></i>
+                                  </div>
+                                  <p class="text-muted small mb-3">List your market on our platform as an Admin.</p>
+                                  <a href="{{ url_for('market_request') }}" class="btn btn-outline-dark w-100 btn-sm stretched-link">Create Market</a>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+
+            {% endif %}
+            </div>
           </div>
         </div>
       </div>
     </main>
 
-    <div class="modal fade" id="editMarketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editUsernameModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Username</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('userpage') }}" method="POST">
+              <div class="modal-body">
+                <input type="text" class="form-control" name="username" value="{{ user['Username'] }}" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="editEmailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Email</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('userpage') }}" method="POST">
+              <div class="modal-body">
+                <input type="email" class="form-control" name="email" value="{{ user['Email'] }}" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <div class="modal fade" id="editPasswordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Change Password</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('userpage') }}" method="POST">
+              <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-control" name="current_password" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-control" name="new_password" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editMarketModal" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
             <h5 class="modal-title">Edit Market Details</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form action="" method="POST" enctype="multipart/form-data"> 
                 <input type="hidden" name="action" value="update_market">
@@ -292,37 +505,17 @@
                             <input type="text" class="form-control" name="market_name" value="{{ market['MarketName'] if market }}" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Location (Physical)</label>
-                            <input type="text" class="form-control" name="market_location" value="{{ market['MarketLocation'] if market }}" placeholder="Street Address">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Google Maps Link</label>
-                            <input type="text" class="form-control" name="market_location_link" value="{{ market['MarketLocationLink'] if market }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Entry Fee</label>
-                            <input type="text" class="form-control" name="market_entry_fee" value="{{ market['MarketEntryFee'] if market }}" placeholder="e.g. R50 or Free">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" name="market_location" value="{{ market['MarketLocation'] if market }}">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="market_description" rows="3">{{ market['MarketDescription'] if market }}</textarea>
+                            <textarea class="form-control" name="market_description">{{ market['MarketDescription'] if market }}</textarea>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Operating Days</label>
-                            <input type="text" class="form-control" name="market_days" value="{{ market['MarketDays'] if market }}" placeholder="e.g. Every Saturday">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Upload Poster (Image)</label>
-                            <input type="file" class="form-control" name="market_poster" accept="image/*">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label"><i class="bi bi-instagram"></i> Instagram Link</label>
-                            <input type="text" class="form-control" name="market_instagram" value="{{ market['MarketInstagram'] if market }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label"><i class="bi bi-facebook"></i> Facebook Link</label>
-                            <input type="text" class="form-control" name="market_facebook" value="{{ market['MarketFacebook'] if market }}">
-                        </div>
+                         <div class="col-md-6">
+                             <label class="form-label">Upload Poster</label>
+                             <input type="file" class="form-control" name="market_poster">
+                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -334,12 +527,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editEventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editEventModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-            <h5 class="modal-title">Add New Event</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title">Add/Edit Event</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form action="" method="POST" enctype="multipart/form-data"> 
                 <input type="hidden" name="action" value="update_event">
@@ -348,206 +541,82 @@
                         <label class="form-label">Event Name</label>
                         <input type="text" class="form-control" name="event_name" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control" name="event_description" rows="2"></textarea>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-6">
+                    <div class="row g-3">
+                         <div class="col-6">
                             <label class="form-label">Date</label>
                             <input type="date" class="form-control" name="event_date">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Event Days (Duration)</label>
-                            <input type="text" class="form-control" name="event_days" placeholder="e.g. 2 Days">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Booking Link</label>
-                        <input type="text" class="form-control" name="event_booking_link" placeholder="https://...">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Event Poster</label>
-                        <input type="file" class="form-control" name="event_poster" accept="image/*">
+                         </div>
+                         <div class="col-6">
+                             <label class="form-label">Duration</label>
+                             <input type="text" class="form-control" name="event_days">
+                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Add Event</button>
+                    <button type="submit" class="btn btn-success">Save Event</button>
                 </div>
             </form>
         </div>
         </div>
     </div>
 
-  <!-- Footer -->
-  <footer class="border-top py-3" style="background-color: #c8f7c5">
-    <div
-      class="container d-flex flex-wrap justify-content-between align-items-center"
-    >
-      <!-- Left side -->
-      <div class="d-flex align-items-center mb-3 mb-md-0">
-        <img
-          src="{{ url_for('static', filename='images/Logo.png') }}"
-          alt="Mzanzi Market"
-          height="80"
-          class="me-3"
-        />
-        <span class="fw-bold text-success fs-5">Mzanzi Market</span>
-      </div>
+    <div class="modal fade" id="editVendorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-shop me-2"></i>Edit Vendor Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url_for('userpage') }}" method="POST">
+                    <input type="hidden" name="action" value="update_vendor">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Vendor / Stall Name</label>
+                                <input type="text" class="form-control" name="vendor_name" value="{{ user['VendorName'] if user['VendorName'] }}" placeholder="E.g. Mama's Kitchen" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Offering Type</label>
+                                <select class="form-select" name="vendor_type">
+                                    <option value="Food & Drink" {% if user['VendorOfferingType'] == 'Food & Drink' %}selected{% endif %}>Food & Drink</option>
+                                    <option value="Arts & Crafts" {% if user['VendorOfferingType'] == 'Arts & Crafts' %}selected{% endif %}>Arts & Crafts</option>
+                                    <option value="Clothing" {% if user['VendorOfferingType'] == 'Clothing' %}selected{% endif %}>Clothing</option>
+                                    <option value="Services" {% if user['VendorOfferingType'] == 'Services' %}selected{% endif %}>Services</option>
+                                    <option value="Other" {% if user['VendorOfferingType'] == 'Other' %}selected{% endif %}>Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Description</label>
+                                <textarea class="form-control" name="vendor_description" rows="3" placeholder="Tell customers what makes your stall special...">{{ user['VendorDescription'] if user['VendorDescription'] }}</textarea>
+                            </div>
 
-      <!-- Right side navigation -->
-      <ul class="nav col-md-5 justify-content-end">
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
-  </li>
-</ul>
-    </div>
-  </footer>
+                            <hr class="my-2 opacity-25">
 
-<div class="modal fade" id="editUsernameModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Edit Username</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">Contact Number (WhatsApp)</label>
+                                <input type="text" class="form-control" name="contact_number" value="{{ user['VendorContactNumber'] if user['VendorContactNumber'] }}" placeholder="012 345 6789">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-instagram text-danger"></i> Instagram Link</label>
+                                <input type="url" class="form-control" name="instagram" value="{{ user['VendorInstagram'] if user['VendorInstagram'] }}" placeholder="https://instagram.com/...">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-facebook text-primary"></i> Facebook Link</label>
+                                <input type="url" class="form-control" name="facebook" value="{{ user['VendorFacebook'] if user['VendorFacebook'] }}" placeholder="https://facebook.com/...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-link text-secondary text-decoration-none" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success px-4">Save Profile</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form action="{{ url_for('userpage') }}" method="POST">
-          <div class="modal-body">
-            <label for="username" class="form-label">New Username</label>
-            <input type="text" class="form-control" name="username" value="{{ user['Username'] }}" required>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-success">Save Changes</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
-
-  <div class="modal fade" id="editEmailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Edit Email</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="{{ url_for('userpage') }}" method="POST">
-          <div class="modal-body">
-            <label for="email" class="form-label">New Email Address</label>
-            <input type="email" class="form-control" name="email" value="{{ user['Email'] }}" required>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-success">Save Changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Change Password</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="{{ url_for('userpage') }}" method="POST">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="current_password" class="form-label">Current Password</label>
-              <input type="password" class="form-control" name="current_password" required>
-            </div>
-            <div class="mb-3">
-              <label for="new_password" class="form-label">New Password</label>
-              <input type="password" class="form-control" name="new_password" required>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-success">Update Password</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="editMarketModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Edit Market Details</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="" method="POST"> <input type="hidden" name="action" value="update_market">
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Market Name</label>
-                    <input type="text" class="form-control" name="market_name" placeholder="E.g. Pretoria Central Market">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Location / Address</label>
-                    <input type="text" class="form-control" name="market_location" placeholder="Street address or Area">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" name="market_description" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Save Market Details</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="editEventModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Manage Event</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="" method="POST"> <input type="hidden" name="action" value="update_event">
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Event Name</label>
-                    <input type="text" class="form-control" name="event_name" placeholder="E.g. Spring Fest">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Date</label>
-                    <input type="date" class="form-control" name="event_date">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Status</label>
-                    <select class="form-select" name="event_status">
-                        <option value="active">Active</option>
-                        <option value="upcoming">Upcoming</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Save Event</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

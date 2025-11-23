@@ -151,9 +151,6 @@ def userpage():
     conn.row_factory = sqlite3.Row # Ensure we can access columns by name
     user_id = session['user_id']
 
-    # ==========================================
-    # 1. HANDLE FORM SUBMISSIONS (POST)
-    # ==========================================
     if request.method == 'POST':
         action = request.form.get('action')
 
@@ -236,6 +233,14 @@ def userpage():
                     conn.commit()
                 else:
                     flash("Please create a market profile first.", "warning")
+            
+            # --- C. DELETE PROFILE ---
+            elif action == 'delete_profile':
+                conn.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
+                conn.commit()
+                session.clear() # Log them out immediately
+                flash("Your profile has been permanently deleted.", "info")
+                return redirect(url_for('login'))
 
         except Exception as e:
             conn.rollback()
@@ -245,9 +250,6 @@ def userpage():
         conn.close()
         return redirect(url_for("userpage"))
 
-    # ==========================================
-    # 2. PAGE LOAD (GET)
-    # ==========================================
     user = conn.execute("SELECT * FROM User WHERE UserID = ?", (user_id,)).fetchone()
     
     market = None
@@ -264,7 +266,8 @@ def userpage():
             
             # Fetch Vendors (Assuming logic: Fetch all vendors for now, 
             # normally you would need a linking table like 'MarketVendors' to filter specific ones)
-            vendors = conn.execute("SELECT * FROM Vendor").fetchall() 
+            vendors = conn.execute("SELECT * FROM Vendor").fetchall()
+        
 
     conn.close()
     return render_template("userpage.html", user=user, market=market, events=events, vendors=vendors)
@@ -282,18 +285,49 @@ def vendor_request():
         return redirect(url_for("login"))
 
     if request.method == "POST":
+        # 1. Get the data from the HTML Form
         vendor_name = request.form.get("vendor_name")
-        description = request.form.get("stall_description")
+        description = request.form.get("stall_description") 
         vendor_type = request.form.get("vendor_type")
         contact = request.form.get("contact_number")
         
+        # New fields from your form
+        website = request.form.get("website")
+        facebook = request.form.get("facebook")
+        instagram = request.form.get("instagram")
+        
+        # Note: We are skipping 'vendor_logo' and 'vendor_picture' for now 
+        # as handling image uploads requires extra BLOB logic similar to your Markets.
+
         try:
             conn = get_db_connection()
             
-            conn.execute("UPDATE User SET Classification = ? WHERE UserID = ?", 
-                         ('Vendor', session['user_id']))
+            # 2. SQL to Update the User with ALL details
+            sql = """
+                UPDATE User 
+                SET Classification = ?, 
+                    VendorName = ?, 
+                    VendorDescription = ?, 
+                    VendorOfferingType = ?, 
+                    VendorContactNumber = ?,
+                    VendorWebsite = ?,
+                    VendorFacebook = ?,
+                    VendorInstagram = ?
+                WHERE UserID = ?
+            """
             
-            print(f"Promoting User {session['user_id']} to Vendor.")
+            # 3. Execute
+            conn.execute(sql, (
+                'Vendor', 
+                vendor_name, 
+                description, 
+                vendor_type, 
+                contact,
+                website,
+                facebook,
+                instagram,
+                session['user_id']
+            ))
             
             conn.commit()
             conn.close()
@@ -303,8 +337,7 @@ def vendor_request():
             
         except Exception as e:
             print(f"Error processing vendor request: {e}")
-            flash("An error occurred (Database might be locked).", "danger")
-            # FIX 2: Corrected 'vendorrequestform' to 'vendor_request'
+            flash(f"An error occurred: {e}", "danger")
             return redirect(url_for('vendor_request'))
 
     return render_template("vendorrequestform.html")

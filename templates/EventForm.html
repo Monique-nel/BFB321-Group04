@@ -39,7 +39,7 @@
             <!-- Left-aligned links (next to logo) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="home"
+                <a class="nav-link fw-semibold fs-5 active" href=""
                   >Home</a
                 >
               </li>
@@ -76,18 +76,36 @@
               <!-- User section -->
               <ul class="navbar-nav d-flex align-items-center mb-0">
                 <li class="nav-item">
-                  <a
-                    class="nav-link d-flex align-items-center fw-semibold fs-5"
-                    href="login"
-                  >
-                    <img
-                      src="{{ url_for('static', filename='images/usericon.png')}}"
-                      alt="User"
-                      height="30"
-                      class="me-1 rounded-circle border border-light p-1"
-                    />
-                    <span>User</span>
-                  </a>
+                  
+                  {% if session.get('user_id') %}
+                    <a
+                      class="nav-link d-flex align-items-center fw-semibold fs-5"
+                      href="{{ url_for('userpage') }}"
+                    >
+                      <img
+                        src="{{ url_for('static', filename='images/usericon.png')}}"
+                        alt="User"
+                        height="30"
+                        class="me-1 rounded-circle border border-light p-1"
+                      />
+                      <span>{{ session['username'] }}</span>
+                    </a>
+
+                  {% else %}
+                    <a
+                      class="nav-link d-flex align-items-center fw-semibold fs-5"
+                      href="{{ url_for('login') }}"
+                    >
+                      <img
+                        src="{{ url_for('static', filename='images/usericon.png')}}"
+                        alt="User"
+                        height="30"
+                        class="me-1 rounded-circle border border-light p-1"
+                      />
+                      <span>Sign In</span>
+                    </a>
+                  {% endif %}
+
                 </li>
               </ul>
             </div>
