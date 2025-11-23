@@ -1,21 +1,38 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file, session, flash
+import os
 import sqlite3
-import base64
+from datetime import datetime, timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Required for flash messages
+app.secret_key = 'Mzanzi_secret_key_2025'  # Required for flash messages
+
+# Database configuration
+DATABASE = 'Mzanzi.db'
 
 def get_db_connection():
     """Get database connection"""
-    conn = sqlite3.connect('Mzanzi.db')
-    conn.row_factory = sqlite3.Row
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row  # This enables column access by name
     return conn
 
-@app.template_filter("b64encode")
-def b64encode_filter(data):
-    if data is None:
-        return None
-    return base64.b64encode(data).decode("utf-8")
+def init_db():
+    """Initialize database if it doesn't exist"""
+    if not os.path.exists(DATABASE):
+        print(f"Database {DATABASE} not found. Please run init_db.py first.")
+        return False
+    return True
+
+def login_required(f):
+    """Decorator to require login for certain routes"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please log in to access this page.', 'error')
+            return redirect(url_for('home'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route("/", methods=["GET"])
 def home():
@@ -24,6 +41,29 @@ def home():
     conn.close()
     print(markets)
     return render_template("home.html", markets=markets)
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+    
+    conn = get_db_connection()
+    user = conn.execute(
+        'SELECT * FROM User WHERE email_address = ?', (email,)
+    ).fetchone()
+    conn.close()
+    
+    if user and check_password_hash(user['password_hash'], password):
+        # Login successful
+        session['user_id'] = user['student_id']
+        session['user_email'] = user['email_address']
+        session['user_fullname'] = user['full_name']
+        flash(f'Welcome back, {user["full_name"]}!', 'success')
+        return redirect(url_for('userpage'))
+    else:
+        # Login failed
+        flash('Invalid email or password. Please try again.', 'error')
+        return redirect(url_for('home'))
 
 @app.route("/eventform", methods=["GET", "POST"])
 def eventform():
@@ -40,10 +80,6 @@ def faq():
 @app.route("/generalpolicies", methods=["GET", "POST"])
 def generalpolicies():
     return render_template("generalpolicies.html")
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    return render_template("login.html")
 
 @app.route("/maps/<int:market_id>", methods=["GET", "POST"])
 def market_details(market_id):
