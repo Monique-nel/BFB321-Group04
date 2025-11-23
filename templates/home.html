@@ -154,351 +154,64 @@
       </a>
 
       <!-- MARKET SECTION -->
-      <section id="markets" class="container py-5">
-        <h2 class="text-center fw-bold text-success mb-5">
-          Explore South Africa’s Favorite Markets
-        </h2>
+      <div class="row g-4 justify-content-center">
 
-        <div class="row g-4 justify-content-center">
-              <!-- 4 Ways Farmers Market -->
-              <div class="col-md-6 col-lg-4">
+          {% for market in markets %}
+          <div class="col-md-6 col-lg-4">
               <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  <div
-                  class="card-header bg-white border-0 d-flex justify-content-between align-items-center"
-                  >
-                  <h5 class="fw-bold mb-0">4 Ways Farmers Market</h5>
-                  <div>
-                      <a href="https://www.instagram.com/4waysfarmersmarket/?hl=en">
-                      <img
-                          src="{{ url_for('static', filename='images/instagram.png')}}"
-                          alt="instagram"
-                          height="25"
-                          class="me-2"
-                      />
-                      </a>
-                      <a href="https://www.facebook.com/TheFourwaysFarmersMarket">
-                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
-                      </a>
-                  </div>
-                  </div>
 
-                  <img
-                  src="{{ url_for('static', filename='images/4_ways.png')}}"
-                  class="card-img-top img-fluid bg-white p-3 rounded"
-                  alt="4 Ways Farmers Market"
-                  />
-
-                  <div class="card-body d-flex flex-column">
-                  <ul class="list-unstyled mb-3">
-                      <li>🕰️ Every Saturday and Sunday 9AM - 7PM</li>
-                      <li>✅ Dog friendly</li>
-                      <li>✅ Food and Drinks</li>
-                      <li>✅ Live music</li>
-                      <li>✅ Shopping and Groceries</li>
-                      <li>💰 Entry fee: R20</li>
-                  </ul>
-
-                  <a
-                      href="https://www.google.com/maps/place/Fourways+Farmers+Market/@-26.0636371,28.1209609,17z"
-                      class="text-decoration-none mb-3 fw-semibold"
-                      >📌 Modderfontein, Johannesburg</a
-                  >
-
-                      <div class="d-grid gap-2 mt-auto">
-                          <a href="maps" class="btn btn-success">Market Map</a>
-                          <a href="vendors" class="btn btn-outline-success"
-                          >Visit Stalls</a
-                          >
+                  <!-- HEADER -->
+                  <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                      <h5 class="fw-bold mb-0">{{ market['MarketName'] }}</h5>
+                      <div>
+                          {% if market['InstagramLink'] %}
+                          <a href="{{ market['InstagramLink'] }}">
+                              <img src="{{ url_for('static', filename='images/instagram.png') }}" height="25" class="me-2">
+                          </a>
+                          {% endif %}
+                          {% if market['FacebookLink'] %}
+                          <a href="{{ market['FacebookLink'] }}">
+                              <img src="{{ url_for('static', filename='images/facebook.png') }}" height="25">
+                          </a>
+                          {% endif %}
                       </div>
                   </div>
-              </div>
-              </div>
 
-              <!-- Pretoria Boeremark -->
-              <div class="col-md-6 col-lg-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  <div
-                  class="card-header bg-white border-0 d-flex justify-content-between align-items-center"
-                  >
-                  <h5 class="fw-bold mb-0">Pretoria Boeremark</h5>
-                  <div>
-                      <a href="https://www.instagram.com/pretoriaboeremark/">
-                      <img
-                          src="{{ url_for('static', filename='images/instagram.png')}}"
-                          alt="instagram"
-                          height="25"
-                          class="me-2"
-                      />
-                      </a>
-                      <a href="https://www.facebook.com/ptaboeremark">
-                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
-                      </a>
-                  </div>
-                  </div>
-
-                  <img
-                  src="{{ url_for('static', filename='images/PretoriaBoeremark.png')}}"
-                  class="card-img-top img-fluid bg-white p-3 rounded"
-                  alt="Pretoria Boeremark"
-                  />
-
+                  <!-- CARD BODY -->
                   <div class="card-body d-flex flex-column">
-                  <ul class="list-unstyled mb-3 text-start">
-                      <li>
-                      Wanneer die meeste mense nog slaap op 'n Saterdagoggend, is
-                      die Boeremarkterrein reeds 'n miernes van bedrywighede...
-                      </li>
-                      <li>🕰️ Elke Saterdag 05:30 – 09:30 AM</li>
-                      <li>💰 Entry fee: None</li>
-                  </ul>
 
-                  <a
-                      href="https://www.google.com/maps/place/Pretoria+Boeremark"
-                      class="text-decoration-none mb-3 fw-semibold"
-                  >
-                      📌 Silverton, Pretoria
-                  </a>
+                      <ul class="list-unstyled mb-3">
+                          <li>🕰️ {{ market['MarketHours'] }}</li>
+                          <li>💰 Entry fee: {{ market['EntryFee'] }}</li>
+                          {% if market['OtherInfo'] %}
+                          <li>{{ market['OtherInfo'] }}</li>
+                          {% endif %}
+                      </ul>
 
-                  <div class="d-grid gap-2 mt-auto">
-                      <a href="maps" class="btn btn-success"
-                      >Market Map</a
-                      >
-                      <a href="vendors" class="btn btn-outline-success"
-                      >Visit Stalls</a
-                      >
-                  </div>
-                  </div>
-              </div>
-              </div>
-
-              <!-- Montana Family Market -->
-              <div class="col-md-6 col-lg-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  <div
-                  class="card-header bg-white border-0 d-flex justify-content-between align-items-center"
-                  >
-                  <h5 class="fw-bold mb-0">Montana Family Market</h5>
-                  <div>
-                      <a href="https://www.instagram.com/montana_family_market/">
-                      <img
-                          src="{{ url_for('static', filename='images/instagram.png')}}"
-                          alt="instagram"
-                          height="25"
-                          class="me-2"
-                      />
+                      <!-- LOCATION -->
+                      {% if market['LocationLink'] %}
+                      <a href="{{ market['LocationLink'] }}" class="text-decoration-none mb-3 fw-semibold">
+                          📌 {{ market['LocationText'] or "View on Google Maps" }}
                       </a>
-                      <a href="https://www.facebook.com/montanafamilymarket">
-                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
-                      </a>
+                      {% endif %}
+
+                      <!-- BUTTONS -->
+                      <div class="d-grid gap-2 mt-auto">
+                          <a href="{{ url_for('market_details', id=market['MarketID']) }}" class="btn btn-success">
+                              Market Map
+                          </a>
+                          <a href="{{ url_for('vendors', market_id=market['MarketID']) }}" class="btn btn-outline-success">
+                              Visit Stalls
+                          </a>
+                      </div>
+
                   </div>
-                  </div>
-
-                  <img
-                  src="{{ url_for('static', filename='images/Montana_Family.png')}}"
-                  class="card-img-top img-fluid bg-white p-3 rounded"
-                  alt="Montana Family Market"
-                  />
-
-                  <div class="card-body d-flex flex-column">
-                  <ul class="list-unstyled mb-3 text-start">
-                      <li>
-                      Montana Family Market is a permanent flea-market-style
-                      shopping complex located in the heart of Montana.
-                      </li>
-                      <li>🕰️ Every Tuesday - Sunday 9AM - 5PM</li>
-                      <li>💰 Entry fee: R50/R100</li>
-                  </ul>
-
-                  <a
-                      href="https://www.google.com/maps/place/Montana+Family+Market"
-                      class="text-decoration-none mb-3 fw-semibold"
-                      >📌 Montana, Pretoria</a
-                  >
-
-                  <div class="d-grid gap-2 mt-auto">
-                      <a href="maps" class="btn btn-success"
-                      >Market Map</a
-                      >
-                      <a href="vendors" class="btn btn-outline-success"
-                      >Visit Stalls</a
-                      >
-                  </div>
-                  </div>
-              </div>
-              </div>
-
-              <!-- Hazel Food Market -->
-              <div class="col-md-6 col-lg-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  <div
-                  class="card-header bg-white border-0 d-flex justify-content-between align-items-center"
-                  >
-                  <h5 class="fw-bold mb-0">Hazel Food Market</h5>
-                  <div>
-                      <a href="https://www.instagram.com/hazelfood_arts_crafts/">
-                      <img
-                          src="{{ url_for('static', filename='images/instagram.png')}}"
-                          alt="instagram"
-                          height="25"
-                          class="me-2"
-                      />
-                      </a>
-                      <a href="https://www.facebook.com/hazelfoodmarket">
-                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
-                      </a>
-                  </div>
-                  </div>
-
-                  <img
-                  src="{{ url_for('static', filename='images/HazelwoodFood.png')}}"
-                  class="card-img-top img-fluid bg-white p-3 rounded"
-                  alt="Hazel Food Market"
-                  />
-
-                  <div class="card-body d-flex flex-column">
-                  <ul class="list-unstyled mb-3">
-                      <li>
-                      Providing the best food #Pretoria has to offer, making your
-                      Saturday mornings something to look forward to.
-                      </li>
-                      <li>🕰️ Every Saturday 8AM - 2PM</li>
-                      <li>💰 Entry fee: None</li>
-                  </ul>
-
-                  <a
-                      href="https://www.google.com"
-                      class="text-decoration-none mb-3 fw-semibold"
-                      >📌 Lynnwood, Pretoria</a
-                  >
-
-                  <div class="d-grid gap-2 mt-auto">
-                      <a href="maps" class="btn btn-success"
-                      >Market Map</a
-                      >
-                      <a href="vendors" class="btn btn-outline-success"
-                      >Visit Stalls</a
-                      >
-                  </div>
-                  </div>
-              </div>
-              </div>
-
-              <!-- Irene Village Market -->
-              <div class="col-md-6 col-lg-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  <div
-                  class="card-header bg-white border-0 d-flex justify-content-between align-items-center"
-                  >
-                  <h5 class="fw-bold mb-0">Irene Village Market</h5>
-                  <div>
-                      <a href="https://www.instagram.com/irenemarket/">
-                      <img
-                          src="{{ url_for('static', filename='images/instagram.png')}}"
-                          alt="instagram"
-                          height="25"
-                          class="me-2"
-                      />
-                      </a>
-                      <a href="https://www.facebook.com/irenevillagemarket">
-                      <img src="{{ url_for('static', filename='images/facebook.png')}}"alt="facebook" height="25" />
-                      </a>
-                  </div>
-                  </div>
-
-                  <img
-                  src="{{ url_for('static', filename='images/irene.png')}}"
-                  class="card-img-top img-fluid bg-white p-3 rounded"
-                  alt="Irene Village Market"
-                  />
-
-                  <div class="card-body d-flex flex-column">
-                  <ul class="list-unstyled mb-3 text-start">
-                      <li>
-                      The Irene Village Market at The Big Red Barn celebrates 36
-                      years of locally handmade arts and crafts in a forest setting.
-                      </li>
-                      <li>🕰️ Every Saturday 8AM - 2PM</li>
-                      <li>💰 Entry fee: None</li>
-                  </ul>
-
-                  <a
-                      href="https://www.google.com/maps/place/Irene+Village+Market"
-                      class="text-decoration-none mb-3 fw-semibold"
-                      >📌 Sunlawns AH, Olifantsfontein</a
-                  >
-
-                  <div class="d-grid gap-2 mt-auto">
-                      <a href="maps" class="btn btn-success">Market Map</a>
-                      <a href="vendors" class="btn btn-outline-success"
-                      >Visit Stalls</a
-                      >
-                  </div>
-                  </div>
-              </div>
-              </div>
-
-              <!-- The Vintage Square Thrift Fair -->
-              <div class="col-md-6 col-lg-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  <div
-                  class="card-header bg-white border-0 d-flex justify-content-between align-items-center"
-                  >
-                  <h5 class="fw-bold mb-0">The Vintage Square Thrift Fair</h5>
-                  <div>
-                      <a href="https://www.instagram.com/thevintagesquarethriftfair/">
-                      <img
-                          src="{{ url_for('static', filename='images/instagram.png')}}"
-                          alt="instagram"
-                          height="25"
-                          class="me-2"
-                      />
-                      </a>
-                      <a href="https://www.facebook.com/vintagesquarethriftfair/">
-                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
-                      </a>
-                  </div>
-                  </div>
-
-                  <img
-                  src="{{ url_for('static', filename='images/Vintage.png')}}"
-                  class="card-img-top img-fluid bg-white p-3 rounded"
-                  alt="The Vintage Square Thrift Fair"
-                  />
-
-                  <div class="card-body d-flex flex-column">
-                  <ul class="list-unstyled mb-3">
-                      <li>
-                      Pretoria's original and largest vintage thrift clothing
-                      market. Shop over 50+ clothing stalls!
-                      </li>
-                      <li>🕰️ Every Saturday 9AM - 3PM</li>
-                      <li>💰 Entry fee: None</li>
-                  </ul>
-
-                  <a
-                      href="https://www.google.com/maps/place/The+Vintage+Square+Thrift+Fair"
-                      class="text-decoration-none mb-3 fw-semibold"
-                      >📌 Brooklyn, Pretoria</a
-                  >
-
-                  <div class="d-grid gap-2 mt-auto">
-                      <a href="maps" class="btn btn-success"
-                      >Market Map</a
-                      >
-                      <a href="vendors" class="btn btn-outline-success"
-                      >Visit Stalls</a
-                      >
-                  </div>
-                  </div>
-              </div>
               </div>
           </div>
+          {% endfor %}
 
-        <!-- Next button -->
-        <div class="text-center mt-5">
-          <a href="#" class="btn btn-lg btn-success px-5 shadow">Next</a>
-        </div>
-      </section>
+      </div>
+
     </main>
 
     <!-- Footer -->

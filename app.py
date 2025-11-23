@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 import sqlite3
+import base64
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Required for flash messages
@@ -10,9 +11,19 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-@app.route("/", methods=["GET", "POST"])
+@app.template_filter("b64encode")
+def b64encode_filter(data):
+    if data is None:
+        return None
+    return base64.b64encode(data).decode("utf-8")
+
+@app.route("/", methods=["GET"])
 def home():
-    return render_template("home.html")
+    conn = get_db_connection()
+    markets = conn.execute("SELECT * FROM Market ORDER BY MarketID").fetchall()
+    conn.close()
+    print(markets)
+    return render_template("home.html", markets=markets)
 
 @app.route("/eventform", methods=["GET", "POST"])
 def eventform():
