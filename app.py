@@ -195,9 +195,125 @@ def vendor_request():
 
 @app.route("/market_request", methods=["GET", "POST"])
 def market_request():
+    # 1. Security Check
     if 'user_id' not in session:
+        flash("Please log in to register a market.", "warning")
         return redirect(url_for("login"))
+
+    if request.method == "POST":
+        # 2. Get Text Data
+        market_name = request.form.get("market_name")
+        description = request.form.get("description")
+        location = request.form.get("location")
+        location_link = request.form.get("location_link") 
+        entry_fee = request.form.get("entry_fee")
+        market_date = request.form.get("market_date")
+        days = request.form.get("operating_days")
+        instagram = request.form.get("instagram")
+        facebook = request.form.get("facebook")
+        
+        # 3. Handle File Uploads (BLOB)
+        poster_file = request.files.get("market_poster") 
+        poster_blob = poster_file.read() if poster_file else None
+
+        map_file = request.files.get("market_map")
+        map_blob = map_file.read() if map_file else None
+
+        conn = get_db_connection()
+        try:
+            # 4. Insert into Market Table using exact DB Schema columns
+            conn.execute("""
+                INSERT INTO Market (
+                    MarketName, 
+                    MarketDescription, 
+                    MarketLocationLink,
+                    MarketLocation, 
+                    MarketEntryFee,
+                    MarketDate,
+                    MarketDays, 
+                    MarketPoster,
+                    MarketInstagram,
+                    MarketFacebook,
+                    MarketMap,
+                    MarketAdministratorID
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                market_name, 
+                description, 
+                location_link,
+                location, 
+                entry_fee,
+                market_date,
+                days, 
+                poster_blob,
+                instagram,
+                facebook,
+                map_blob,
+                session['user_id'] # Using logged-in user as the Admin ID
+            ))
+            
+            # 5. Upgrade User Classification
+            conn.execute("UPDATE User SET Classification = ? WHERE UserID = ?", 
+                         ('MarketAdministrator', session['user_id']))
+            
+            conn.commit()
+            flash("Market registered successfully!", "success")
+            return redirect(url_for('home')) 
+            
+        except Exception as e:
+            print(f"Error saving market: {e}")
+            flash(f"Error saving market: {e}", "danger")
+            return redirect(url_for('market_request'))
+        finally:
+            conn.close()
+
     return render_template("marketrequestform.html")
+
+@app.route("/Eventform", methods=["GET", "POST"])
+def Eventform():
+    # 1. Security Check: Must be logged in
+    if 'user_id' not in session:
+        flash("Please log in to add an event.", "warning")
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+
+    if request.method == "POST":
+        # 2. Get Text Data
+        name = request.form.get("event_name")
+        description = request.form.get("event_description")
+        date = request.form.get("event_date") # Returns string "YYYY-MM-DDTHH:MM"
+        days = request.form.get("event_days")
+        link = request.form.get("booking_link")
+        market_id = request.form.get("market_id")
+
+        # 3. Handle File Upload (BLOB)
+        poster_file = request.files.get("event_poster")
+        # Read the file data into binary (BLOB) format if a file was selected
+        poster_blob = poster_file.read() if poster_file else None
+
+        try:
+            # 4. Insert into Database
+            conn.execute("""
+                INSERT INTO Events (EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster, MarketID)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (name, description, date, days, link, poster_blob, market_id))
+            
+            conn.commit()
+            flash("Event created successfully!", "success")
+            return redirect(url_for('events')) # Redirect to events list after success
+        except Exception as e:
+            print(f"Error saving event: {e}")
+            flash("Error saving event. Please try again.", "danger")
+        finally:
+            conn.close()
+
+    # GET Request: Fetch markets for the dropdown so the user can select one
+    markets = conn.execute("SELECT * FROM Market").fetchall()
+    conn.close()
+    
+    return render_template("Eventform.html", markets=markets)
 
 if __name__ == '__main__':
     print("Running Flask app. Ensure 'Mzanzi.db' exists.")

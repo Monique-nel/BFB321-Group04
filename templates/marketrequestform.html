@@ -7,7 +7,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-
     <header id="pageTop">
       <nav
         class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
@@ -95,22 +94,22 @@
         </div>
       </nav>
     </header>
-
+  
     <main>
-      <!-- Event Section -->
-      <div id="eventSection" class="py-3">
-        <h3 class="fw-bold text-success text-center mb-3">Add Your Event</h3>
+      <!-- Market Section -->
+      <div id="marketSection" class="py-3">
+        <div class="container" style="max-width: 700px;">
+            
+        <h3 class="fw-bold text-success text-center mb-3">Add your Market</h3>
 
         <div class="text-center mb-3">
-          <i class="bi bi-calendar-event fs-1 text-success"></i>
-          <p class="mt-2 mb-3 fs-6 text-secondary">
-            Welcome to your event dashboard! Please fill in your event details below.
-          </p>
+          <i class="bi bi-shop-window fs-1 text-success"></i>
+          <p class="mt-2 mb-3 fs-6 text-secondary">Welcome to your market dashboard! Please fill in your market details below.</p>
         </div>
 
-        <div class="card shadow-sm border-0 p-4 mx-auto" style="max-width: 700px;">
+        <div class="card shadow-sm border-0 p-4 mx-auto">
           
-          <!-- Flash Messages for Success/Error -->
+          <!-- Flash Messages -->
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -122,31 +121,49 @@
             {% endif %}
           {% endwith %}
 
-          <!-- IMPORTANT: enctype is REQUIRED for file uploads -->
-          <form action="/Eventform" method="POST" enctype="multipart/form-data">
-
-            <!-- Event Name -->
+          <!-- Form Start -->
+          <form action="/market_request" method="POST" id="marketForm" enctype="multipart/form-data">
+            
+            <!-- Market Name -->
             <div class="mb-3">
-              <label for="eventName" class="form-label fw-semibold">Event Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="eventName" name="event_name" placeholder="Enter event name" maxlength="100" required>
+              <label for="marketName" class="form-label fw-semibold">Market Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="marketName" name="market_name" placeholder="Enter market name" required>
             </div>
 
-            <!-- Event Description -->
+            <!-- Market Description -->
             <div class="mb-3">
-              <label for="eventDescription" class="form-label fw-semibold">Event Description <span class="text-danger">*</span></label>
-              <textarea class="form-control" id="eventDescription" name="event_description" rows="3" placeholder="Describe your event" maxlength="200" required></textarea>
+              <label for="marketDescription" class="form-label fw-semibold">Market Description <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="marketDescription" name="description" rows="3" placeholder="Describe your market" required></textarea>
             </div>
 
-            <!-- Event Date -->
+            <!-- Market Location (Address) -->
             <div class="mb-3">
-              <label for="eventDate" class="form-label fw-semibold">Event Date <span class="text-danger">*</span></label>
-              <input type="datetime-local" class="form-control" id="eventDate" name="event_date" required>
+              <label for="marketLocation" class="form-label fw-semibold">Market Location (Address) <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="marketLocation" name="location" placeholder="e.g. 123 Main St, Pretoria" required>
             </div>
 
-            <!-- Event Days -->
+            <!-- Market Location Link (NEW - Matches Database) -->
             <div class="mb-3">
-              <label for="eventDays" class="form-label fw-semibold">Event Days <span class="text-danger">*</span></label>
-              <select class="form-select" id="eventDays" name="event_days" required>
+              <label for="marketLocationLink" class="form-label fw-semibold">Google Maps Link</label>
+              <input type="url" class="form-control" id="marketLocationLink" name="location_link" placeholder="https://maps.google.com/...">
+            </div>
+
+            <!-- Entry Fee -->
+            <div class="mb-3">
+              <label for="marketEntryFee" class="form-label fw-semibold">Market Entry Fee (R)</label>
+              <input type="text" class="form-control" id="marketEntryFee" name="entry_fee" placeholder="e.g. Free or 20">
+            </div>
+
+            <!-- Market Date -->
+            <div class="mb-3">
+              <label for="marketDate" class="form-label fw-semibold">Market Date <span class="text-danger">*</span></label>
+              <input type="datetime-local" class="form-control" id="marketDate" name="market_date" required>
+            </div>
+
+            <!-- Market Days -->
+            <div class="mb-3">
+              <label for="marketDays" class="form-label fw-semibold">Market Days <span class="text-danger">*</span></label>
+              <select class="form-select" id="marketDays" name="operating_days" required>
                 <option selected disabled value="">Select day(s)</option>
                 <option value="Monday">Monday</option>
                 <option value="Tuesday">Tuesday</option>
@@ -159,36 +176,37 @@
               </select>
             </div>
 
-            <!-- NEW: Market Selection (Required by Database) -->
+            <!-- Poster Upload (Matches 'MarketPoster' BLOB) -->
             <div class="mb-3">
-                <label for="marketSelect" class="form-label fw-semibold">Select Market <span class="text-danger">*</span></label>
-                <select class="form-select" id="marketSelect" name="market_id" required>
-                    <option selected disabled value="">-- Choose a Market --</option>
-                    {% for market in markets %}
-                        <option value="{{ market['MarketID'] }}">{{ market['MarketName'] }}</option>
-                    {% endfor %}
-                </select>
+              <label for="marketPoster" class="form-label fw-semibold">Market Poster</label>
+              <input class="form-control" type="file" id="marketPoster" name="market_poster" accept="image/*">
             </div>
 
-            <!-- Event Booking Link -->
+            <!-- Market Map (Matches 'MarketMap' BLOB) -->
             <div class="mb-3">
-              <label for="eventBookingLink" class="form-label fw-semibold">Event Booking Link</label>
-              <input type="url" class="form-control" id="eventBookingLink" name="booking_link" placeholder="https://yourbookinglink.com">
+              <label for="marketMap" class="form-label fw-semibold">Market Map (optional)</label>
+              <input class="form-control" type="file" id="marketMap" name="market_map" accept="image/*,application/pdf">
             </div>
 
-            <!-- Event Poster -->
+            <!-- Instagram -->
             <div class="mb-3">
-              <label for="eventPoster" class="form-label fw-semibold">Event Poster</label>
-              <input class="form-control" type="file" id="eventPoster" name="event_poster" accept="image/*">
+              <label for="marketInstagram" class="form-label fw-semibold">Instagram Link</label>
+              <input type="url" class="form-control" id="marketInstagram" name="instagram" placeholder="https://www.instagram.com/yourpage">
+            </div>
+
+            <!-- Facebook -->
+            <div class="mb-3">
+              <label for="marketFacebook" class="form-label fw-semibold">Facebook Link</label>
+              <input type="url" class="form-control" id="marketFacebook" name="facebook" placeholder="https://www.facebook.com/yourpage">
             </div>
 
             <!-- Buttons -->
             <div class="d-flex justify-content-center gap-3">
               <a href="/userpage" class="btn btn-outline-danger px-4">Back</a>
-              <button type="submit" class="btn btn-success px-4">Save Event</button>
+              <button type="submit" class="btn btn-success px-4">Save Market</button>
             </div>
-
           </form>
+        </div>
         </div>
       </div>
     </main>
@@ -210,7 +228,7 @@
       </div>
 
       <!-- Right side navigation -->
-    <ul class="nav col-md-5 justify-content-end">
+      <ul class="nav col-md-5 justify-content-end">
   <li class="nav-item fw-semibold">
     <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
   </li>
@@ -226,7 +244,6 @@
 </ul>
     </div>
   </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
