@@ -154,61 +154,80 @@
       </a>
 
       <!-- MARKET SECTION -->
-      <div class="row g-4 justify-content-center">
+      <div class="container py-5">
+          <!-- Dynamic Heading: Show "All Markets" or a specific Market ID -->
+          <h1 class="text-center mb-5 fw-light">
+              {% if current_id %}
+                  Market Details (Market ID: {{ current_id }})
+              {% else %}
+                  All Mzanzi Markets
+              {% endif %}
+          </h1>
+          
+          <!-- MARKET SECTION - Displays 1 or more markets in a responsive grid -->
+          <div class="row g-4 justify-content-center">
+          {% if markets %}
+              {% for market in markets %}
+              <div class="col-md-6 col-lg-4">
+                  <div class="card border-0 shadow-sm h-100 hover-shadow rounded-4">
 
-          {% for market in markets %}
-          <div class="col-md-6 col-lg-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-
-                  <!-- HEADER -->
-                  <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-                      <h5 class="fw-bold mb-0">{{ market['MarketName'] }}</h5>
-                      <div>
-                          {% if market['InstagramLink'] %}
-                          <a href="{{ market['InstagramLink'] }}">
-                              <img src="{{ url_for('static', filename='images/instagram.png') }}" height="25" class="me-2">
-                          </a>
-                          {% endif %}
-                          {% if market['FacebookLink'] %}
-                          <a href="{{ market['FacebookLink'] }}">
-                              <img src="{{ url_for('static', filename='images/facebook.png') }}" height="25">
-                          </a>
-                          {% endif %}
+                      <!-- HEADER -->
+                      <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center p-3 rounded-top-4">
+                          <h5 class="fw-bold mb-0">{{ market['MarketName'] }}</h5>
+                          <div>
+                              {% if market['MarketInstagram'] %}
+                              <a href="{{ market['MarketInstagram'] }}" target="_blank" aria-label="Instagram Link">
+                                  <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="instagram" height="25" class="me-2" />
+                              </a>
+                              {% endif %}
+                              {% if market['MarketFacebook'] %}
+                              <a href="{{ market['MarketFacebook'] }}" target="_blank" aria-label="Facebook Link">
+                                  <img src="{{ url_for('static', filename='images/facebook.png') }}" alt="facebook" height="25" />
+                              </a>
+                              {% endif %}
+                          </div>
                       </div>
-                  </div>
 
-                  <!-- CARD BODY -->
-                  <div class="card-body d-flex flex-column">
-
-                      <ul class="list-unstyled mb-3">
-                          <li>🕰️ {{ market['MarketHours'] }}</li>
-                          <li>💰 Entry fee: {{ market['EntryFee'] }}</li>
-                          {% if market['OtherInfo'] %}
-                          <li>{{ market['OtherInfo'] }}</li>
-                          {% endif %}
-                      </ul>
-
-                      <!-- LOCATION -->
-                      {% if market['LocationLink'] %}
-                      <a href="{{ market['LocationLink'] }}" class="text-decoration-none mb-3 fw-semibold">
-                          📌 {{ market['LocationText'] or "View on Google Maps" }}
-                      </a>
+                      <!-- CARD IMAGE -->
+                      {% if market['MarketImage'] %}
+                      <img src="{{ url_for('static', filename=market['MarketImage']) }}" class="card-img-top img-fluid bg-white p-3 rounded" alt="{{ market['MarketName'] }}" />
+                      {% endif %}
+                      {% else %}
+                      <img src="{{ url_for('static', filename=market['MarketImage']) }}" class="card-img-top img-fluid bg-white p-3 rounded" alt="{{ market['MarketName'] }}" />
                       {% endif %}
 
-                      <!-- BUTTONS -->
-                      <div class="d-grid gap-2 mt-auto">
-                          <a href="{{ url_for('market_details', id=market['MarketID']) }}" class="btn btn-success">
-                              Market Map
-                          </a>
-                          <a href="{{ url_for('vendors', market_id=market['MarketID']) }}" class="btn btn-outline-success">
-                              Visit Stalls
-                          </a>
-                      </div>
+                      <!-- CARD BODY -->
+                      <div class="card-body d-flex flex-column">
+                          <ul class="list-unstyled mb-3">
+                              {% if market['MarketDays'] %}
+                              <li>🕰️ {{ market['MarketDays'] }}</li>
+                              {% endif %}
+                              {% if market['MarketDescription'] %}
+                              <li>✅ {{ market['MarketDescription'] }}</li>
+                              {% endif %}
+                              {% if market['MarketEntryFee'] %}
+                              <li>💰 Entry Fee: {{ market['MarketEntryFee'] }}</li>
+                              {% endif %}
+                          </ul>
 
+                          {% if market['MarketLocationLink'] %}
+                          <a href="{{ market['MarketLocationLink'] }}" class="text-decoration-none mb-3 fw-semibold">
+                              📌 {{ market['MarketLocation'] or "View on Google Maps" }}
+                          </a>
+                          {% endif %}
+
+                          <div class="d-grid gap-2 mt-auto">
+                              <a href="{{ url_for('market_details', market_id=market['MarketID']) }}" class="btn btn-success">Market Map</a>
+                              <a href="vendors" class="btn btn-outline-success">Visit Stalls</a>
+                          </div>
+                      </div>
                   </div>
               </div>
+              {% endfor %}
+          {% else %}
+              <p class="text-center text-danger fs-5">No markets found in the database.</p>
+          {% endif %}
           </div>
-          {% endfor %}
 
       </div>
 
