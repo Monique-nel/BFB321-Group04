@@ -95,106 +95,119 @@
       </nav>
     </header>
   
-  <main>
-  <div class="container my-5" style="max-width: 800px;">
-    <div class="card shadow-sm border-0">
-      <div class="card-body p-4">
-        <h3 class="text-center text-success mb-4 fw-bold">Vendor request form</h3>
+    <main>
+      <div class="container my-5" style="max-width: 800px;">
+        <div class="card shadow-sm border-0">
+          <div class="card-body p-4">
+            <h3 class="text-center text-success mb-4 fw-bold">Vendor request form</h3>
 
-        <form>
-          <!-- Vendor Name -->
-          <div class="mb-3">
-            <label for="vendorName" class="form-label fw-semibold">Vendor name <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="vendorName" placeholder="Vendor name" required>
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <!-- IMPORTANT: enctype is required for file uploads -->
+            <form action="/vendor_request" method="POST" enctype="multipart/form-data">
+              
+              <!-- Vendor Name -->
+              <div class="mb-3">
+                <label for="vendorName" class="form-label fw-semibold">Vendor name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="vendorName" name="vendor_name" placeholder="Vendor name" required>
+              </div>
+
+              <!-- Stall Description -->
+              <div class="mb-3">
+                <label for="vendorDescription" class="form-label fw-semibold">Stall Description <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="vendorDescription" name="stall_description" rows="3" placeholder="Enter short description of business" required></textarea>
+              </div>
+
+              <!-- Vendor Type -->
+              <div class="mb-3">
+                <label for="vendorType" class="form-label fw-semibold">Vendor type <span class="text-danger">*</span></label>
+                <select class="form-select" id="vendorType" name="vendor_type" required>
+                  <option selected disabled value="">Select vendor type</option>
+                  <option value="Food and Drink">Food and Drink</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Personal Health">Personal Health</option>
+                  <option value="Clothes">Clothes</option>
+                  <option value="Antiques">Antiques</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Accessories">Accessories</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <!-- Contact Number -->
+              <div class="mb-3">
+                <label for="vendorContact" class="form-label fw-semibold">Contact number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="vendorContact" name="contact_number" placeholder="(+27)" required>
+              </div>
+
+              <!-- Vendor Logo -->
+              <div class="mb-3">
+                <label for="vendorLogo" class="form-label fw-semibold">Vendor logo</label>
+                <input class="form-control" type="file" id="vendorLogo" name="vendor_logo">
+              </div>
+
+              <!-- Vendor Picture -->
+              <div class="mb-3">
+                <label for="vendorPicture" class="form-label fw-semibold">Vendor picture</label>
+                <input class="form-control" type="file" id="vendorPicture" name="vendor_picture">
+              </div>
+
+              <!-- Website -->
+              <div class="mb-3">
+                <label for="vendorWebsite" class="form-label fw-semibold">Website link</label>
+                <input type="url" class="form-control" id="vendorWebsite" name="website" placeholder="Insert link">
+              </div>
+
+              <!-- Facebook -->
+              <div class="mb-3">
+                <label for="facebook" class="form-label fw-semibold">Facebook link</label>
+                <input type="url" class="form-control" id="facebook" name="facebook" placeholder="Insert link">
+              </div>
+
+              <!-- Instagram -->
+              <div class="mb-3">
+                <label for="instagram" class="form-label fw-semibold">Instagram link</label>
+                <input type="url" class="form-control" id="instagram" name="instagram" placeholder="Insert link">
+              </div>
+
+
+              <!-- Market -->
+                <div class="mb-3">
+                <label for="marketSelect" class="form-label fw-semibold">Market <span class="text-danger">*</span></label>
+                <!-- name="markets" matches Python -->
+                <select class="form-select" id="marketSelect" name="markets" multiple size="5" required>
+                    <option value="Johannesburg Market">Johannesburg Market</option>
+                    <option value="Pretoria Market">Pretoria Market</option>
+                    <option value="Durban Market">Durban Market</option>
+                    <option value="Cape Town Market">Cape Town Market</option>
+                    <option value="Port Elizabeth Market">Port Elizabeth Market</option>
+                </select>
+                <div class="form-text">Hold Ctrl (or Cmd) to select multiple markets</div>
+                </div>
+              
+              <div class="text-center">
+                <a href="/userpage" class="btn btn-outline-danger btn-lg px-4">Back</a>
+                <!-- Changed to Button Type Submit -->
+                <button type="submit" class="btn btn-success btn-lg px-4">
+                  Submit your Request
+                </button>
+              </div>
+              
+            </form>
           </div>
-
-          <!-- Stall Description -->
-          <div class="mb-3">
-            <label for="stallDescription" class="form-label fw-semibold">Stall Description <span class="text-danger">*</span></label>
-            <textarea class="form-control" id="vendorDescription" rows="3" placeholder="Enter short description of business" required></textarea>
-          </div>
-
-          <!-- Vendor Type -->
-          <div class="mb-3">
-            <label for="vendorType" class="form-label fw-semibold">Vendor type <span class="text-danger">*</span></label>
-            <select class="form-select" id="vendorType" required>
-              <option selected disabled>Select vendor type</option>
-              <option>Food and Drink</option>
-              <option>Entertainment</option>
-              <option>Personal Health</option>
-              <option>Clothes</option>
-              <option>Antiques</option>
-              <option>Technology</option>
-              <option>Accessories </option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          <!-- Contact Number -->
-          <div class="mb-3">
-            <label for="contactNumber" class="form-label fw-semibold">Contact number <span class="text-danger">*</span></label>
-            <input type="tel" class="form-control" id="vendorContact" placeholder="(+27)" required>
-          </div>
-
-          <!-- Vendor Logo -->
-          <div class="mb-3">
-            <label for="vendorLogo" class="form-label fw-semibold">Vendor logo</label>
-            <input class="form-control" type="file" id="vendorLogo" multiple>
-          </div>
-
-          <!-- Vendor Picture -->
-          <div class="mb-3">
-            <label for="vendorPicture" class="form-label fw-semibold">Vendor picture</label>
-            <input class="form-control" type="file" id="vendorPicture" multiple>
-          </div>
-
-          <!-- Website -->
-          <div class="mb-3">
-            <label for="website" class="form-label fw-semibold">Website link</label>
-            <input type="url" class="form-control" id="vendorWebsite" placeholder="Insert link">
-          </div>
-
-          <!-- Facebook -->
-          <div class="mb-3">
-            <label for="facebook" class="form-label fw-semibold">Facebook link</label>
-            <input type="url" class="form-control" id="facebook" placeholder="Insert link">
-          </div>
-
-          <!-- Instagram -->
-          <div class="mb-3">
-            <label for="instagram" class="form-label fw-semibold">Instagram link</label>
-            <input type="url" class="form-control" id="instagram" placeholder="Insert link">
-          </div>
-
-
-          <!-- Market -->
-            <div class="mb-3">
-            <label for="marketSelect" class="form-label fw-semibold">Market <span class="text-danger">*</span></label>
-            <select class="form-select" id="marketSelect" multiple size="5" required>
-                <option>Johannesburg Market</option>
-                <option>Pretoria Market</option>
-                <option>Durban Market</option>
-                <option>Cape Town Market</option>
-                <option>Port Elizabeth Market</option>
-            </select>
-            <div class="form-text">Hold Ctrl (or Cmd) to select multiple markets</div>
-            </div>
-          
-          <div class="text-center">
-            <a href="userpage.html" class="btn btn-outline-danger btn-lg px-4">Back</a>
-            <a href="userpage.html" 
-              class="btn btn-success btn-lg px-4">
-              Submit your Request
-            </a>
-          </div>
-          
-
-        </form>
+        </div>
       </div>
-    </div>
-    </div>
-  </div>
-  </main>
+    </main>
 
   <!-- Footer -->
   <footer class="border-top py-3" style="background-color: #c8f7c5">
