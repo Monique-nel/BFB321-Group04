@@ -3,280 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us - Mzanzi Market</title>
+  <title>About Us – Mzanzi Market</title>
+
+  <!-- Bootstrap + shared custom overrides -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Tahoma', sans-serif;
-      color: #000000;
-    }
-    .hero-section {
-      background-color: #f8f9fa;
-      padding: 60px 0;
-      text-align: center;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 30px;
-      color: #198754;
-    }
-    .divider {
-      height: 2px;
-
-      background-color: #e9ecef;
-      
-    }
-    .content-img {
-      height: 300px;
-      object-fit: fill;
-      width: 100%;
-      margin-bottom: 20px;
-      border-radius: 8px;
-    }
-    .contact-info {
-      background-color: #f8f9fa;
-      padding: 30px;
-      border-radius: 5px;
-    }
-    .content-section {
-      padding: 60px 0;
-    }
-    .goal-card {
-      text-align: center;
-      padding: 20px;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-    }
-    .goal-card:hover {
-      transform: translateY(-5px);
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
-    <header id="pageTop">
-      <nav
-        class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
-      >
-        <div class="container-fluid px-4">
-          <!-- Left side: Logo + Links -->
-          <a class="navbar-brand d-flex align-items-center me-3" href="home">
-            <img
-              src="{{ url_for('static', filename='images/Logo.png') }}"
-              alt="Mzanzi Market"
-              height="100"
-              class="me-2"
-            />
-          </a>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+<body class="bg-light">
+<!-- =========================  NAVBAR  ========================= -->
+<header id="pageTop">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center me-3" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Mzanzi Market" height="100" class="me-2">
+      </a>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left-aligned links (next to logo) -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="home"
-                  >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="events"
-                  >Upcoming Events</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="vendors"
-                  >Vendor Community</a
-                >
-              </li>
-            </ul>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <!-- Right side: Search + User -->
-            <div class="d-flex align-items-center">
-              <!-- Search -->
-              <form class="d-flex me-3" role="search">
-                <input
-                  class="form-control me-2 rounded-pill px-3 py-1 fs-5"
-                  type="search"
-                  placeholder="Search..."
-                  aria-label="Search"
-                />
-                <button
-                  class="btn btn-outline-light rounded-pill px-3 py-1 fs-5"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link fw-semibold fs-5" href="{{ url_for('home') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold fs-5" href="{{ url_for('events') }}">Upcoming Events</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold fs-5" href="{{ url_for('vendors') }}">Vendor Community</a></li>
+        </ul>
 
-              <!-- User section -->
-              <ul class="navbar-nav d-flex align-items-center mb-0">
-                <li class="nav-item">
-                  <a
-                    class="nav-link d-flex align-items-center fw-semibold fs-5"
-                    href="login"
-                  >
-                    <img
-                      src="{{ url_for('static', filename='images/usericon.png')}}"
-                      alt="User"
-                      height="30"
-                      class="me-1 rounded-circle border border-light p-1"
-                    />
-                    <span>User</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
+        
 
-    <main>
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <h3 class='display-5 '>Who we are</h3>
-              <p class="lead">Mzanzi Market is an online community celebrating South Africa's flourishing market culture since 2025. Connecting people from all paths of life with the shared love for local market communities.</p>
-            </div>
-            <div class="col-md-6">
-              <img src="{{ url_for('static', filename='images/Market_picture.jpg')}}"
-                  alt="Vibrant South African market" class="content-img">
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-
-      <!-- Our Goals Section -->
-      <section id="our-goals" class="content-section">
-        <div class="container">
-          <h2 class="section-title">Our Goals</h2>
-          <div class="row">
-            <div class="col-md-4 mb-4">
-              <div class="goal-card">
-                <img src="{{ url_for('static', filename='images/planet-earth.png')}}"
-                    alt="Eco-friendly practices" class="content-img">
-                <h4>Sustainability</h4>
-                <p>Promoting eco-friendly practices in market culture and reducing environmental impact through conscious consumerism.</p>
-              </div>
-            </div>
-            <div class="col-md-4 mb-4">
-              <div class="goal-card">
-                <img src="{{ url_for('static', filename='images/community (1).png')}}"
-                    alt="Local artisans" class="content-img">
-                <h4>Community Support</h4>
-                <p>fostering a sense of community through collaboration and shared resources</p>
-              </div>
-            </div>
-            <div class="col-md-4 mb-4">
-              <div class="goal-card">
-                <img src="{{ url_for('static', filename='images/network (1).png')}}"
-                    alt="Community connections" class="content-img">
-                <h4>Supporting local businesses</h4>
-                <p>Supporting local businesses and fostering a sense of community through collaboration and shared resources.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-
-      <!-- Our Story Section -->
-      <section id="our-story" class="content-section">
-        <div class="container">
-          <h2 class="section-title">Our Story</h2>
-          <div class="row">
-            <div class="col-md-4">
-              <img src="{{ url_for('static', filename='images/market2.jpg')}}"
-                  alt="Market beginnings" class="content-img">
-            </div>
-            <div class="col-md-8">
-              <p>Mzanzi Market, established in 2025, is an online community with a love for South Africa's flourishing market culture.</p>
-              <p>Our journey began with a simple idea: to create a digital space where the vibrant energy of South African markets could thrive online. We wanted to connect artisans, food producers, and creative entrepreneurs with a community that appreciates authentic, handmade, and locally sourced products.</p>
-              <p>What started as a small platform for a handful of vendors has grown into a thriving community of hundreds of creators and thousands of customers who share our passion for unique, quality products with a story.</p>
-            </div>
-          </div>
-          
-          </div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-
-      <!-- Contact Us Section -->
-      <section id="contact" class="content-section">
-        <div class="container">
-          <h2 class="section-title">Contact Us</h2>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="contact-info">
-                <h4>Get in Touch</h4>
-                <p><strong>Facebook:</strong> MzanziMarket</p>
-                <p><strong>Instagram:</strong> @mzanzi_market</p>
-                <p><strong>Call:</strong> +27 123 456 7890</p>
-                <p><strong>Email:</strong> info@mzanzimarket.co.za</p>
-                <p class="mt-3">We'd love to hear from you! Whether you're a vendor interested in joining our community or a customer with questions, don't hesitate to reach out.</p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <img src="{{ url_for('static', filename='images/market_crowd.jpg')}}" 
-                  alt="Contact our team" class="content-img">
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-  <!-- Footer -->
-  <footer class="border-top py-3" style="background-color: #c8f7c5">
-    <div
-      class="container d-flex flex-wrap justify-content-between align-items-center"
-    >
-      <!-- Left side -->
-      <div class="d-flex align-items-center mb-3 mb-md-0">
-        <img
-          src="{{ url_for('static', filename='images/Logo.png') }}"
-          alt="Mzanzi Market"
-          height="80"
-          class="me-3"
-        />
-        <span class="fw-bold text-success fs-5">Mzanzi Market</span>
+        <!-- User -->
+        <ul class="navbar-nav d-flex align-items-center mb-0">
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center fw-semibold fs-5" href="{{ url_for('login') }}">
+              <img src="{{ url_for('static', filename='images/usericon.png') }}" alt="User" height="30"
+                   class="me-1 rounded-circle border border-light p-1">
+              <span>User</span>
+            </a>
+          </li>
+        </ul>
       </div>
+    </div>
+  </nav>
+</header>
 
-      <!-- Right side navigation -->
+<!-- =========================  HERO  (same style as home) ========================= -->
+<main>
+  <section class="bg-success bg-gradient text-white text-center py-5 mb-5">
+    <div class="container">
+      <h1 class="display-4 fw-bold">About Mzanzi Market</h1>
+      <p class="lead mb-4">Celebrating South Africa's vibrant market culture since 2025.</p>
+    </div>
+  </section>
+
+<!-- =========================  ABOUT CONTENT  ========================= -->
+<div class="container py-5">
+  <!-- Who we are -->
+  <div class="row g-4 align-items-center mb-5">
+    <div class="col-md-6">
+      <h2 class="fw-semibold text-success mb-3">Who we are</h2>
+      <p class="fs-5">Mzanzi Market is an online community that connects people who love local markets—artisans, food producers, and customers alike.</p>
+      <p>Our mission is to keep South Africa’s market culture alive by giving vendors a digital stage and visitors an easy way to discover their next favourite stall.</p>
+    </div>
+    <div class="col-md-6">
+      <img src="{{ url_for('static', filename='images/Market_picture.jpg') }}" alt="Vibrant South African market"
+           class="img-fluid rounded-4 shadow-sm">
+    </div>
+  </div>
+
+  <!-- Our Goals -->
+  <h2 class="text-center display-6 fw-semibold text-success mb-4">Our Goals</h2>
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card h-200 border-0 shadow-sm rounded-4 text-center p-3">
+        <img src="{{ url_for('static', filename='images/planet-earth.png') }}" alt="Sustainability" class="mb-3" height="200">
+        <h5 class="fw-bold">Sustainability</h5>
+        <p class="small">Promote eco-friendly practices and conscious consumerism in market culture.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-200 border-0 shadow-sm rounded-4 text-center p-3">
+        <img src="{{ url_for('static', filename='images/community (1).png') }}" alt="Community" class="mb-3" height="200">
+        <h5 class="fw-bold">Community Support</h5>
+        <p class="small">Foster collaboration and shared resources among local creators.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-200 border-0 shadow-sm rounded-4 text-center p-3">
+        <img src="{{ url_for('static', filename='images/network (1).png') }}" alt="Local Business" class="mb-3" height="200">
+        <h5 class="fw-bold">Support Local Business</h5>
+        <p class="small">Help small vendors reach new customers and grow their brands.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Story -->
+  <h2 class="text-center display-6 fw-semibold text-success mb-4">Our Story</h2>
+  <div class="row g-4 align-items-center mb-5">
+    <div class="col-md-4">
+      <img src="{{ url_for('static', filename='images/market2.jpg') }}" alt="Market beginnings"
+           class="img-fluid rounded-4 shadow-sm">
+    </div>
+    <div class="col-md-8">
+      <p class="fs-5">Established in 2025, Mzanzi Market began as a simple idea: create a digital space where the energy of South African markets could thrive online.</p>
+      <p>What started with a handful of stalls has grown into a community of hundreds of vendors and thousands of shoppers who believe in authentic, locally made products.</p>
+      <p>Today we continue to build technology that makes it easy for anyone to discover, visit and support local markets across the country.</p>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <h2 class="text-center display-6 fw-semibold text-success mb-4">Contact Us</h2>
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="bg-light p-4 rounded-4">
+        <h5 class="fw-bold mb-3">Get in Touch</h5>
+        <p class="mb-1"><strong>Facebook:</strong> <a class="text-success" href="https://facebook.com/MzanziMarket" target="_blank" rel="noopener">MzanziMarket</a></p>
+        <p class="mb-1"><strong>Instagram:</strong> <a class="text-success" href="https://instagram.com/mzanzi_market" target="_blank" rel="noopener">@mzanzi_market</a></p>
+        <p class="mb-1"><strong>Call:</strong> <a class="text-success" href="tel:+27123456789">+27 123 456 789</a></p>
+        <p class="mb-1"><strong>Email:</strong> <a class="text-success" href="mailto:info@mzanzimarket.co.za">info@mzanzimarket.co.za</a></p>
+        <p class="mt-3 mb-0">We’d love to hear from you—whether you’re a vendor who wants to join or a customer with questions.</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <img src="{{ url_for('static', filename='images/market_crowd.jpg') }}" alt="Contact our team"
+           class="img-fluid rounded-4 shadow-sm">
+    </div>
+  </div>
+</div>
+<!-- =========================  FOOTER  ========================= -->
+<footer class="border-top py-3" style="background-color: #c8f7c5">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+    <div class="d-flex align-items-center mb-3 mb-md-0">
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Mzanzi Market" height="80" class="me-3">
+      <span class="fw-bold text-success fs-5">Mzanzi Market</span>
+    </div>
     <ul class="nav col-md-5 justify-content-end">
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
-  </li>
-</ul>
-  </footer>
+      <li class="nav-item fw-semibold"><a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item fw-semibold"><a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a></li>
+      <li class="nav-item fw-semibold"><a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a></li>
+      <li class="nav-item fw-semibold"><a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a></li>
+    </ul>
+  </div>
+</footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
