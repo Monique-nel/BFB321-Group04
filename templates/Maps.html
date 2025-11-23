@@ -8,117 +8,114 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    <header id="pageTop">
-      <nav
-        class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
-      >
-        <div class="container-fluid px-4">
-          <!-- Left side: Logo + Links -->
-          <a class="navbar-brand d-flex align-items-center me-3" href="home">
-            <img
-              src="{{ url_for('static', filename='images/Logo.png') }}"
-              alt="Mzanzi Market"
-              height="100"
-              class="me-2"
-            />
-          </a>
+  <header id="pageTop">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
+    >
+      <div class="container-fluid px-4">
+        <!-- Left side: Logo + Links -->
+        <a class="navbar-brand d-flex align-items-center me-3" href="home">
+          <img
+            src="{{ url_for('static', filename='images/Logo.png') }}"
+            alt="Mzanzi Market"
+            height="100"
+            class="me-2"
+          />
+        </a>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left-aligned links (next to logo) -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Left-aligned links (next to logo) -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link fw-semibold fs-5 active" href="home"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold fs-5" href="events"
+                >Upcoming Events</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold fs-5" href="vendors"
+                >Vendor Community</a
+              >
+            </li>
+          </ul>
+
+          <!-- Right side: Search + User -->
+          <div class="d-flex align-items-center">
+            <!-- Search -->
+            <form class="d-flex me-3" role="search">
+              <input
+                class="form-control me-2 rounded-pill px-3 py-1 fs-5"
+                type="search"
+                placeholder="Search..."
+                aria-label="Search"
+              />
+              <button
+                class="btn btn-outline-light rounded-pill px-3 py-1 fs-5"
+                type="submit"
+              >
+                Search
+              </button>
+            </form>
+
+            <!-- User section -->
+            <ul class="navbar-nav d-flex align-items-center mb-0">
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="home"
-                  >Home</a
+                <a
+                  class="nav-link d-flex align-items-center fw-semibold fs-5"
+                  href="login"
                 >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="events"
-                  >Upcoming Events</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="vendors"
-                  >Vendor Community</a
-                >
+                  <img
+                    src="{{ url_for('static', filename='images/usericon.png')}}"
+                    alt="User"
+                    height="30"
+                    class="me-1 rounded-circle border border-light p-1"
+                  />
+                  <span>User</span>
+                </a>
               </li>
             </ul>
-
-            <!-- Right side: Search + User -->
-            <div class="d-flex align-items-center">
-              <!-- Search -->
-              <form class="d-flex me-3" role="search">
-                <input
-                  class="form-control me-2 rounded-pill px-3 py-1 fs-5"
-                  type="search"
-                  placeholder="Search..."
-                  aria-label="Search"
-                />
-                <button
-                  class="btn btn-outline-light rounded-pill px-3 py-1 fs-5"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
-
-              <!-- User section -->
-              <ul class="navbar-nav d-flex align-items-center mb-0">
-                <li class="nav-item">
-                  <a
-                    class="nav-link d-flex align-items-center fw-semibold fs-5"
-                    href="login"
-                  >
-                    <img
-                      src="{{ url_for('static', filename='images/usericon.png')}}"
-                      alt="User"
-                      height="30"
-                      class="me-1 rounded-circle border border-light p-1"
-                    />
-                    <span>User</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
 
   <main>
+
       <!-- Market name -->
       <div class="container my-4 text-center fs-2">
-          <p>{{ market.name }}</p>
+          <p>{{ market.MarketName }}</p>
       </div>
 
       <!-- Image section with fallback -->
       <div class="container my-4 text-center">
 
-          {% if market.image_filename %}
-              <!-- Image exists in DB -->
-              <img src="{{ url_for('static', filename='images/' ~ market.image_filename) }}"
-                  alt="{{ market.name }}"
+          {% if market.MarketPoster %}
+              <!-- Image exists in DB as BLOB -->
+              <img src="data:image/png;base64,{{ market.MarketPoster | b64encode }}"
+                  alt="{{ market.MarketName }}"
                   class="img-fluid rounded shadow"
                   style="max-width:100%; height:auto;">
           {% else %}
               <!-- No image found -->
               <div class="text-center">
                   <p class="fs-3 fw-bold">Coming Soon</p>
-                  <img src="{{ url_for('static', filename='images/placeholder.png') }}"
-                      alt="Coming Soon"
-                      class="img-fluid rounded shadow"
-                      style="max-width:100%; height:auto;">
               </div>
           {% endif %}
       </div>
@@ -128,6 +125,7 @@
           <a href="{{ url_for('home') }}" class="btn btn-success btn-lg">Back to Markets</a>
           <a href="{{ url_for('vendors') }}" class="btn btn-success btn-lg">Vendors</a>
       </div>
+
   </main>
 
   <!-- Footer -->
