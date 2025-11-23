@@ -1,26 +1,15 @@
-# Mzanzi market 
-## What is mzanzi market 
-Mzanzi market is an online web space that serves as a central informational hub between the consumer and markets in the area, giving you real time information about the location , date and time for all the markets in the Gauteng area. 
+# Mzanzi Market
 
-<<<<<<< HEAD
-## Purpose of Mzanzi market 
-The local market space serves as a simple supplychain where the identified bottleneck is the communication between the markets/vendors and the protantial consumer. Furthermore it was found the root cause for rhis bottlenck is the lack of communication between these two parties
+The Mzanzi Market project, completed in accordance with the BFB 321 module requirements, is a web application that addresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project, demonstrating core marketplace features: product listing, browsing, and user interactions.
 
-With this bottleneck and root cause identified the purpose of Mazanzi Market is to bridge the gap of the communication between the customer and the market. Creating a centrialized informational hub between the two parties and in turn increasing the profits of the markets and the vendors
-
-# Database schema 
-## ERD diagram 
-## Steps on how to run the project 
-## Wireframes
-link to wireframes: https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0-1&t=Y2KUCGWX4J2IAIZk-1
-
-
-
-# Aditional informationS
-=======
-
+## Project owners
+The application was developed in accordance with the BFB 321 module requirements, for **Mr Ibrahim Akanbi** and Mr **Thabang Ngwenya** by **Project Group 04.** The developers are:
+- **Monique Nel** (Project lead): u23614057
+- **Beate du Plessis** : u04659075
+- **Izé Rautenbach** : u23539489
+- **Lana van Rooyen** : u23524342 
 ## Features
-- User authenitication, registration and management
+- User authentication, registration and management
 - User detail pages
 - Product listing and detail pages
 - Admin area for product management (create / edit / remove)
@@ -32,28 +21,28 @@ link to wireframes: https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-webs
 - Basic data analytics for users
 
 
-## System Architechture 
+## System Architecture 
 
-The application consists of a three-layer integrated architecture, consisting of a frontend, backend and database, to ensure functionality. 
+The application has a three-layer architecture comprising a frontend, backend, and database to ensure functionality. 
 - **Frontend** -> Built with Bootstrap, HTML and CSS for an attractive and responsive interface
-- **Backend** -> Not yet applicable for this submission, but built with Flask and Python functionality
-- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, and product information.  
+- **Backend** -> Not yet applicable for this submission, but will be built with Flask and Python functionality
+- **Integrated Database** -> The database was created using SQLite, and stores users, markets, vendors, events and product information.  
 
 ## User experience 
+Please find the application wireframes at the link below: 
 
-link to wireframes: https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0-1&t=Y2KUCGWX4J2IAIZk-1 
-
+https://www.figma.com/design/f7aLnVRKclcaV32dRpTcuk/BFB-website-design?node-id=0-1&t=Y2KUCGWX4J2IAIZk-1
 
 
 ## Database Design and Setup
 
-The databases used for this project is  discussed below and contains the setup, layout, sample data and visualisation, and an ERD. 
+The databases used for this project are discussed below and include the setup, layout, sample data, visualisation, and an ERD. 
 
 ---
 
 ### Database setup using SQLite Command Line
 
-1. Open command prompt/terminal in the project directory
+1. Open the command prompt/terminal in the project directory
 2. Run the SQL commands:
    ```bash
    Mzanzi.db < Mzanzi.sql
@@ -73,18 +62,18 @@ The database includes 8 tables, those containing data are listed below:
 
 2. **markets**:  
    Represents the various community markets featured on the platform.  
-   Each market entry provides location, scheduling, and contact information, as well as links to its social media pages.  
+   Each market entry includes location, scheduling, and contact information, along with links to its social media pages.  
    - **Fields include**: `MarketID`, `MarketName`, `MarketDescription`, `MarketLocation`, `MarketLocationLink`, `MarketEntryFee`, `MarketDate`, `MarketDays`, `MarketPoster`, `MarketInstagram`, `MarketFacebook`, `MarketMap`, `MarketAdministratorID`  
    - **Purpose**: Enables administrators to list and promote markets with comprehensive detail for customers and vendors.  
 
 3. **vendors**:  
-   Contains details for all participating vendors operating at different markets.  
+   Contains details for all participating vendors operating in different markets.  
    Each vendor is linked to a `UserID` (classified as a Vendor) and may operate at multiple markets.  
    - **Fields include**: `VendorID`, `VendorName`, `VendorStallDescription`, `VendorLocation`, `VendorContactNumber`, `VendorOfferingType`, `VendorDescriptionPicture`, `VendorWebsite`, `VendorFacebook`, `VendorInstagram`, `VendorLogo`, `UserID`  
    - **Purpose**: Allows customers to discover unique stalls, products, and artisans across South African markets.  
 
 4. **events**:  
-   Lists special market events, themed festivals, or seasonal gatherings associated with a specific market.  
+   List special market events, themed festivals, or seasonal gatherings associated with a specific market.  
    Each event provides booking links, promotional posters, and details about the date and day of the week.  
    - **Fields include**: `EventID`, `EventName`, `EventDescription`, `EventDate`, `EventDays`, `EventBookingLink`, `EventPoster`, `MarketID`  
    - **Purpose**: Promotes upcoming market events, enabling customers to view details and vendors to participate in event opportunities.  
@@ -96,7 +85,7 @@ The database includes 8 tables, those containing data are listed below:
 The Mzanzi Market database follows a **relational structure** that connects users, markets, vendors, and events:
 
 - **users → markets**:  
-  Each market is managed by one user classified as a *Market Administrator*.  
+  Each market is managed by a single user, designated as *Market Administrator*.  
 
 - **users → vendors**:  
   Each vendor profile is owned by one user classified as a *Vendor*.  
@@ -107,7 +96,7 @@ The Mzanzi Market database follows a **relational structure** that connects user
 - **markets → events**:  
   Each event is hosted by a specific market (linked through `MarketID` as a foreign key).  
 
-This ensures referential integrity and allows efficient querying of related information — for example, displaying all events hosted at a particular market or showing all vendors under one administrator.
+This ensures referential integrity and enables efficient querying of related information — for example, displaying all events hosted at a particular market or showing all vendors under a single administrator.
 
 ---
 
@@ -146,7 +135,7 @@ Each event record includes:
 ---
 
 ## Data Visualisation
-Insert this code into Mzanzi.sql to see current tables.
+Insert this code into Mzanzi.sql to see the tables filled with sample data.
 ```bash
 SELECT * FROM "User";
 SELECT * FROM "Market";
@@ -154,67 +143,55 @@ SELECT * FROM "Vendor";
 SELECT * FROM "Events";
 ```
 
+## Entity Relationship Diagram
 
-The Relationship between the different entities in the database is explored in the ERD below. The ERD was created in MySQL Workbench. 
+The Relationships between the entities in the database are explored in the ERD below. The ERD was created in MySQL Workbench.  
 ![ERD in PNG format](https://github.com/Monique-nel/BFB321-Group04/blob/main/ERD%20Reviewed.png?raw=true)
 
 
-## Repository Structure 
-- **static/** -> Holds the CSS, JS and Images
-- **templates/** -> HTML templates and Flask
-- **Something something** -> Flask main application file
-- **Mzanzi.sql** -> Database models
-- **README.md** -> Application description and explaination  of setup
-
+## File Structure
+```
+├── static/                      # Holds CSS, JS, and images
+├── templates/                   # HTML templates rendered by Flask
+│   ├── images/                  # Template-related images
+│   ├── About.html               # About page
+│   ├── EventForm.html           # Event creation form
+│   ├── events.html              # List of all events
+│   ├── FAQ.html                 # Frequently asked questions page
+│   ├── generalpolicies.html     # Market policies and rules
+│   ├── home.html                # Home page
+│   ├── login.html               # User login page
+│   ├── register.html            # New user registration page
+│   ├── userpage.html            # User dashboard
+│   ├── vendors.html             # Vendor dashboard
+│   ├── marketrequestform.html   # Market request submission form
+│   ├── vendorrequestform.html   # Vendor request submission form
+│   ├── map_4way.html            # Map for Fourways market
+│   ├── map_hazelwood.html       # Map for Hazelwood market
+│   ├── map_irene.html           # Map for Irene market
+│   ├── map_montana.html         # Map for Montana market
+│   ├── map_pretoria.html        # Map for Pretoria market
+│   ├── map_vintage.html         # Map for Vintage market
+│
+├── Mzanzi.db                    # SQLite database
+├── Mzanzi.sql                   # Database schema and sample data
+├── __pycache__/                 # Compiled Python cache files
+└── README.md                    # This file
+```
 
 ## Getting started
 
 Setting up the Mzanzi Market Application locally consists of the following steps: 
 - Clone the repository to your local drive
-- Run the application. It should open on the home.html page on the live server.
-- Click on the Sign In Button to register or sign in
-- Navigate through the app to reach the necessary functionality
-Prerequisites
-- Node 14+ and npm (if using Node)
-- Or the appropriate runtime for your chosen stack
-- Database service configured (MongoDB, Postgres, etc.)
+- Open *home.html* in your web browser
+- Navigate through the app to reach the necessary functionality.
+- Click on the **User Icon** found in the Navigation bar to register or sign in
 
-Quick start (Node + npm example)
-1. Clone the repo
-    git clone <repository-url>
-2. Install dependencies
-    cd mzanzi-market
-    npm install
-3. Environment
-    - Copy .env.example to .env and update DB / API keys
-4. Run locally
-    npm run dev
-5. Open http://localhost:3000 (or configured port)
-
-Adjust the commands to match your actual project scripts.
-
-## Development
-- Follow the project's branching and commit message conventions.
-- Run linters and formatters before pushing.
-- Use feature branches and open pull requests for review.
-
-Common commands (replace as needed)
-- npm run lint
-- npm run test
-- npm run build
-
-## Testing
-- Unit tests for core modules
-- Integration tests for API endpoints
-- Frontend component tests (if applicable)
-
-Run tests:
-npm test
-
-## Deployment
-- Build production assets: npm run build
-- Deploy backend to your chosen host (Heroku, Vercel, AWS, Azure)
-- Configure environment variables on the host
+## Tech Stack
+- **Frontend:** HTML5, CSS3, Bootstrap 5  
+- **Backend:** Flask (Python) *(in progress)*  
+- **Database:** SQLite  
+- **Design Tools:** Figma, MySQL Workbench
 
 ## Browser Compatibility
 
@@ -225,7 +202,7 @@ The application works with all modern browsers that support HTML5 and CSS3, incl
 - Edge 90+
 
 ## License
-Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria
+Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria.
 
 ## Contact
 Project maintained for BFB 321 — University of Pretoria.

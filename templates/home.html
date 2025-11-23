@@ -17,9 +17,9 @@
       >
         <div class="container-fluid px-4">
           <!-- Left side: Logo + Links -->
-          <a class="navbar-brand d-flex align-items-center me-3" href="home.html">
+          <a class="navbar-brand d-flex align-items-center me-3" href="home">
             <img
-              src="images/Logo.png"
+              src="{{ url_for('static', filename='images/Logo.png') }}"
               alt="Mzanzi Market"
               height="100"
               class="me-2"
@@ -42,17 +42,17 @@
             <!-- Left-aligned links (next to logo) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="home.html"
+                <a class="nav-link fw-semibold fs-5 active" href="home"
                   >Home</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="events.html"
+                <a class="nav-link fw-semibold fs-5" href="events"
                   >Upcoming Events</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="vendors.html"
+                <a class="nav-link fw-semibold fs-5" href="vendors"
                   >Vendor Community</a
                 >
               </li>
@@ -81,10 +81,10 @@
                 <li class="nav-item">
                   <a
                     class="nav-link d-flex align-items-center fw-semibold fs-5"
-                    href="login.html"
+                    href="login"
                   >
                     <img
-                      src="images/usericon.png"
+                      src="{{ url_for('static', filename='images/usericon.png')}}"
                       alt="User"
                       height="30"
                       class="me-1 rounded-circle border border-light p-1"
@@ -170,20 +170,20 @@
                   <div>
                       <a href="https://www.instagram.com/4waysfarmersmarket/?hl=en">
                       <img
-                          src="images/instagram.png"
+                          src="{{ url_for('static', filename='images/instagram.png')}}"
                           alt="instagram"
                           height="25"
                           class="me-2"
                       />
                       </a>
                       <a href="https://www.facebook.com/TheFourwaysFarmersMarket">
-                      <img src="images/facebook.png" alt="facebook" height="25" />
+                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
                       </a>
                   </div>
                   </div>
 
                   <img
-                  src="images/4_ways.png"
+                  src="{{ url_for('static', filename='images/4_ways.png')}}"
                   class="card-img-top img-fluid bg-white p-3 rounded"
                   alt="4 Ways Farmers Market"
                   />
@@ -205,8 +205,8 @@
                   >
 
                       <div class="d-grid gap-2 mt-auto">
-                          <a href="Map_4way.html" class="btn btn-success">Market Map</a>
-                          <a href="vendors.html" class="btn btn-outline-success"
+                          <a href="maps" class="btn btn-success">Market Map</a>
+                          <a href="vendors" class="btn btn-outline-success"
                           >Visit Stalls</a
                           >
                       </div>
@@ -224,20 +224,20 @@
                   <div>
                       <a href="https://www.instagram.com/pretoriaboeremark/">
                       <img
-                          src="images/instagram.png"
+                          src="{{ url_for('static', filename='images/instagram.png')}}"
                           alt="instagram"
                           height="25"
                           class="me-2"
                       />
                       </a>
                       <a href="https://www.facebook.com/ptaboeremark">
-                      <img src="images/facebook.png" alt="facebook" height="25" />
+                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
                       </a>
                   </div>
                   </div>
 
                   <img
-                  src="images/PretoriaBoeremark.png"
+                  src="{{ url_for('static', filename='images/PretoriaBoeremark.png')}}"
                   class="card-img-top img-fluid bg-white p-3 rounded"
                   alt="Pretoria Boeremark"
                   />
@@ -260,10 +260,10 @@
                   </a>
 
                   <div class="d-grid gap-2 mt-auto">
-                      <a href="Map_pretoria.html" class="btn btn-success"
+                      <a href="maps" class="btn btn-success"
                       >Market Map</a
                       >
-                      <a href="vendors.html" class="btn btn-outline-success"
+                      <a href="vendors" class="btn btn-outline-success"
                       >Visit Stalls</a
                       >
                   </div>
@@ -281,20 +281,20 @@
                   <div>
                       <a href="https://www.instagram.com/montana_family_market/">
                       <img
-                          src="images/instagram.png"
+                          src="{{ url_for('static', filename='images/instagram.png')}}"
                           alt="instagram"
                           height="25"
                           class="me-2"
                       />
                       </a>
                       <a href="https://www.facebook.com/montanafamilymarket">
-                      <img src="images/facebook.png" alt="facebook" height="25" />
+                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
                       </a>
                   </div>
                   </div>
 
                   <img
-                  src="images/Montana_Family.png"
+                  src="{{ url_for('static', filename='images/Montana_Family.png')}}"
                   class="card-img-top img-fluid bg-white p-3 rounded"
                   alt="Montana Family Market"
                   />
@@ -316,10 +316,10 @@
                   >
 
                   <div class="d-grid gap-2 mt-auto">
-                      <a href="Map_montana.html" class="btn btn-success"
+                      <a href="maps" class="btn btn-success"
                       >Market Map</a
                       >
-                      <a href="vendors.html" class="btn btn-outline-success"
+                      <a href="vendors" class="btn btn-outline-success"
                       >Visit Stalls</a
                       >
                   </div>
@@ -337,20 +337,20 @@
                   <div>
                       <a href="https://www.instagram.com/hazelfood_arts_crafts/">
                       <img
-                          src="images/instagram.png"
+                          src="{{ url_for('static', filename='images/instagram.png')}}"
                           alt="instagram"
                           height="25"
                           class="me-2"
                       />
                       </a>
                       <a href="https://www.facebook.com/hazelfoodmarket">
-                      <img src="images/facebook.png" alt="facebook" height="25" />
+                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
                       </a>
                   </div>
                   </div>
 
                   <img
-                  src="images/HazelwoodFood.png"
+                  src="{{ url_for('static', filename='images/HazelwoodFood.png')}}"
                   class="card-img-top img-fluid bg-white p-3 rounded"
                   alt="Hazel Food Market"
                   />
@@ -372,10 +372,10 @@
                   >
 
                   <div class="d-grid gap-2 mt-auto">
-                      <a href="map_hazelwood.html" class="btn btn-success"
+                      <a href="maps" class="btn btn-success"
                       >Market Map</a
                       >
-                      <a href="vendors.html" class="btn btn-outline-success"
+                      <a href="vendors" class="btn btn-outline-success"
                       >Visit Stalls</a
                       >
                   </div>
@@ -393,20 +393,20 @@
                   <div>
                       <a href="https://www.instagram.com/irenemarket/">
                       <img
-                          src="images/instagram.png"
+                          src="{{ url_for('static', filename='images/instagram.png')}}"
                           alt="instagram"
                           height="25"
                           class="me-2"
                       />
                       </a>
                       <a href="https://www.facebook.com/irenevillagemarket">
-                      <img src="images/facebook.png" alt="facebook" height="25" />
+                      <img src="{{ url_for('static', filename='images/facebook.png')}}"alt="facebook" height="25" />
                       </a>
                   </div>
                   </div>
 
                   <img
-                  src="images/irene.png"
+                  src="{{ url_for('static', filename='images/irene.png')}}"
                   class="card-img-top img-fluid bg-white p-3 rounded"
                   alt="Irene Village Market"
                   />
@@ -428,8 +428,8 @@
                   >
 
                   <div class="d-grid gap-2 mt-auto">
-                      <a href="map_irene.html" class="btn btn-success">Market Map</a>
-                      <a href="vendors.html" class="btn btn-outline-success"
+                      <a href="maps" class="btn btn-success">Market Map</a>
+                      <a href="vendors" class="btn btn-outline-success"
                       >Visit Stalls</a
                       >
                   </div>
@@ -447,20 +447,20 @@
                   <div>
                       <a href="https://www.instagram.com/thevintagesquarethriftfair/">
                       <img
-                          src="images/instagram.png"
+                          src="{{ url_for('static', filename='images/instagram.png')}}"
                           alt="instagram"
                           height="25"
                           class="me-2"
                       />
                       </a>
                       <a href="https://www.facebook.com/vintagesquarethriftfair/">
-                      <img src="images/facebook.png" alt="facebook" height="25" />
+                      <img src="{{ url_for('static', filename='images/facebook.png')}}" alt="facebook" height="25" />
                       </a>
                   </div>
                   </div>
 
                   <img
-                  src="images/Vintage.png"
+                  src="{{ url_for('static', filename='images/Vintage.png')}}"
                   class="card-img-top img-fluid bg-white p-3 rounded"
                   alt="The Vintage Square Thrift Fair"
                   />
@@ -482,10 +482,10 @@
                   >
 
                   <div class="d-grid gap-2 mt-auto">
-                      <a href="map_vintage.html" class="btn btn-success"
+                      <a href="maps" class="btn btn-success"
                       >Market Map</a
                       >
-                      <a href="vendors.html" class="btn btn-outline-success"
+                      <a href="vendors" class="btn btn-outline-success"
                       >Visit Stalls</a
                       >
                   </div>
@@ -509,7 +509,7 @@
         <!-- Left side -->
         <div class="d-flex align-items-center mb-3 mb-md-0">
           <img
-            src="images/Logo.png"
+            src="{{ url_for('static', filename='images/Logo.png') }}"
             alt="Mzanzi Market"
             height="80"
             class="me-3"
@@ -520,18 +520,18 @@
         <!-- Right side navigation -->
         <ul class="nav col-md-5 justify-content-end">
           <li class="nav-item fw-semibold">
-            <a href="home.html" class="nav-link px-2 text-muted">Home</a>
+            <a href="home" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item fw-semibold">
-            <a href="generalpolicies.html" class="nav-link px-2 text-muted"
+            <a href="generalpolicies" class="nav-link px-2 text-muted"
               >General Policies</a
             >
           </li>
           <li class="nav-item fw-semibold">
-            <a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a>
+            <a href="FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
           <li class="nav-item fw-semibold">
-            <a href="About.html" class="nav-link px-2 text-muted">About</a>
+            <a href="About" class="nav-link px-2 text-muted">About</a>
           </li>
         </ul>
       </div>
