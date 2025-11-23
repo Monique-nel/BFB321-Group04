@@ -227,21 +227,19 @@
 
       <!-- Right side navigation -->
       <ul class="nav col-md-5 justify-content-end">
-        <li class="nav-item fw-semibold">
-          <a href="home.html" class="nav-link px-2 text-muted">Home</a>
-        </li>
-        <li class="nav-item fw-semibold">
-          <a href="generalpolicies.html" class="nav-link px-2 text-muted"
-            >General Policies</a
-          >
-        </li>
-        <li class="nav-item fw-semibold">
-          <a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a>
-        </li>
-        <li class="nav-item fw-semibold">
-          <a href="About.html" class="nav-link px-2 text-muted">About</a>
-        </li>
-      </ul>
+  <li class="nav-item fw-semibold">
+    <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
+  </li>
+  <li class="nav-item fw-semibold">
+    <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
+  </li>
+  <li class="nav-item fw-semibold">
+    <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
+  </li>
+  <li class="nav-item fw-semibold">
+    <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
+  </li>
+</ul>
     </div>
   </footer>
 
