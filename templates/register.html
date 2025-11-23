@@ -101,44 +101,48 @@
         <div class="card-body p-4">
           <h3 class="text-center text-success mb-4">Register here</h3>
 
+          <!-- Flash Messages for Errors -->
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
           <form action="/register" method="POST">
             <!-- Username -->
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
             </div>
 
             <!-- Email -->
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com">
+              <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
             </div>
 
             <!-- Password -->
-            <div class="mb-3 position-relative">
+            <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <div class="input-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                  Show
-                </button>
-              </div>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
             </div>
 
-            <!--Confirm Password -->
+            <!-- Confirm Password -->
             <div class="mb-3">
               <label for="confirmpassword" class="form-label">Confirm Password</label>
-              <div class="input-group">
-                <input type="password" class="form-control" id="confirmpassword" placeholder="Enter your password again">
-                <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
-                  Show
-                </button>
-              </div>
+              <!-- FIXED: Added name="confirmpassword" -->
+              <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Enter your password again" required>
             </div>
 
             <!-- Buttons -->
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-success flex-fill">Sign in</button>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success">Register</button>
+              <a href="/login" class="btn btn-outline-secondary">Already have an account? Login</a>
             </div>
           </form>
         </div>
@@ -165,18 +169,18 @@
       <!-- Right side navigation -->
       <ul class="nav col-md-5 justify-content-end">
         <li class="nav-item fw-semibold">
-          <a href="home.html" class="nav-link px-2 text-muted">Home</a>
+          <a href="home" class="nav-link px-2 text-muted">Home</a>
         </li>
         <li class="nav-item fw-semibold">
-          <a href="generalpolicies.html" class="nav-link px-2 text-muted"
+          <a href="generalpolicies" class="nav-link px-2 text-muted"
             >General Policies</a
           >
         </li>
         <li class="nav-item fw-semibold">
-          <a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a>
+          <a href="FAQ" class="nav-link px-2 text-muted">FAQs</a>
         </li>
         <li class="nav-item fw-semibold">
-          <a href="About.html" class="nav-link px-2 text-muted">About</a>
+          <a href="About" class="nav-link px-2 text-muted">About</a>
         </li>
       </ul>
     </div>

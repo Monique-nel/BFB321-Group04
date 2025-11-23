@@ -95,48 +95,52 @@
       </nav>
     </header>
   
-  <main>
-  <!-- Sign In Section -->
-  <div class="container my-5" style="max-width: 500px;">
-    <div class="card shadow-lg border-0">
-      <div class="card-body p-4">
-        <h3 class="text-center text-success mb-4">Sign In</h3>
-        <p class="text-center text-muted mb-4">Don’t have an account? <a href="register.html" class="text-success fw-bold">Register here</a>.</p>
+    <main>
+      <div class="container my-5" style="max-width: 500px;">
+        <div class="card shadow-lg border-0">
+          <div class="card-body p-4">
+            <h3 class="text-center text-success mb-4">Sign In</h3>
+            
+            <!-- Link to Register Page -->
+            <p class="text-center text-muted mb-4">Don’t have an account? <a href="/register" class="text-success fw-bold">Register here</a>.</p>
 
-        <form id="loginForm">
-          <!-- Username -->
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+            <!-- Flash Messages for Errors (e.g. Wrong Password) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <!-- Form Action points to your Python login route -->
+            <form action="/login" method="POST">
+              
+              <!-- Email (Used for lookup in your Python code) -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
+              </div>
+
+              <!-- Password -->
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success px-5 w-100">Sign in</button>
+              </div>
+
+            </form>
           </div>
-
-          <!-- Email -->
-          <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
-          </div>
-
-          <!-- Password -->
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <div class="input-group">
-              <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-              <button type="button" class="btn btn-outline-secondary" id="togglePassword">Show</button>
-            </div>
-          </div>
-
-          <!-- Error Message -->
-          <div id="errorMsg" class="text-danger text-center mb-3 d-none fw-semibold"></div>
-
-          <!-- Buttons -->
-          <div class="d-flex justify-content-center">
-            <a href="userpage.html" class="btn btn-success px-5">Sign in</a>
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
-  </div>
-  </main>
+    </main>
 
   <!-- Footer -->
   <footer class="border-top py-3" style="background-color: #c8f7c5;">
@@ -149,10 +153,10 @@
 
       <!-- Right side navigation -->
       <ul class="nav col-md-5 justify-content-end">
-        <li class="nav-item fw-semibold"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
-        <li class="nav-item fw-semibold"><a href="generalpolicies.html" class="nav-link px-2 text-muted">General Policies</a></li>
-        <li class="nav-item fw-semibold"><a href="FAQ.html" class="nav-link px-2 text-muted">FAQs</a></li>
-        <li class="nav-item fw-semibold"><a href="About.html" class="nav-link px-2 text-muted">About</a></li>
+        <li class="nav-item fw-semibold"><a href="home" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item fw-semibold"><a href="generalpolicies" class="nav-link px-2 text-muted">General Policies</a></li>
+        <li class="nav-item fw-semibold"><a href="FAQ" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item fw-semibold"><a href="About" class="nav-link px-2 text-muted">About</a></li>
       </ul>
     </div>
   </footer>
