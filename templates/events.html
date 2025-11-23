@@ -100,67 +100,39 @@
     <section>
       <div class="container py-5">
         <!-- EVENT 1 -->
+        {% for event in events %}
         <div class="row g-4 align-items-center mb-5">
           <div class="col-lg-6 text-center">
-            <img src="{{ url_for('static', filename='images/Flavours_event.png')}}" alt="Flavors of Africa Flyer" class="img-fluid rounded shadow">
+            <img src="{{ url_for('static', filename='images/' + event['EventPoster']) }}"
+                alt="{{ event['EventName'] }} Flyer"
+                class="img-fluid rounded shadow">
           </div>
-          <div class="col-lg-6">
-            <div class="card border-0 shadow-sm">
-              <div class="card-body">
-                <h2 class="fw-bold mb-3 text-success">Flavors of Africa Food Festival</h2>
-                <ul class="list-unstyled mb-3">
-                  <li><strong>Date:</strong> 2-7 August 2025</li>
-                  <li><strong>Time:</strong> 11:00 AM – 08:00 PM</li>
-                  <li><strong>Place:</strong> Montana Family Market, Pretoria</li>
-                </ul>
-                <p class="mb-4">A celebration of African cuisine featuring food stalls from across the continent — from Ethiopian coffee to West African jollof rice. Live cooking demos, tasting stations, and kids’ activities included.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLgKrMh7-riUP76_EFa470RKlfSZr602ULQ5JIv14o-JGGlA/viewform?usp=header" class="btn btn-success w-100 fw-semibold">Book your spot TODAY!</a>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- EVENT 2 (reversed order on large screens) -->
-        <div class="row g-4 align-items-center flex-lg-row-reverse mb-5">
-          <div class="col-lg-6 text-center">
-            <img src="{{ url_for('static', filename='images/Music_event.png')}}" alt="Mzansi Music & Market Nights" class="img-fluid rounded shadow">
-          </div>
           <div class="col-lg-6">
             <div class="card border-0 shadow-sm">
               <div class="card-body">
-                <h2 class="fw-bold mb-3 text-success">Mzansi Music & Market Nights</h2>
-                <ul class="list-unstyled mb-3">
-                  <li><strong>Date:</strong> Friday, 23 February</li>
-                  <li><strong>Time:</strong> All day and night</li>
-                  <li><strong>Place:</strong> Lavender Kontrei Market, Onderstepoort</li>
-                </ul>
-                <p class="mb-4">A lively night market with food trucks, craft stalls, and a line-up of local jazz and indie bands. Fire dancers and kids’ play zones included.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSekeaNnxkL7jvGUNx87RckKJi9kuwcnJ6ZH8plfgEIifUz03w/viewform?usp=header" class="btn btn-success w-100 fw-semibold">Book your spot TODAY!</a>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- EVENT 3 -->
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-6 text-center">
-            <img src="{{ url_for('static', filename='images/Springfair_event.png')}}" alt="Spring Craft & Handmade Fair" class="img-fluid rounded shadow">
-          </div>
-          <div class="col-lg-6">
-            <div class="card border-0 shadow-sm">
-              <div class="card-body">
-                <h2 class="fw-bold mb-3 text-success">Spring Craft & Handmade Fair</h2>
+                <h2 class="fw-bold mb-3 text-success">{{ event['EventName'] }}</h2>
+
                 <ul class="list-unstyled mb-3">
-                  <li><strong>Date:</strong> Saturday, 27 September 2025</li>
-                  <li><strong>Time:</strong> 09:00 AM – 4:00 PM</li>
-                  <li><strong>Place:</strong> Hazel Food Market, Lynnwood</li>
+                  <li><strong>Date:</strong> {{ event['EventDate'] }}</li>
+                  
+                  <li><strong>Days:</strong> {{ event['EventDays'] }}</li> 
+                  
+                  <li><strong>Market ID:</strong> {{ event['MarketID'] }}</li>
                 </ul>
-                <p class="mb-4">A showcase of local artisans and makers. Shop handmade jewelry, décor, pottery, and fashion while enjoying live acoustic music and fresh food.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd20u0qCcVMgO0BGy8wsPXc6v9ZuqAraDOEOWkEF1J7PfZQDQ/viewform?usp=header" class="btn btn-success w-100 fw-semibold">Book your spot TODAY!</a>
+
+                <p class="mb-4">{{ event['EventDescription'] }}</p>
+
+                <a href="{{ event['EventBookingLink'] }}" class="btn btn-success w-100 fw-semibold">
+                  Book Now
+                </a>
+
               </div>
             </div>
           </div>
         </div>
+        {% endfor %}
 
         <!-- Next button -->
         <div class="text-center mt-5">
