@@ -9,61 +9,38 @@ app.secret_key = "my_super_secret_key_12345"
 
 # --- Jinja Filter for BLOB Images ---
 def convert_blob_to_base64(blob_data):
-    if blob_data:
-        return f"data:image/png;base64,{base64.b64encode(blob_data).decode('utf-8')}"
-    return None
-
-app.jinja_env.filters['to_base64'] = convert_blob_to_base64
-
-<<<<<<< HEAD
-# --- Database Helper Function ---
-=======
-import base64
-def convert_blob_to_base64(blob_data):
-    """Return a data-URI for a BLOB or an empty string if nothing supplied."""
+    """
+    Return a data-URI for a BLOB, a path for a string, 
+    or an empty string if nothing supplied.
+    """
     if not blob_data:                       # None or empty
         return ""
+    
     if isinstance(blob_data, bytes):        # real SQLite BLOB
-        return f"data:image/png;base64,{base64.b64encode(blob_data).decode()}"
+        return f"data:image/png;base64,{base64.b64encode(blob_data).decode('utf-8')}"
+    
     if isinstance(blob_data, str):          # already a path / file name
         return blob_data                    # pass through unchanged
+    
     return ""
 
 app.jinja_env.filters['to_base64'] = convert_blob_to_base64
-#  --- Database Helper Function ---
 
->>>>>>> 2b902b7ba4f43d7be607116ac0ce15ca400ec535
 def get_db_connection():
-    # FIX 1: Added timeout=10 to wait for the database lock to clear instead of crashing immediately
-    conn = sqlite3.connect('Mzanzi.db', timeout=10)
+    # FIX: Increased timeout to 30s and enabled WAL mode to prevent locking
+    conn = sqlite3.connect('Mzanzi.db', timeout=30)
     conn.row_factory = sqlite3.Row 
+    
+    # Enable Write-Ahead Logging (WAL) - Huge help for concurrency
+    try:
+        conn.execute("PRAGMA journal_mode=WAL")
+    except:
+        pass # If it fails, it just ignores it, but usually it works
+        
     return conn
-
 # --- Routes ---
 
-<<<<<<< HEAD
-=======
-# NEW ROUTE: Displays a specific market detail by ID passed in the URL
-@app.route("/market/<int:market_id>", methods=["GET"])
-def market_details(market_id):
-    conn = get_db_connection()
-    # Fetch the specific market using the ID from the URL
-    market = conn.execute(
-        "SELECT * FROM Market WHERE MarketID = ?", 
-        (market_id,)
-    ).fetchone() # Use fetchone() since we expect at most one row
-    conn.close()
-
-    # Pass a list containing the single market (or empty list if None) for the template loop compatibility
-    markets = [market] if market else []
-    
-    # The home.html template is flexible enough to handle this single item/empty list
-    # We pass 'current_id' to dynamically update the page title and heading.
-    return render_template("home.html", markets=markets, current_id=market_id)
-
-
 # DEFAULT ROUTE: Still serves the original request (MarketID = 2)
->>>>>>> 2b902b7ba4f43d7be607116ac0ce15ca400ec535
 @app.route("/", methods=["GET"])
 def home():
     conn = get_db_connection()
