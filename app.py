@@ -141,17 +141,133 @@ def login():
             
     return render_template("login.html")
 
-@app.route("/userpage")
+@app.route("/userpage", methods=['GET', 'POST'])
 def userpage():
     if 'user_id' not in session:
         flash("Please log in to view your profile.", "warning")
         return redirect(url_for("login"))
-    
+
     conn = get_db_connection()
-    user = conn.execute("SELECT * FROM User WHERE UserID = ?", (session['user_id'],)).fetchone()
-    conn.close()
+    conn.row_factory = sqlite3.Row # Ensure we can access columns by name
+    user_id = session['user_id']
+
+    # ==========================================
+    # 1. HANDLE FORM SUBMISSIONS (POST)
+    # ==========================================
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        try:
+            # --- A. UPDATE MARKET DETAILS ---
+            if action == 'update_market':
+                # Text Data
+                name = request.form['market_name']
+                desc = request.form['market_description']
+                loc = request.form['market_location']
+                loc_link = request.form['market_location_link']
+                fee = request.form['market_entry_fee']
+                days = request.form['market_days']
+                insta = request.form['market_instagram']
+                fb = request.form['market_facebook']
+                
+                # Image Data (BLOBs)
+                poster_blob = None
+                if 'market_poster' in request.files:
+                    file = request.files['market_poster']
+                    if file.filename != '':
+                        poster_blob = file.read()
+
+                # Check if market exists for this admin
+                # Note: Assuming UserID matches MarketAdministratorID for simplicity
+                existing = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+
+                if existing:
+                    # Construct Update Query
+                    sql = """UPDATE Market SET 
+                             MarketName=?, MarketDescription=?, MarketLocation=?, MarketLocationLink=?, 
+                             MarketEntryFee=?, MarketDays=?, MarketInstagram=?, MarketFacebook=?"""
+                    params = [name, desc, loc, loc_link, fee, days, insta, fb]
+
+                    # Only update poster if a new one was uploaded
+                    if poster_blob:
+                        sql += ", MarketPoster=?"
+                        params.append(poster_blob)
+                    
+                    sql += " WHERE MarketAdministratorID=?"
+                    params.append(user_id)
+                    
+                    conn.execute(sql, params)
+                    flash("Market details updated!", "success")
+                else:
+                    # Insert New
+                    conn.execute("""
+                        INSERT INTO Market (MarketAdministratorID, MarketName, MarketDescription, MarketLocation, 
+                        MarketLocationLink, MarketEntryFee, MarketDays, MarketInstagram, MarketFacebook, MarketPoster) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (user_id, name, desc, loc, loc_link, fee, days, insta, fb, poster_blob))
+                    flash("Market registered successfully!", "success")
+                
+                conn.commit()
+
+            # --- B. ADD/UPDATE EVENT ---
+            elif action == 'update_event':
+                e_name = request.form['event_name']
+                e_desc = request.form['event_description']
+                e_date = request.form['event_date']
+                e_days = request.form['event_days']
+                e_link = request.form['event_booking_link']
+                
+                # Image Data
+                e_poster = None
+                if 'event_poster' in request.files:
+                    file = request.files['event_poster']
+                    if file.filename != '':
+                        e_poster = file.read()
+
+                # Get Market ID
+                market_row = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+                
+                if market_row:
+                    conn.execute("""
+                        INSERT INTO Events (MarketID, EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """, (market_row['MarketID'], e_name, e_desc, e_date, e_days, e_link, e_poster))
+                    flash("Event added successfully!", "success")
+                    conn.commit()
+                else:
+                    flash("Please create a market profile first.", "warning")
+
+        except Exception as e:
+            conn.rollback()
+            flash(f"Error: {str(e)}", "danger")
+            print(f"Database Error: {e}")
+
+        conn.close()
+        return redirect(url_for("userpage"))
+
+    # ==========================================
+    # 2. PAGE LOAD (GET)
+    # ==========================================
+    user = conn.execute("SELECT * FROM User WHERE UserID = ?", (user_id,)).fetchone()
     
-    return render_template("userpage.html", user=user)
+    market = None
+    events = []
+    vendors = []
+
+    if user['Classification'] == 'MarketAdministrator': # Note: No space based on your DB
+        # Fetch Market
+        market = conn.execute("SELECT * FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+        
+        if market:
+            # Fetch Events for this Market
+            events = conn.execute("SELECT * FROM Events WHERE MarketID = ?", (market['MarketID'],)).fetchall()
+            
+            # Fetch Vendors (Assuming logic: Fetch all vendors for now, 
+            # normally you would need a linking table like 'MarketVendors' to filter specific ones)
+            vendors = conn.execute("SELECT * FROM Vendor").fetchall() 
+
+    conn.close()
+    return render_template("userpage.html", user=user, market=market, events=events, vendors=vendors)
 
 @app.route("/logout")
 def logout():

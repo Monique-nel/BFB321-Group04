@@ -99,171 +99,286 @@
     </header>
 
     <main>
-      <!-- Main Dashboard -->
       <div class="container my-5">
+        
+        <div class="row mb-3">
+          <div class="col-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
+        </div>
+
         <div class="row g-4">
 
-          <!-- Left: Profile Card (Visible to Everyone) -->
           <div class="col-lg-4">
             <div class="card border-0 shadow-lg rounded-4">
               <div class="card-body text-center p-4">
                 <div class="bg-success bg-opacity-10 d-inline-flex p-4 rounded-circle mb-3">
                   <i class="bi bi-person-circle fs-1 text-success"></i>
                 </div>
-                
-                <!-- Dynamic Username -->
                 <h4 class="fw-bold text-success mb-1">Welcome, {{ user['Username'] }}</h4>
-                <p class="text-muted mb-4">Manage your profile information below</p>
+                <p class="text-muted mb-4">Manage your profile information</p>
 
-                <!-- Profile Info -->
                 <div class="text-start">
                   <div class="mb-3">
                     <h6 class="fw-semibold text-success mb-1">Username</h6>
                     <div class="border rounded-3 p-3 d-flex justify-content-between align-items-center">
                       <span class="text-muted">{{ user['Username'] }}</span>
-                      <i class="bi bi-pencil-square text-success"></i>
+                      <button type="button" class="btn btn-sm btn-outline-success border-0" data-bs-toggle="modal" data-bs-target="#editUsernameModal">
+                        <i class="bi bi-pencil-square fs-5"></i>
+                      </button>
                     </div>
                   </div>
-
-                  <div class="mb-3">
-                    <h6 class="fw-semibold text-success mb-1">Email</h6>
-                    <div class="border rounded-3 p-3 d-flex justify-content-between align-items-center">
-                      <span class="text-muted">{{ user['Email'] }}</span>
-                      <i class="bi bi-pencil-square text-success"></i>
-                    </div>
                   </div>
-
-                  <div class="mb-3">
-                    <h6 class="fw-semibold text-success mb-1">Account Type</h6>
-                    <div class="border rounded-3 p-3 d-flex justify-content-between align-items-center">
-                      <span class="badge bg-success">{{ user['Classification'] }}</span>
-                    </div>
-                  </div>
-
-                  <div class="mb-4">
-                    <h6 class="fw-semibold text-success mb-1">Password</h6>
-                    <div class="border rounded-3 p-3 d-flex justify-content-between align-items-center">
-                      <span class="text-muted">************</span>
-                      <i class="bi bi-pencil-square text-success"></i>
-                    </div>
-                  </div>
-                </div>
-
-                <a href="/logout" class="btn btn-outline-danger w-100 rounded-pill py-2 mb-2">
-                  <i class="bi bi-box-arrow-left me-2"></i>Logout
-                </a>
+                <a href="/logout" class="btn btn-outline-danger w-100 rounded-pill py-2 mb-2">Logout</a>
               </div>
             </div>
           </div>
 
-          <!-- Right: Dashboard Sections -->
           <div class="col-lg-8 d-flex flex-column gap-4">
 
-            <!-- VENDOR SPECIFIC SECTION -->
             {% if user['Classification'] == 'Vendor' %}
-            
-              <!-- Vendor Overview -->
+              <div class="card border-0 shadow-lg rounded-4"><div class="card-body"><h5>Vendor View Placeholder</h5></div></div>
+
+            {% elif user['Classification'] == 'MarketAdministrator' %}
+
               <div class="card border-0 shadow-lg rounded-4">
                 <div class="card-body">
-                  <h5 class="fw-semibold text-success mb-4"><i class="bi bi-shop me-2"></i>Vendor Overview</h5>
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h5 class="fw-semibold text-success m-0"><i class="bi bi-buildings me-2"></i>
+                            {{ market['MarketName'] if market else 'Register Your Market' }}
+                        </h5>
+                        {% if market %}
+                            <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> {{ market['MarketLocation'] }}</small>
+                        {% endif %}
+                    </div>
+                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#editMarketModal">
+                        <i class="bi bi-pencil me-1"></i> {{ 'Edit Details' if market else 'Create Market' }}
+                    </button>
+                  </div>
+
                   <div class="row g-3 text-center">
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4">
                       <div class="border rounded-4 py-3 bg-white">
-                        <i class="bi bi-box-seam fs-2 text-success"></i>
-                        <div class="fw-semibold text-secondary mt-2">Products</div>
-                        <div class="fw-bold text-success fs-5">24</div>
+                        <i class="bi bi-calendar-check fs-2 text-success"></i>
+                        <div class="fw-semibold text-secondary mt-2">Active Events</div>
+                        <div class="fw-bold text-success fs-5">{{ events|length }}</div>
                       </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4">
                       <div class="border rounded-4 py-3 bg-white">
-                        <i class="bi bi-calendar-event fs-2 text-success"></i>
-                        <div class="fw-semibold text-secondary mt-2">Markets</div>
-                        <div class="fw-bold text-success fs-5">3</div>
+                        <i class="bi bi-people-fill fs-2 text-success"></i>
+                        <div class="fw-semibold text-secondary mt-2">Vendors</div>
+                        <div class="fw-bold text-success fs-5">{{ vendors|length }}</div>
                       </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                      <div class="border rounded-4 py-3 bg-white">
-                        <i class="bi bi-clock-history fs-2 text-success"></i>
-                        <div class="fw-semibold text-secondary mt-2">Pending</div>
-                        <div class="fw-bold text-success fs-5">5</div>
+                    <div class="col-md-4">
+                        <div class="border rounded-4 py-3 bg-white">
+                          <i class="bi bi-ticket-perforated fs-2 text-success"></i>
+                          <div class="fw-semibold text-secondary mt-2">Entry Fee</div>
+                          <div class="fw-bold text-success fs-5">{{ market['MarketEntryFee'] if market else 'Free' }}</div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                      <div class="border rounded-4 py-3 bg-white">
-                        <i class="bi bi-star-fill fs-2 text-success"></i>
-                        <div class="fw-semibold text-secondary mt-2">Reviews</div>
-                        <div class="fw-bold text-success fs-5">4.7★</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Vendor Dashboard Buttons -->
               <div class="card border-0 shadow-lg rounded-4">
-                <div class="card-body text-center">
-                  <h3 class="fw-bold text-success mb-3">Vendor Dashboard</h3>
-                  <p class="text-secondary mb-4">Manage and monitor your market activities</p>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-semibold text-success m-0"><i class="bi bi-calendar-range me-2"></i>Upcoming Events</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editEventModal">
+                            <i class="bi bi-plus-lg me-1"></i> Add Event
+                        </button>
+                    </div>
 
-                  <div class="row g-3 justify-content-center">
-                    <div class="col-md-4 col-sm-6">
-                      <a class="btn btn-outline-success w-100 py-3">
-                        <i class="bi bi-pencil-square me-2"></i>Edit Profile
-                      </a>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Event Name</th>
+                                    <th>Date</th>
+                                    <th>Days</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if events %}
+                                    {% for event in events %}
+                                    <tr>
+                                        <td class="fw-semibold">{{ event['EventName'] }}</td>
+                                        <td>{{ event['EventDate'] }}</td>
+                                        <td>{{ event['EventDays'] }}</td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="4" class="text-center text-muted">No events yet.</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                      <a class="btn btn-outline-success w-100 py-3">
-                        <i class="bi bi-box-seam me-2"></i>Manage Products
-                      </a>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-body">
+                    <h5 class="fw-semibold text-success mb-4"><i class="bi bi-shop me-2"></i>Vendors</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Vendor Name</th>
+                                    <th>Offering</th>
+                                    <th>Contact</th>
+                                    <th class="text-end">Socials</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if vendors %}
+                                    {% for vendor in vendors %}
+                                    <tr>
+                                        <td class="fw-semibold">{{ vendor['VendorName'] }}</td>
+                                        <td><span class="badge bg-success bg-opacity-75">{{ vendor['VendorOfferingType'] }}</span></td>
+                                        <td>{{ vendor['VendorContactNumber'] }}</td>
+                                        <td class="text-end">
+                                            {% if vendor['VendorInstagram'] %}<a href="{{ vendor['VendorInstagram'] }}" class="text-success me-2"><i class="bi bi-instagram"></i></a>{% endif %}
+                                            {% if vendor['VendorFacebook'] %}<a href="{{ vendor['VendorFacebook'] }}" class="text-primary"><i class="bi bi-facebook"></i></a>{% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="4" class="text-center text-muted">No vendors registered yet.</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                      <a href="{{ url_for('market_request') }}" class="btn btn-outline-success w-100 py-3">
-                        <i class="bi bi-shop-window me-2"></i>Register Market
-                      </a>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                      <a class="btn btn-outline-success w-100 py-3">
-                        <i class="bi bi-calendar-event me-2"></i>Market Events
-                      </a>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                      <a class="btn btn-outline-success w-100 py-3">
-                        <i class="bi bi-star-fill me-2"></i>Customer Reviews
-                      </a>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                      <a class="btn btn-outline-success w-100 py-3">
-                        <i class="bi bi-question-circle me-2"></i>Help & Support
-                      </a>
-                    </div>
-                    <div class="col-md-6 col-sm-8 mt-3">
-                      <button class="btn btn-outline-danger w-100 py-3">
-                        <i class="bi bi-trash-fill me-2"></i>Delete Vendor Profile
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </div>
 
             {% else %}
-              
-              <!-- Customer View (Shown if NOT a vendor) -->
-              <div class="card border-0 shadow-lg rounded-4">
-                <div class="card-body text-center p-5">
-                  <h3 class="text-success">Welcome to Mzanzi Market!</h3>
-                  <p class="text-muted">Browse events and markets to start your journey.</p>
-                  <a href="/" class="btn btn-success btn-lg px-5 mt-3">Go to Home</a>
-                  <a href="/vendor_request" class="btn btn-success btn-lg px-5 mt-3">Become a vendor</a>
-                  <a href="/" class="btn btn-success btn-lg px-5 mt-3">Become a Market Administrator</a>
-                </div>
-              </div>
-
+              <div class="card border-0 shadow-lg rounded-4"><div class="card-body text-center p-5"><h3>Welcome!</h3></div></div>
             {% endif %}
 
           </div>
         </div>
       </div>
     </main>
+
+    <div class="modal fade" id="editMarketModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">Edit Market Details</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data"> 
+                <input type="hidden" name="action" value="update_market">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Market Name</label>
+                            <input type="text" class="form-control" name="market_name" value="{{ market['MarketName'] if market }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Location (Physical)</label>
+                            <input type="text" class="form-control" name="market_location" value="{{ market['MarketLocation'] if market }}" placeholder="Street Address">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Google Maps Link</label>
+                            <input type="text" class="form-control" name="market_location_link" value="{{ market['MarketLocationLink'] if market }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Entry Fee</label>
+                            <input type="text" class="form-control" name="market_entry_fee" value="{{ market['MarketEntryFee'] if market }}" placeholder="e.g. R50 or Free">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="market_description" rows="3">{{ market['MarketDescription'] if market }}</textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Operating Days</label>
+                            <input type="text" class="form-control" name="market_days" value="{{ market['MarketDays'] if market }}" placeholder="e.g. Every Saturday">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Upload Poster (Image)</label>
+                            <input type="file" class="form-control" name="market_poster" accept="image/*">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="bi bi-instagram"></i> Instagram Link</label>
+                            <input type="text" class="form-control" name="market_instagram" value="{{ market['MarketInstagram'] if market }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="bi bi-facebook"></i> Facebook Link</label>
+                            <input type="text" class="form-control" name="market_facebook" value="{{ market['MarketFacebook'] if market }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save Details</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">Add New Event</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data"> 
+                <input type="hidden" name="action" value="update_event">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Event Name</label>
+                        <input type="text" class="form-control" name="event_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="event_description" rows="2"></textarea>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" name="event_date">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Event Days (Duration)</label>
+                            <input type="text" class="form-control" name="event_days" placeholder="e.g. 2 Days">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Booking Link</label>
+                        <input type="text" class="form-control" name="event_booking_link" placeholder="https://...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Event Poster</label>
+                        <input type="file" class="form-control" name="event_poster" accept="image/*">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Add Event</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
 
   <!-- Footer -->
   <footer class="border-top py-3" style="background-color: #c8f7c5">
@@ -298,6 +413,141 @@
 </ul>
     </div>
   </footer>
+
+<div class="modal fade" id="editUsernameModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Edit Username</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ url_for('userpage') }}" method="POST">
+          <div class="modal-body">
+            <label for="username" class="form-label">New Username</label>
+            <input type="text" class="form-control" name="username" value="{{ user['Username'] }}" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editEmailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Edit Email</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ url_for('userpage') }}" method="POST">
+          <div class="modal-body">
+            <label for="email" class="form-label">New Email Address</label>
+            <input type="email" class="form-control" name="email" value="{{ user['Email'] }}" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Change Password</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ url_for('userpage') }}" method="POST">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="current_password" class="form-label">Current Password</label>
+              <input type="password" class="form-control" name="current_password" required>
+            </div>
+            <div class="mb-3">
+              <label for="new_password" class="form-label">New Password</label>
+              <input type="password" class="form-control" name="new_password" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editMarketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Edit Market Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="POST"> <input type="hidden" name="action" value="update_market">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Market Name</label>
+                    <input type="text" class="form-control" name="market_name" placeholder="E.g. Pretoria Central Market">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Location / Address</label>
+                    <input type="text" class="form-control" name="market_location" placeholder="Street address or Area">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="market_description" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Save Market Details</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editEventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Manage Event</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="POST"> <input type="hidden" name="action" value="update_event">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Event Name</label>
+                    <input type="text" class="form-control" name="event_name" placeholder="E.g. Spring Fest">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" name="event_date">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" name="event_status">
+                        <option value="active">Active</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Save Event</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
