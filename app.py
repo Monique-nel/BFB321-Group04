@@ -44,7 +44,6 @@ def market_details(market_id):
     # We pass 'current_id' to dynamically update the page title and heading.
     return render_template("home.html", markets=markets, current_id=market_id)
 
-
 # DEFAULT ROUTE: Still serves the original request (MarketID = 2)
 @app.route("/", methods=["GET"])
 def home():
@@ -57,6 +56,30 @@ def home():
     
     # Passes all markets to the template
     return render_template("home.html", markets=markets)
+
+@app.route("/vendors", methods=["GET"])
+def vendors():
+    conn = get_db_connection()
+    
+    # Fetch all rows
+    vendors = conn.execute("SELECT * FROM Vendor").fetchall()
+    conn.close()
+    print(f"Fetched {len(vendors)} vendors for home listing.")
+    
+    # Passes all vendors to the template
+    return render_template("vendors.html", vendors=vendors)
+
+@app.route("/events", methods=["GET"])
+def events():
+    conn = get_db_connection()
+    
+    # Fetch all rows
+    events = conn.execute("SELECT * FROM Events").fetchall()
+    conn.close()
+    print(f"Fetched {len(events)} events for home listing.")
+    
+    # Passes all events to the template
+    return render_template("events.html", events=events)
 
 if __name__ == '__main__':
     # Ensure you run 'python database_setup.py' once before running this app.
