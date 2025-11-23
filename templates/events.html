@@ -39,13 +39,20 @@
             <!-- Left-aligned links (next to logo) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
+                <a class="nav-link fw-semibold fs-5 active" href="{{ url_for('home') }}"
+                  >Home</a
+                  
+                >
               </li>
               <li class="nav-item">
-                <a href="{{ url_for('events') }}" class="nav-link px-2 text-muted">Upcoming Events</a>
+                <a class="nav-link fw-semibold fs-5" href="events"
+                  >Upcoming Events</a
+                >
               </li>
               <li class="nav-item">
-                <a href="{{ url_for('vendors') }}" class="nav-link px-2 text-muted">Vendor Community</a>
+                <a class="nav-link fw-semibold fs-5" href="vendors"
+                  >Vendor Community</a
+                >
               </li>
             </ul>
 
