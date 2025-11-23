@@ -190,10 +190,13 @@
 
                       <!-- CARD IMAGE -->
                       {% if market['MarketImage'] %}
-                      <img src="{{ url_for('static', filename=market['MarketImage']) }}" class="card-img-top img-fluid bg-white p-3 rounded" alt="{{ market['MarketName'] }}" />
-                      {% endif %}
+                          <img src="{{ url_for('static', filename=market['MarketImage']) }}"
+                              class="card-img-top img-fluid bg-white p-3 rounded"
+                              alt="{{ market['MarketName'] }}" />
                       {% else %}
-                      <img src="{{ url_for('static', filename=market['MarketImage']) }}" class="card-img-top img-fluid bg-white p-3 rounded" alt="{{ market['MarketName'] }}" />
+                          <img src="{{ url_for('static', filename='images/default.png') }}"
+                              class="card-img-top img-fluid bg-white p-3 rounded"
+                              alt="{{ market['MarketName'] }}" />
                       {% endif %}
 
                       <!-- CARD BODY -->
