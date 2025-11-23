@@ -315,13 +315,6 @@ def Eventform():
     
     return render_template("Eventform.html", markets=markets)
 
-if __name__ == '__main__':
-    print("Running Flask app. Ensure 'Mzanzi.db' exists.")
-    app.run(debug=True)
-
-
-# app routes for static pages 
-
 @app.route('/general-policies')
 def general_policies():
     return render_template('generalpolicies.html')
@@ -333,3 +326,7 @@ def faq():
 @app.route('/about')
 def about():
     return render_template('About.html')
+
+if __name__ == '__main__':
+    print("Running Flask app. Ensure 'Mzanzi.db' exists.")
+    app.run(debug=True)
