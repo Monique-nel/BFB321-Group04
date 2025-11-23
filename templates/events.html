@@ -121,9 +121,13 @@
         {% for event in events %}
         <div class="row g-4 align-items-center mb-5">
           <div class="col-lg-6 text-center">
-            <img src="{{ url_for('static', filename='images/' + event['EventPoster']) }}"
-                alt="{{ event['EventName'] }} Flyer"
-                class="img-fluid rounded shadow">
+            {% if event['EventPoster'] %}
+                <img src="{{ url_for('static', filename='images/' + event['EventPoster']) }}" 
+                    class="card-img-top" alt="{{ event['EventName'] }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default.png') }}" 
+                    class="card-img-top" alt="Default Event Image">
+            {% endif %}
           </div>
 
           <div class="col-lg-6">
