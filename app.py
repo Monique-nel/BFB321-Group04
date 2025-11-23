@@ -16,7 +16,19 @@ def convert_blob_to_base64(blob_data):
 # Register the filter with Jinja environment
 app.jinja_env.filters['to_base64'] = convert_blob_to_base64
 
-# --- Database Helper Function ---
+import base64
+def convert_blob_to_base64(blob_data):
+    """Return a data-URI for a BLOB or an empty string if nothing supplied."""
+    if not blob_data:                       # None or empty
+        return ""
+    if isinstance(blob_data, bytes):        # real SQLite BLOB
+        return f"data:image/png;base64,{base64.b64encode(blob_data).decode()}"
+    if isinstance(blob_data, str):          # already a path / file name
+        return blob_data                    # pass through unchanged
+    return ""
+
+app.jinja_env.filters['to_base64'] = convert_blob_to_base64
+#  --- Database Helper Function ---
 
 def get_db_connection():
     """Establishes a connection to the SQLite database."""
@@ -43,6 +55,7 @@ def market_details(market_id):
     # The home.html template is flexible enough to handle this single item/empty list
     # We pass 'current_id' to dynamically update the page title and heading.
     return render_template("home.html", markets=markets, current_id=market_id)
+
 
 # DEFAULT ROUTE: Still serves the original request (MarketID = 2)
 @app.route("/", methods=["GET"])
@@ -85,3 +98,18 @@ if __name__ == '__main__':
     # Ensure you run 'python database_setup.py' once before running this app.
     print("Running Flask app. Ensure 'Mzanzi.db' exists.")
     app.run(debug=True)
+
+
+# app routes for static pages 
+
+@app.route('/general-policies')
+def general_policies():
+    return render_template('generalpolicies.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('FAQ.html')
+
+@app.route('/about')
+def about():
+    return render_template('About.html')
