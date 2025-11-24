@@ -3,36 +3,32 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import base64
 import math
+from flask import jsonify
 
 # --- Configuration ---
 app = Flask(__name__)
 app.secret_key = "my_super_secret_key_12345" 
 
-# This allows Jinja to handle the image data from the database
+# --- UNIVERSAL IMAGE FILTER ---
 @app.template_filter('b64encode')
 def b64encode_filter(data):
-    if data:
-        return base64.b64encode(data).decode('utf-8')
-    return ""
-
-# --- Jinja Filter for BLOB Images ---
-def convert_blob_to_base64(blob_data):
-    """
-    Return a data-URI for a BLOB, a path for a string, 
-    or an empty string if nothing supplied.
-    """
-    if not blob_data:                       # None or empty
+    if not data:
         return ""
     
-    if isinstance(blob_data, bytes):        # real SQLite BLOB
-        return f"data:image/png;base64,{base64.b64encode(blob_data).decode('utf-8')}"
+    # 1. Handle SQLite 'memoryview' (common with BLOBs)
+    if isinstance(data, memoryview):
+        data = bytes(data)
     
-    if isinstance(blob_data, str):          # already a path / file name
-        return blob_data                    # pass through unchanged
+    # 2. Handle Bytes (Actual Image Data) - Return base64 string
+    if isinstance(data, bytes):
+        return base64.b64encode(data).decode('utf-8')
     
-    return ""
+    # 3. Handle Strings (File Paths) - Return as-is (or encode if you prefer)
+    # If your DB has "logo.png", we don't want to base64 encode that text.
+    if isinstance(data, str):
+        return data 
 
-app.jinja_env.filters['to_base64'] = convert_blob_to_base64
+    return ""
 
 def get_db_connection():
     # FIX: Increased timeout to 30s and enabled WAL mode to prevent locking
@@ -76,7 +72,7 @@ def maps(market_id):
         return "Market not found", 404
 
     # Pass 'market' (singular) to the template
-    return render_template("maps.html", market=market)
+    return render_template("Maps.html", market=market)
 
 @app.route("/vendors", methods=["GET"])
 def vendors():
@@ -95,10 +91,28 @@ def vendors():
 
 @app.route("/events", methods=["GET"])
 def events():
+    # 1. Pagination setup
+    page = request.args.get('page', 1, type=int)
+    per_page = 4
+    offset = (page - 1) * per_page
+
     conn = get_db_connection()
-    events = conn.execute("SELECT * FROM Events").fetchall()
+    
+    # 2. Count total events
+    total_events = conn.execute("SELECT COUNT(*) FROM Events").fetchone()[0]
+    total_pages = (total_events + per_page - 1) // per_page
+
+    # 3. THE UPDATED QUERY (Joins Events with Market to get the Name)
+    query = """
+        SELECT Events.*, Market.MarketName 
+        FROM Events 
+        JOIN Market ON Events.MarketID = Market.MarketID 
+        LIMIT ? OFFSET ?
+    """
+    events = conn.execute(query, (per_page, offset)).fetchall()
     conn.close()
-    return render_template("events.html", events=events)
+
+    return render_template("events.html", events=events, page=page, total_pages=total_pages)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -364,24 +378,33 @@ def vendor_request():
         return redirect(url_for("login"))
 
     if request.method == "POST":
-        # 1. Get the data from the HTML Form
+        # 1. Get Text Data
         vendor_name = request.form.get("vendor_name")
         description = request.form.get("stall_description") 
         vendor_type = request.form.get("vendor_type")
         contact = request.form.get("contact_number")
-        
-        # New fields from your form
         website = request.form.get("website")
         facebook = request.form.get("facebook")
         instagram = request.form.get("instagram")
         
-        # Note: We are skipping 'vendor_logo' and 'vendor_picture' for now 
-        # as handling image uploads requires extra BLOB logic similar to your Markets.
+        # 2. HANDLE FILE UPLOADS (This was missing!)
+        logo_blob = None
+        if 'vendor_logo' in request.files:
+            file = request.files['vendor_logo']
+            if file.filename:
+                logo_blob = file.read() # Convert to BLOB
+        
+        descriptor_blob = None
+        if 'vendor_picture' in request.files: # Make sure HTML input name matches this
+            file = request.files['vendor_picture']
+            if file.filename:
+                descriptor_blob = file.read() # Convert to BLOB
 
         try:
             conn = get_db_connection()
             
-            # 2. SQL to Update the User with ALL details
+            # 3. SQL to Update the User with ALL details + IMAGES
+            # We construct the query carefully to handle cases where user might NOT upload a new image
             sql = """
                 UPDATE User 
                 SET Classification = ?, 
@@ -392,22 +415,24 @@ def vendor_request():
                     VendorWebsite = ?,
                     VendorFacebook = ?,
                     VendorInstagram = ?
-                WHERE UserID = ?
             """
+            params = ['Vendor', vendor_name, description, vendor_type, contact, website, facebook, instagram]
+
+            # Only update the logo if a new one was uploaded
+            if logo_blob:
+                sql += ", VendorLogo = ?"
+                params.append(logo_blob)
+
+            # Only update the banner if a new one was uploaded
+            if descriptor_blob:
+                sql += ", VendorDescriptorPicture = ?"
+                params.append(descriptor_blob)
+
+            sql += " WHERE UserID = ?"
+            params.append(session['user_id'])
             
-            # 3. Execute
-            conn.execute(sql, (
-                'Vendor', 
-                vendor_name, 
-                description, 
-                vendor_type, 
-                contact,
-                website,
-                facebook,
-                instagram,
-                session['user_id']
-            ))
-            
+            # 4. Execute
+            conn.execute(sql, params)
             conn.commit()
             conn.close()
             

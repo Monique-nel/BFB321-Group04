@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mzanzi Market</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body class="bg-light">
     <header id="pageTop">
@@ -38,7 +39,7 @@
             <!-- Left-aligned links (next to logo) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="/"
+                <a class="nav-link fw-semibold fs-5" href="/"
                   >Home</a
                 >
               </li>
@@ -48,7 +49,7 @@
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="vendors"
+                <a class="nav-link fw-semibold fs-5 active" href="vendors"
                   >Vendor Community</a
                 >
               </li>
@@ -113,88 +114,123 @@
       </nav>
     </header>
 
-  <main>    
-    <div class="container py-5" id="vendorList">
+    <main>
+      <div class="container py-5" id="vendorList">
 
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       {% for vendor in vendors %}
-      <div class="card shadow-sm mb-4 border-0 rounded-3 vendor-card">
-        <div class="card-body d-flex flex-column flex-md-row align-items-center">
-          <!-- Logo -->
-          <div class="text-center mb-3 mb-md-0 me-md-4">
-            <img src="{{ vendor.VendorLogo | to_base64 if vendor.VendorLogo else url_for('static', filename='images/VendorDefault.png') }}"
-                 alt="{{ vendor.VendorName }} Logo"
-                 class="img-fluid rounded shadow-sm" style="max-height:100px;">
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden hover-shadow">
+          
+          <div class="position-relative bg-light">
+              {% if vendor['VendorDescriptorPicture'] %}
+                  <img src="data:image;base64,{{ vendor['VendorDescriptorPicture'] | b64encode }}"
+                      class="card-img-top"
+                      style="height: 160px; object-fit: cover;"
+                      alt="Storefront">
+              {% else %}
+                  <img src="https://placehold.co/600x400/E9ECEF/E9ECEF?text=%20" 
+                      class="card-img-top" 
+                      style="height: 160px; object-fit: cover;" 
+                      alt="Default Banner">
+              {% endif %}
           </div>
+          
 
-          <!-- Details -->
-          <div class="flex-grow-1 px-md-3 mb-3 mb-md-0">
-            <h5 class="fw-bold text-success">{{ vendor.VendorName }}</h5>
-            <p class="mb-1">{{ vendor.VendorStallDescription }}</p>
-            <p class="mb-1"><strong>Location:</strong> {{ vendor.VendorLocation }}</p>
-            <p class="mb-1"><strong>Contact:</strong> {{ vendor.VendorContactNumber }}</p>
-            <span class="badge bg-success me-1">{{ vendor.VendorofferingType }}</span>
-
-            <!-- Buttons -->
-            <div class="row g-2 mt-3">
-              <div class="col-auto">
-                <a class="btn btn-outline-success py-1 px-3" href="/vendor/{{ vendor.VendorID }}">
-                  <i class="bi bi-box-seam me-1"></i>Check Products
-                </a>
-              </div>
-              <div class="col-auto">
-                <a href="https://{{ vendor.VendorWebsite or '#' }}" class="btn btn-outline-success py-1 px-3" target="_blank">
-                  <i class="bi bi-globe me-1"></i>Website
-                </a>
-              </div>
-              <div class="col-auto">
-                <a href="https://{{ vendor.VendorFacebook or '#' }}" class="btn btn-outline-success py-1 px-3" target="_blank">
-                  <i class="bi bi-facebook me-1"></i>Facebook
-                </a>
-              </div>
-              <div class="col-auto">
-                <a href="https://{{ vendor.Vendorinstagram or '#' }}" class="btn btn-outline-success py-1 px-3" target="_blank">
-                  <i class="bi bi-instagram me-1"></i>Instagram
-                </a>
-              </div>
+          <div class="card-body text-center pt-0">
+            
+            <div class="position-relative mb-3" style="margin-top: -50px;">
+              {% if vendor.VendorLogo %}
+                  <img src="data:image/png;base64,{{ vendor.VendorLogo | b64encode }}"
+                       alt="Logo"
+                       class="rounded-circle shadow border border-4 border-white bg-white"
+                       style="width: 100px; height: 100px; object-fit: cover;">
+              {% else %}
+                  <img src="{{ url_for('static', filename='images/VendorDefault.png') }}"
+                       alt="Default Logo"
+                       class="rounded-circle shadow border border-4 border-white bg-white"
+                       style="width: 100px; height: 100px; object-fit: contain; padding: 5px;">
+              {% endif %}
             </div>
-          </div>
 
-          <!-- Descriptor Picture -->
-          <div class="shadow rounded" style="max-width:300px; min-width:250px;">
-            <img src="{{ vendor.VendorDescriptorPicture | to_base64 if vendor.VendorDescriptorPicture else url_for('static', filename='images/VendorDefault.png') }}"
-                 class="img-fluid rounded" style="height:200px; width:100%; object-fit:cover;"
-                 alt="{{ vendor.VendorName }}">
+            <h4 class="fw-bold text-dark mb-1">{{ vendor.VendorName }}</h4>
+            <p class="text-muted small mb-3">
+                <i class="bi bi-geo-alt-fill text-success"></i> {{ vendor.VendorLocation }}
+            </p>
+            
+            <p class="card-text text-secondary mb-4 small px-2">
+              {{ vendor.VendorStallDescription | truncate(80) }}
+            </p>
+
+            <div class="d-grid gap-2 mb-3 px-4">
+              <a href="/vendor/{{ vendor.VendorID }}" class="btn btn-success fw-semibold shadow-sm">
+                View Products
+              </a>
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 pb-2">
+              {% if vendor.VendorWebsite %}
+              <a href="https://{{ vendor.VendorWebsite }}" target="_blank" class="text-secondary fs-5" data-bs-toggle="tooltip" title="Website">
+                <i class="bi bi-globe"></i>
+              </a>
+              {% endif %}
+              
+              {% if vendor.VendorFacebook %}
+              <a href="https://{{ vendor.VendorFacebook }}" target="_blank" class="text-primary fs-5" data-bs-toggle="tooltip" title="Facebook">
+                <i class="bi bi-facebook"></i>
+              </a>
+              {% endif %}
+              
+              {% if vendor.Vendorinstagram %}
+              <a href="https://{{ vendor.Vendorinstagram }}" target="_blank" class="text-danger fs-5" data-bs-toggle="tooltip" title="Instagram">
+                <i class="bi bi-instagram"></i>
+              </a>
+              {% endif %}
+
+              <a href="tel:{{ vendor.VendorContactNumber }}" class="text-success fs-5" data-bs-toggle="tooltip" title="Call">
+                <i class="bi bi-whatsapp"></i>
+              </a>
+            </div>
+
           </div>
         </div>
       </div>
       {% endfor %}
-
-      <!-- Next button -->
-      {% if total_pages > 1 %}
-          <nav aria-label="Market navigation" class="mt-5">
-            <ul class="pagination justify-content-center">
-              
-              <li class="page-item {% if page == 1 %}disabled{% endif %}">
-                <a class="page-link text-success" href="{{ url_for('home', page=page-1) }}" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-
-              {% for p in range(1, total_pages + 1) %}
-              <li class="page-item {% if p == page %}active{% endif %}">
-                <a class="page-link {% if p == page %}bg-success border-success{% else %}text-success{% endif %}" href="{{ url_for('home', page=p) }}">
-                    {{ p }}
-                </a>
-              </li>
-              {% endfor %}
-
-              <li class="page-item {% if page == total_pages %}disabled{% endif %}">
-                <a class="page-link text-success" href="{{ url_for('vendors', page=page+1) }}">Next</a>
-              </li>
-              
-            </ul>
-          </nav>
-          {% endif %}
     </div>
-  </main>
+
+        {% if total_pages > 1 %}
+        <nav aria-label="Market navigation" class="mt-5">
+          <ul class="pagination justify-content-center pagination-lg">
+            
+            <li class="page-item {% if page == 1 %}disabled{% endif %}">
+              <a class="page-link text-success border-0 shadow-sm mx-1 rounded-circle" 
+                href="{{ url_for('vendors', page=page-1) }}" aria-label="Previous">
+                <i class="bi bi-chevron-left"></i>
+              </a>
+            </li>
+
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {% if p == page %}active{% endif %}">
+              <a class="page-link shadow-sm mx-1 rounded-circle {% if p == page %}bg-success border-success text-white{% else %}text-success border-0{% endif %}" 
+                href="{{ url_for('vendors', page=p) }}">
+                  {{ p }}
+              </a>
+            </li>
+            {% endfor %}
+
+            <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+              <a class="page-link text-success border-0 shadow-sm mx-1 rounded-circle" 
+                href="{{ url_for('vendors', page=page+1) }}" aria-label="Next">
+                <i class="bi bi-chevron-right"></i>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        {% endif %}
+
+      </div>
+    </main>
 
   <!-- Footer -->
   <footer class="border-top py-3" style="background-color: #c8f7c5">

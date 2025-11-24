@@ -173,13 +173,8 @@
 
       <!-- MARKET SECTION -->
       <div class="container py-5">
-          <!-- Dynamic Heading: Show "All Markets" or a specific Market ID -->
-          <h1 class="text-center mb-5 fw-light">
-              {% if current_id %}
-                  Market Details (Market ID: {{ current_id }})
-              {% else %}
-                  All Mzanzi Markets
-              {% endif %}
+          <h1 id="markets" class="text-center mb-5 fw-light" style="padding-top: 80px; margin-top: -80px;">
+              All Mzanzi Markets
           </h1>
           
           <!-- MARKET SECTION - Displays 1 or more markets in a responsive grid -->
@@ -207,10 +202,11 @@
                       </div>
 
                       <!-- CARD IMAGE -->
-                      {% if market['MarketImage'] %}
-                          <img src="{{ url_for('static', filename=market['MarketImage']) }}"
-                              class="card-img-top img-fluid bg-white p-3 rounded"
-                              alt="{{ market['MarketName'] }}" />
+                      {% if market.MarketPoster %}
+                          <img src="data:image/png;base64,{{ market.MarketPoster | b64encode }}"
+                              alt="Map of {{ market.MarketName }}"
+                              class="img-fluid rounded"
+                              style="max-height: 600px; width: auto;">
                       {% else %}
                           <img src="{{ url_for('static', filename='images/default.png') }}"
                               class="card-img-top img-fluid bg-white p-3 rounded"

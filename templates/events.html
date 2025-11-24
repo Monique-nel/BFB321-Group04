@@ -39,12 +39,12 @@
             <!-- Left-aligned links (next to logo) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="/"
+                <a class="nav-link fw-semibold fs-5" href="/"
                   >Home</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="events"
+                <a class="nav-link fw-semibold fs-5 active" href="events"
                   >Upcoming Events</a
                 >
               </li>
@@ -114,90 +114,137 @@
       </nav>
     </header>
 
-  <main>
-    <section>
-      <div class="container py-5">
-        <!-- EVENT 1 -->
-        {% for event in events %}
-        <div class="row g-4 align-items-center mb-5">
-          <div class="col-lg-6 text-center">
-            {% if event['EventPoster'] %}
-                <img src="{{ url_for('static', filename='images/' + event['EventPoster']) }}" 
-                    class="card-img-top" alt="{{ event['EventName'] }}">
-            {% else %}
-                <img src="{{ url_for('static', filename='images/default.png') }}" 
-                    class="card-img-top" alt="Default Event Image">
-            {% endif %}
-          </div>
+    <main>
+      <section>
+        <div class="container py-5">
+          <h2 class="text-center fw-bold text-success mb-5">Upcoming Events</h2>
 
-          <div class="col-lg-6">
-            <div class="card border-0 shadow-sm">
-              <div class="card-body">
-
-                <h2 class="fw-bold mb-3 text-success">{{ event['EventName'] }}</h2>
-
-                <ul class="list-unstyled mb-3">
-                  <li><strong>Date:</strong> {{ event['EventDate'] }}</li>
-                  
-                  <li><strong>Days:</strong> {{ event['EventDays'] }}</li> 
-                  
-                  <li><strong>Market ID:</strong> {{ event['MarketID'] }}</li>
-                </ul>
-
-                <p class="mb-4">{{ event['EventDescription'] }}</p>
-
-                <a href="{{ event['EventBookingLink'] }}" class="btn btn-success w-100 fw-semibold">
-                  Book Now
-                </a>
-
+          {% for event in events %}
+          <div class="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden hover-shadow">
+            <div class="row g-0">
+              
+              <div class="col-md-5 col-lg-4 position-relative bg-light">
+                {% if event['EventPoster'] %}
+                    <img src="data:image/png;base64,{{ event['EventPoster'] | b64encode }}" 
+                        class="img-fluid w-100 h-100" 
+                        style="object-fit: cover; min-height: 280px;"
+                        alt="{{ event['EventName'] }}">
+                {% else %}
+                    <img src="https://placehold.co/600x800/E9ECEF/198754?text=Event" 
+                        class="img-fluid w-100 h-100" 
+                        style="object-fit: cover; min-height: 280px;"
+                        alt="Default Event">
+                {% endif %}
+                
+                <div class="position-absolute top-0 start-0 m-3">
+                    <div class="bg-white text-center rounded-3 shadow-sm p-2 px-3">
+                        <span class="d-block fw-bold text-success fs-5">{{ event['EventDate'].split(' ')[0] }}</span> 
+                        <small class="text-uppercase fw-bold text-muted" style="font-size: 0.7rem;">Date</small>
+                    </div>
+                </div>
               </div>
+
+              <div class="col-md-7 col-lg-8">
+                <div class="card-body p-4 p-lg-5 d-flex flex-column h-100">
+                  
+                  <h3 class="card-title fw-bold text-dark mb-3">{{ event['EventName'] }}</h3>
+
+                  <div class="d-flex flex-wrap gap-4 mb-4 text-secondary">
+                      <div class="d-flex align-items-center">
+                          <i class="bi bi-clock-history text-success me-2 fs-5"></i>
+                          <span>{{ event['EventDays'] }} &bull; {{ event['EventDate'] }}</span>
+                      </div>
+                      
+                      <div class="d-flex align-items-center">
+                          <i class="bi bi-geo-alt-fill text-success me-1 fs-4"></i>
+                          <a href="{{ url_for('maps', market_id=event['MarketID']) }}" class="text-decoration-none text-secondary fw-semibold hover-link">
+                              {{ event['MarketName'] }}
+                          </a>
+                      </div>
+                  </div>
+
+                  <p class="card-text text-muted flex-grow-1" style="line-height: 1.6;">
+                      {{ event['EventDescription'] }}
+                  </p>
+
+                  <div class="mt-4">
+                    {% if event['EventBookingLink'] %}
+                        <a href="{{ event['EventBookingLink'] }}" target="_blank" class="btn btn-success btn-lg w-100 rounded-pill fw-bold shadow-sm py-3">
+                            Book Tickets <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    {% else %}
+                        <button class="btn btn-outline-secondary btn-lg w-100 rounded-pill fw-bold py-3" disabled>
+                            Tickets Available at Door
+                        </button>
+                    {% endif %}
+                  </div>
+
+                </div>
+              </div>
+
             </div>
           </div>
+          {% else %}
+            <div class="text-center py-5">
+                <h3 class="text-muted">No upcoming events found.</h3>
+            </div>
+          {% endfor %}
+
+          {% if total_pages > 1 %}
+          <nav aria-label="Event navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+              <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                <a class="page-link text-success border-0 shadow-sm mx-1 rounded-circle" href="{{ url_for('events', page=page-1) }}"><i class="bi bi-chevron-left"></i></a>
+              </li>
+              {% for p in range(1, total_pages + 1) %}
+              <li class="page-item {% if p == page %}active{% endif %}">
+                <a class="page-link shadow-sm mx-1 rounded-circle {% if p == page %}bg-success border-success text-white{% else %}text-success border-0{% endif %}" href="{{ url_for('events', page=p) }}">{{ p }}</a>
+              </li>
+              {% endfor %}
+              <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                <a class="page-link text-success border-0 shadow-sm mx-1 rounded-circle" href="{{ url_for('events', page=page+1) }}"><i class="bi bi-chevron-right"></i></a>
+              </li>
+            </ul>
+          </nav>
+          {% endif %}
+
         </div>
-        {% endfor %}
+      </section>
+    </main>
 
-        <!-- Next button -->
-        <div class="text-center mt-5">
-          <a href="#" class="btn btn-lg btn-success px-5 shadow">Next</a>
+    <!-- Footer -->
+    <footer class="border-top py-3" style="background-color: #c8f7c5">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <!-- Left side -->
+        <div class="d-flex align-items-center mb-3 mb-md-0">
+          <img
+            src="{{ url_for('static', filename='images/Logo.png') }}"
+            alt="Mzanzi Market"
+            height="80"
+            class="me-3"
+          />
+          <span class="fw-bold text-success fs-5">Mzanzi Market</span>
         </div>
 
+        <!-- Right side navigation -->
+        <ul class="nav col-md-5 justify-content-end">
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
+    </li>
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
+    </li>
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
+    </li>
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
+    </li>
+  </ul>
       </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="border-top py-3" style="background-color: #c8f7c5">
-    <div
-      class="container d-flex flex-wrap justify-content-between align-items-center"
-    >
-      <!-- Left side -->
-      <div class="d-flex align-items-center mb-3 mb-md-0">
-        <img
-          src="{{ url_for('static', filename='images/Logo.png') }}"
-          alt="Mzanzi Market"
-          height="80"
-          class="me-3"
-        />
-        <span class="fw-bold text-success fs-5">Mzanzi Market</span>
-      </div>
-
-      <!-- Right side navigation -->
-      <ul class="nav col-md-5 justify-content-end">
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
-  </li>
-</ul>
-    </div>
-  </footer>
+    </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
