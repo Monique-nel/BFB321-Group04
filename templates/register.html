@@ -113,94 +113,174 @@
       </nav>
     </header>
 
-  <main>
-    <div class="container my-5" style="max-width: 500px;">
-      <div class="card shadow-lg border-0">
-        <div class="card-body p-4">
-          <h3 class="text-center text-success mb-4">Register here</h3>
+    <main>
+        <div class="container my-5" style="max-width: 500px;">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h3 class="text-center text-success mb-4">Register here</h3>
 
-          <!-- Flash Messages for Errors -->
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form action="/register" method="POST" id="registerForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                            
+                            <div class="mt-2 p-2 border rounded bg-light">
+                                <small class="d-block text-secondary fw-bold mb-1">Password must contain:</small>
+                                <ul class="list-unstyled mb-0 small" style="font-size: 0.85rem;">
+                                    <li id="length" class="text-danger">✗ At least 8 characters</li>
+                                    <li id="uppercase" class="text-danger">✗ One uppercase letter (A-Z)</li>
+                                    <li id="lowercase" class="text-danger">✗ One lowercase letter (a-z)</li>
+                                    <li id="number" class="text-danger">✗ One number (0-9)</li>
+                                    <li id="special" class="text-danger">✗ One special character (!@#$%)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmpassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Enter your password again" required>
+                            <div id="matchMessage" class="form-text"></div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success" id="submitBtn" disabled>Register</button>
+                            <a href="/login" class="btn btn-outline-secondary">Already have an account? Login</a>
+                        </div>
+                    </form>
                 </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-
-          <form action="/register" method="POST">
-            <!-- Username -->
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
             </div>
-
-            <!-- Email -->
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
-            </div>
-
-            <!-- Password -->
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mb-3">
-              <label for="confirmpassword" class="form-label">Confirm Password</label>
-              <!-- FIXED: Added name="confirmpassword" -->
-              <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Enter your password again" required>
-            </div>
-
-            <!-- Buttons -->
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-success">Register</button>
-              <a href="/login" class="btn btn-outline-secondary">Already have an account? Login</a>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
-  </main>
+    </main>
 
-  <!-- Footer -->
-  <footer class="border-top py-3" style="background-color: #c8f7c5">
-    <div
-      class="container d-flex flex-wrap justify-content-between align-items-center"
-    >
-      <!-- Left side -->
-      <div class="d-flex align-items-center mb-3 mb-md-0">
-        <img
-          src="{{ url_for('static', filename='images/Logo.png') }}"
-          alt="Mzanzi Market"
-          height="80"
-          class="me-3"
-        />
-        <span class="fw-bold text-success fs-5">Mzanzi Market</span>
-      </div>
+    <!-- Footer -->
+    <footer class="border-top py-3" style="background-color: #c8f7c5">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <!-- Left side -->
+        <div class="d-flex align-items-center mb-3 mb-md-0">
+          <img
+            src="{{ url_for('static', filename='images/Logo.png') }}"
+            alt="Mzanzi Market"
+            height="80"
+            class="me-3"
+          />
+          <span class="fw-bold text-success fs-5">Mzanzi Market</span>
+        </div>
 
-      <!-- Right side navigation -->
-      <ul class="nav col-md-5 justify-content-end">
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
-  </li>
-  <li class="nav-item fw-semibold">
-    <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
-  </li>
-</ul>
-    </div>
-  </footer>
+        <!-- Right side navigation -->
+        <ul class="nav col-md-5 justify-content-end">
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
+    </li>
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('general_policies') }}" class="nav-link px-2 text-muted">General Policies</a>
+    </li>
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('faq') }}" class="nav-link px-2 text-muted">FAQs</a>
+    </li>
+    <li class="nav-item fw-semibold">
+      <a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a>
+    </li>
+  </ul>
+      </div>
+    </footer>
+
+    <!-- This section is needed to provide the app with additional functionallity -->
+    <script>
+      const passwordInput = document.getElementById('password');
+      const confirmInput = document.getElementById('confirmpassword');
+      const submitBtn = document.getElementById('submitBtn');
+      const matchMessage = document.getElementById('matchMessage');
+
+      // Criteria Elements
+      const criteria = {
+          length: document.getElementById('length'),
+          uppercase: document.getElementById('uppercase'),
+          lowercase: document.getElementById('lowercase'),
+          number: document.getElementById('number'),
+          special: document.getElementById('special')
+      };
+
+      // Regex Patterns
+      const patterns = {
+          length: /.{8,}/,
+          uppercase: /[A-Z]/,
+          lowercase: /[a-z]/,
+          number: /[0-9]/,
+          special: /[!@#$%^&*(),.?":{}|<>]/
+      };
+
+      function validatePassword() {
+          const value = passwordInput.value;
+          let allValid = true;
+
+          // Check each pattern
+          for (const key in patterns) {
+              if (patterns[key].test(value)) {
+                  criteria[key].classList.remove('text-danger');
+                  criteria[key].classList.add('text-success');
+                  criteria[key].innerHTML = '✓ ' + criteria[key].innerText.substring(2);
+              } else {
+                  criteria[key].classList.remove('text-success');
+                  criteria[key].classList.add('text-danger');
+                  criteria[key].innerHTML = '✗ ' + criteria[key].innerText.substring(2);
+                  allValid = false;
+              }
+          }
+          
+          checkMatch(allValid);
+      }
+
+      function checkMatch(passwordValid) {
+          const pass = passwordInput.value;
+          const conf = confirmInput.value;
+
+          if (conf === "") {
+              matchMessage.innerHTML = "";
+              submitBtn.disabled = true;
+              return;
+          }
+
+          if (pass === conf) {
+              matchMessage.innerHTML = '<span class="text-success">Passwords match!</span>';
+              // Only enable button if password criteria are met AND passwords match
+              if(passwordValid) {
+                  submitBtn.disabled = false;
+              } else {
+                  submitBtn.disabled = true;
+              }
+          } else {
+              matchMessage.innerHTML = '<span class="text-danger">Passwords do not match.</span>';
+              submitBtn.disabled = true;
+          }
+      }
+
+      // Event Listeners
+      passwordInput.addEventListener('input', validatePassword);
+      confirmInput.addEventListener('input', () => validatePassword()); 
+    </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
