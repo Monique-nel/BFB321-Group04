@@ -217,9 +217,6 @@ def userpage():
         action = request.form.get('action')
 
         try:
-            # -------------------------
-            #   UPDATE VENDOR
-            # -------------------------
             if action == 'update_vendor':
                 v_name = request.form.get('vendor_name')
                 v_desc = request.form.get('vendor_description')
@@ -251,9 +248,6 @@ def userpage():
                 flash("Vendor profile updated!", "success")
                 return redirect(url_for('userpage'))
 
-            # -------------------------
-            #   UPDATE USERNAME
-            # -------------------------
             elif action == 'update_username':
                 new_username = request.form.get('username')
 
@@ -264,9 +258,6 @@ def userpage():
                 flash("Username updated successfully!", "success")
                 return redirect(url_for('userpage'))
 
-            # -------------------------
-            #   UPDATE EMAIL
-            # -------------------------
             elif action == 'update_email':
                 new_email = request.form.get('email')
 
@@ -276,9 +267,6 @@ def userpage():
                 flash("Email updated successfully!", "success")
                 return redirect(url_for('userpage'))
 
-            # -------------------------
-            #   UPDATE PASSWORD
-            # -------------------------
             elif action == 'update_password':
                 current_pw = request.form.get('current_password')
                 new_pw = request.form.get('new_password')
@@ -294,9 +282,6 @@ def userpage():
 
                 return redirect(url_for('userpage'))
 
-            # -------------------------
-            #   ADD PRODUCT
-            # -------------------------
             elif action == 'add_product':
                 p_name = request.form.get('product_name')
                 p_price = request.form.get('product_price')
@@ -324,62 +309,6 @@ def userpage():
                 flash("Product updated!", "success")
                 return redirect(url_for('userpage'))
 
-            # -------------------------
-            #   UPDATE MARKET
-            # -------------------------
-            elif action == 'update_market':
-                name = request.form['market_name']
-                desc = request.form['market_description']
-                loc = request.form['market_location']
-                loc_link = request.form['market_location_link']
-                fee = request.form['market_entry_fee']
-                days = request.form['market_days']
-                insta = request.form['market_instagram']
-                fb = request.form['market_facebook']
-
-                poster_blob = None
-                if 'market_poster' in request.files:
-                    file = request.files['market_poster']
-                    if file.filename:
-                        poster_blob = file.read()
-
-                existing = conn.execute(
-                    "SELECT MarketID FROM Market WHERE MarketAdministratorID = ?",
-                    (user_id,)
-                ).fetchone()
-
-                if existing:
-                    sql = """UPDATE Market SET 
-                        MarketName=?, MarketDescription=?, MarketLocation=?, MarketLocationLink=?, 
-                        MarketEntryFee=?, MarketDays=?, MarketInstagram=?, MarketFacebook=?"""
-                    params = [name, desc, loc, loc_link, fee, days, insta, fb]
-
-                    if poster_blob:
-                        sql += ", MarketPoster=?"
-                        params.append(poster_blob)
-
-                    sql += " WHERE MarketAdministratorID=?"
-                    params.append(user_id)
-
-                    conn.execute(sql, params)
-                    flash("Market details updated!", "success")
-
-                else:
-                    conn.execute("""
-                        INSERT INTO Market 
-                        (MarketAdministratorID, MarketName, MarketDescription, MarketLocation,
-                         MarketLocationLink, MarketEntryFee, MarketDays, MarketInstagram, MarketFacebook, MarketPoster)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (user_id, name, desc, loc, loc_link, fee, days, insta, fb, poster_blob))
-
-                    flash("Market registered successfully!", "success")
-
-                conn.commit()
-                return redirect(url_for('userpage'))
-
-            # -------------------------
-            #   ADD EVENT
-            # -------------------------
             elif action == 'update_event':
                 e_name = request.form['event_name']
                 e_desc = request.form['event_description']
@@ -412,9 +341,6 @@ def userpage():
 
                 return redirect(url_for('userpage'))
 
-            # -------------------------
-            #   DELETE PROFILE
-            # -------------------------
             elif action == 'delete_profile':
                 conn.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
                 conn.commit()
@@ -422,6 +348,56 @@ def userpage():
                 flash("Your profile has been permanently deleted.", "info")
                 return redirect(url_for('login'))
 
+            elif action == 'update_vendor':
+                # 1. Retrieve all text inputs from the form
+                vendor_name = request.form.get('vendor_name')
+                vendor_type = request.form.get('vendor_type')
+                vendor_location = request.form.get('vendor_location')
+                vendor_description = request.form.get('vendor_description')
+                contact_number = request.form.get('contact_number')
+                website = request.form.get('website')
+                instagram = request.form.get('instagram')
+                facebook = request.form.get('facebook')
+
+                # 2. Update the Text Data
+                # We update these fields regardless of whether images are changed
+                conn.execute("""
+                    UPDATE Vendor 
+                    SET VendorName = ?, 
+                        VendorOfferingType = ?, 
+                        VendorLocation = ?, 
+                        VendorStallDescription = ?, 
+                        VendorContactNumber = ?, 
+                        VendorWebsite = ?, 
+                        VendorInstagram = ?, 
+                        VendorFacebook = ?
+                    WHERE UserID = ?
+                """, (vendor_name, vendor_type, vendor_location, vendor_description, 
+                    contact_number, website, instagram, facebook, user_id))
+
+                # 3. Handle Vendor Logo (Only update if a new file is selected)
+                logo_file = request.files.get('vendor_logo')
+                if logo_file and logo_file.filename != '':
+                    try:
+                        logo_data = base64.b64encode(logo_file.read()).decode('utf-8')
+                        conn.execute("UPDATE Vendor SET VendorLogo = ? WHERE UserID = ?", (logo_data, user_id))
+                    except Exception as e:
+                        print(f"Error uploading logo: {e}")
+
+                # 4. Handle Description Picture (Only update if a new file is selected)
+                banner_file = request.files.get('description_picture')
+                if banner_file and banner_file.filename != '':
+                    try:
+                        banner_data = base64.b64encode(banner_file.read()).decode('utf-8')
+                        conn.execute("UPDATE Vendor SET VendorDescriptionPicture = ? WHERE UserID = ?", (banner_data, user_id))
+                    except Exception as e:
+                        print(f"Error uploading banner: {e}")
+
+                # 5. Commit and Redirect
+                conn.commit()
+                flash("Vendor profile updated successfully!", "success")
+                return redirect(url_for('userpage'))
+            
             elif action == 'update_market':
                 # 1. Get data from the form
                 market_name = request.form.get('market_name')

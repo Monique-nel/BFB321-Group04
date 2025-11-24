@@ -206,44 +206,134 @@
                             <div> 
                                 
                                 <div class="card shadow-lg border-0 overflow-hidden mb-4">
-                                    <div class="row g-0">
-                                        <div class="col-md-4 bg-light border-end d-flex flex-column align-items-center justify-content-center p-4 text-center">
-                                            <div class="mb-3">
-                                                {% if vendor['VendorLogo'] %}
-                                                    <img src="data:image/jpeg;base64,{{ vendor['VendorLogo'] }}" 
-                                                            class="rounded-circle img-fluid border border-3 border-success p-1" 
-                                                            style="width: 120px; height: 120px; object-fit: cover;" alt="Vendor Logo">
-                                                {% else %}
-                                                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center border border-3 border-success p-1" style="width: 120px; height: 120px;">
-                                                        <i class="bi bi-shop text-success" style="font-size: 3rem;"></i>
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                            <h5 class="fw-bold mb-1">{{ vendor['VendorName'] }}</h5>
-                                            <span class="badge bg-success mb-3">{{ vendor['VendorOfferingType'] or 'General Vendor' }}</span>
-                                        </div>
+                                  <div class="row g-0">
+                                      
+                                      <div class="col-md-4 bg-light border-end d-flex flex-column align-items-center justify-content-center p-4 text-center">
+                                          
+                                          <div class="mb-3">
+                                              {% if vendor['VendorLogo'] %}
+                                                  <img src="data:image/jpeg;base64,{{ vendor['VendorLogo'] }}" 
+                                                          class="rounded-circle img-fluid border border-3 border-success p-1" 
+                                                          style="width: 120px; height: 120px; object-fit: cover;" alt="Vendor Logo">
+                                              {% else %}
+                                                  <div class="bg-white rounded-circle d-flex align-items-center justify-content-center border border-3 border-success p-1" style="width: 120px; height: 120px;">
+                                                      <i class="bi bi-shop text-success" style="font-size: 3rem;"></i>
+                                                  </div>
+                                              {% endif %}
+                                          </div>
+                                          
+                                          <h5 class="fw-bold mb-1">{{ vendor['VendorName'] }}</h5>
+                                          <span class="badge bg-success mb-3">{{ vendor['VendorOfferingType'] or 'General Vendor' }}</span>
 
-                                        <div class="col-md-8 p-4 d-flex flex-column justify-content-between">
-                                            <div>
-                                                <h5 class="text-uppercase text-muted fw-bold small mb-2">About the Stall</h5>
-                                                <p class="card-text small text-muted">
-                                                    {{ vendor['VendorStallDescription'] or "This vendor has not added a description yet." }}
-                                                </p>
-                                            </div>
-                                            <div class="mt-3 pt-3 border-top d-flex gap-2">
-                                                <button class="btn btn-outline-secondary btn-sm px-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#editVendorModal">
-                                                    <i class="bi bi-pencil-square me-2"></i> Edit Details
-                                                </button>
-                                                {% if vendor %}
-                                                    <a href="#" class="btn btn-success btn-sm px-3 fw-semibold">
-                                                        <i class="bi bi-eye-fill me-2"></i> Public View
-                                                    </a>
-                                                {% else %}
-                                                    <button class="btn btn-secondary btn-sm px-3 fw-semibold" disabled>Setup First</button>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
+                                          <div class="d-flex gap-2 justify-content-center mt-2">
+                                              {% if vendor['VendorWebsite'] %}
+                                                  <a href="{{ vendor['VendorWebsite'] }}" target="_blank" class="btn btn-sm btn-outline-dark rounded-circle" title="Website">
+                                                      <i class="bi bi-globe"></i>
+                                                  </a>
+                                              {% endif %}
+                                              {% if vendor['VendorFacebook'] %}
+                                                  <a href="{{ vendor['VendorFacebook'] }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-circle" title="Facebook">
+                                                      <i class="bi bi-facebook"></i>
+                                                  </a>
+                                              {% endif %}
+                                              {% if vendor['VendorInstagram'] %}
+                                                  <a href="{{ vendor['VendorInstagram'] }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-circle" title="Instagram">
+                                                      <i class="bi bi-instagram"></i>
+                                                  </a>
+                                              {% endif %}
+                                          </div>
+                                      </div>
+
+                                      <div class="col-md-8 p-4 d-flex flex-column justify-content-between">
+                                          
+                                          <div>
+                                              <h5 class="text-uppercase text-muted fw-bold small mb-2">About the Stall</h5>
+                                              <p class="card-text small text-muted mb-3">
+                                                  {{ vendor['VendorStallDescription'] or "This vendor has not added a description yet." }}
+                                              </p>
+
+                                              {% if vendor['VendorDescriptionPicture'] %}
+                                                  <div class="mb-3 rounded overflow-hidden border shadow-sm" style="max-height: 150px;">
+                                                      <img src="data:image/jpeg;base64,{{ vendor['VendorDescriptionPicture'] }}" 
+                                                          class="w-100 h-100 object-fit-cover" alt="Stall Picture">
+                                                  </div>
+                                              {% endif %}
+                                          </div>
+
+                                          <div>
+                                              <h5 class="text-uppercase text-muted fw-bold small mb-2">Location & Contact</h5>
+                                              <ul class="list-unstyled small text-muted mb-0">
+    
+                                                <li class="mb-2 d-flex align-items-center">
+                                                    <div class="d-flex justify-content-center" style="width: 25px;">
+                                                        <i class="bi bi-geo-alt-fill text-danger"></i>
+                                                    </div>
+                                                    <span class="ms-2">{{ vendor['VendorLocation'] or "Location not listed" }}</span>
+                                                </li>
+
+                                                <li class="mb-2 d-flex align-items-center">
+                                                    <div class="d-flex justify-content-center" style="width: 25px;">
+                                                        <i class="bi bi-telephone-fill text-success"></i>
+                                                    </div>
+                                                    <span class="ms-2">{{ vendor['VendorContactNumber'] or "No contact number" }}</span>
+                                                </li>
+
+                                                <li class="mb-2 d-flex align-items-center">
+                                                    <div class="d-flex justify-content-center" style="width: 25px;">
+                                                        <i class="bi bi-globe text-primary"></i>
+                                                    </div>
+                                                    <span class="ms-2">
+                                                        {% if vendor['VendorWebsite'] %}
+                                                            <a href="{{ vendor['VendorWebsite'] }}" target="_blank" class="text-decoration-none text-muted border-bottom border-secondary">
+                                                                Visit Website
+                                                            </a>
+                                                        {% else %}
+                                                            No website listed
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+
+                                                <li class="mb-2 d-flex align-items-center">
+                                                    <div class="d-flex justify-content-center" style="width: 25px;">
+                                                        <i class="bi bi-instagram text-danger"></i>
+                                                    </div>
+                                                    <span class="ms-2">
+                                                        {% if vendor['VendorInstagram'] %}
+                                                            <a href="{{ vendor['VendorInstagram'] }}" target="_blank" class="text-decoration-none text-muted border-bottom border-secondary">
+                                                                Instagram Profile
+                                                            </a>
+                                                        {% else %}
+                                                            No Instagram listed
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+
+                                                <li class="mb-2 d-flex align-items-center">
+                                                    <div class="d-flex justify-content-center" style="width: 25px;">
+                                                        <i class="bi bi-facebook text-primary"></i>
+                                                    </div>
+                                                    <span class="ms-2">
+                                                        {% if vendor['VendorFacebook'] %}
+                                                            <a href="{{ vendor['VendorFacebook'] }}" target="_blank" class="text-decoration-none text-muted border-bottom border-secondary">
+                                                                Facebook Page
+                                                            </a>
+                                                        {% else %}
+                                                            No Facebook listed
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+
+                                              </ul>
+                                          </div>
+
+                                          <div class="mt-3 pt-3 border-top d-flex gap-2">
+                                              <button class="btn btn-outline-secondary btn-sm px-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#editVendorModal">
+                                                  <i class="bi bi-pencil-square me-2"></i> Edit Details
+                                              </button>
+                                          </div>
+
+                                      </div>
+                                  </div>
                                 </div>
 
                                 <div class="card border-0 shadow-sm">
@@ -618,46 +708,76 @@
                     <h5 class="modal-title fw-bold"><i class="bi bi-shop me-2"></i>Edit Vendor Profile</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ url_for('userpage') }}" method="POST">
+
+                <form action="{{ url_for('userpage') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="update_vendor">
+                    
                     <div class="modal-body p-4">
-                        <div class="row g-3">
+                        
+                        <h6 class="text-muted text-uppercase fw-bold small mb-3">Images</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Profile Logo</label>
+                                <input type="file" class="form-control" name="vendor_logo" accept="image/*">
+                                <div class="form-text text-muted small">Square images work best.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Stall Banner / Feature Image</label>
+                                <input type="file" class="form-control" name="description_picture" accept="image/*">
+                                <div class="form-text text-muted small">Displayed in your "About" section.</div>
+                            </div>
+                        </div>
+
+                        <hr class="my-3 opacity-10">
+
+                        <h6 class="text-muted text-uppercase fw-bold small mb-3">Stall Details</h6>
+                        <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Vendor / Stall Name</label>
-                                <input type="text" class="form-control" name="vendor_name" value="{{ user['VendorName'] if user['VendorName'] }}" placeholder="E.g. Mama's Kitchen" required>
+                                <input type="text" class="form-control" name="vendor_name" value="{{ vendor['VendorName'] }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Offering Type</label>
                                 <select class="form-select" name="vendor_type">
-                                    <option value="Food & Drink" {% if user['VendorOfferingType'] == 'Food & Drink' %}selected{% endif %}>Food & Drink</option>
-                                    <option value="Arts & Crafts" {% if user['VendorOfferingType'] == 'Arts & Crafts' %}selected{% endif %}>Arts & Crafts</option>
-                                    <option value="Clothing" {% if user['VendorOfferingType'] == 'Clothing' %}selected{% endif %}>Clothing</option>
-                                    <option value="Services" {% if user['VendorOfferingType'] == 'Services' %}selected{% endif %}>Services</option>
-                                    <option value="Other" {% if user['VendorOfferingType'] == 'Other' %}selected{% endif %}>Other</option>
+                                    <option value="Food & Drink" {% if vendor['VendorOfferingType'] == 'Food & Drink' %}selected{% endif %}>Food & Drink</option>
+                                    <option value="Arts & Crafts" {% if vendor['VendorOfferingType'] == 'Arts & Crafts' %}selected{% endif %}>Arts & Crafts</option>
+                                    <option value="Clothing" {% if vendor['VendorOfferingType'] == 'Clothing' %}selected{% endif %}>Clothing</option>
+                                    <option value="Services" {% if vendor['VendorOfferingType'] == 'Services' %}selected{% endif %}>Services</option>
+                                    <option value="Other" {% if vendor['VendorOfferingType'] == 'Other' %}selected{% endif %}>Other</option>
                                 </select>
                             </div>
-                            
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">Location</label>
+                                <input type="text" class="form-control" name="vendor_location" value="{{ vendor['VendorLocation'] or '' }}" placeholder="E.g. Stall 42, Main Tent or Street Address">
+                            </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold">Description</label>
-                                <textarea class="form-control" name="vendor_description" rows="3" placeholder="Tell customers what makes your stall special...">{{ user['VendorDescription'] if user['VendorDescription'] }}</textarea>
-                            </div>
-
-                            <hr class="my-2 opacity-25">
-
-                            <div class="col-md-12">
-                                <label class="form-label fw-semibold">Contact Number (WhatsApp)</label>
-                                <input type="text" class="form-control" name="contact_number" value="{{ user['VendorContactNumber'] if user['VendorContactNumber'] }}" placeholder="012 345 6789">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold"><i class="bi bi-instagram text-danger"></i> Instagram Link</label>
-                                <input type="url" class="form-control" name="instagram" value="{{ user['VendorInstagram'] if user['VendorInstagram'] }}" placeholder="https://instagram.com/...">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold"><i class="bi bi-facebook text-primary"></i> Facebook Link</label>
-                                <input type="url" class="form-control" name="facebook" value="{{ user['VendorFacebook'] if user['VendorFacebook'] }}" placeholder="https://facebook.com/...">
+                                <textarea class="form-control" name="vendor_description" rows="3" placeholder="Tell customers what makes your stall special...">{{ vendor['VendorStallDescription'] or '' }}</textarea>
                             </div>
                         </div>
+
+                        <hr class="my-3 opacity-10">
+
+                        <h6 class="text-muted text-uppercase fw-bold small mb-3">Contact & Links</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-whatsapp text-success"></i> Contact Number</label>
+                                <input type="text" class="form-control" name="contact_number" value="{{ vendor['VendorContactNumber'] or '' }}" placeholder="012 345 6789">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-globe text-primary"></i> Website</label>
+                                <input type="url" class="form-control" name="website" value="{{ vendor['VendorWebsite'] or '' }}" placeholder="https://mywebsite.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-instagram text-danger"></i> Instagram</label>
+                                <input type="url" class="form-control" name="instagram" value="{{ vendor['VendorInstagram'] or '' }}" placeholder="https://instagram.com/...">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-facebook text-primary"></i> Facebook</label>
+                                <input type="url" class="form-control" name="facebook" value="{{ vendor['VendorFacebook'] or '' }}" placeholder="https://facebook.com/...">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer bg-light">
                         <button type="button" class="btn btn-link text-secondary text-decoration-none" data-bs-dismiss="modal">Cancel</button>
