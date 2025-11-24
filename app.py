@@ -3,7 +3,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import base64
 import math
-from flask import jsonify
 
 # --- Configuration ---
 app = Flask(__name__)
@@ -580,6 +579,60 @@ def faq():
 def about():
     return render_template('About.html')
 
+@app.route('/delete_profile', methods=['POST'])
+def delete_profile():
+    if 'user_id' not in session:
+        flash("You must be logged in to do that.", "danger")
+        return redirect(url_for('login'))
+
+    try:
+        user_id = session['user_id']
+        conn = get_db_connection()
+        
+        # ---------------------------------------------------------
+        # 1. Delete associated data first (Children)
+        # ---------------------------------------------------------
+        # NOTE: Ensure the column name in these tables matches your DB 
+        # (e.g., 'UserID', 'user_id', or 'OwnerID')
+        
+        conn.execute('DELETE FROM Market WHERE MarketAdministratorID = ?', (user_id,))
+        conn.execute('DELETE FROM Vendor WHERE UserID = ?', (user_id,))
+        conn.execute('DELETE FROM Events WHERE MarketID = ?', (user_id,))
+        
+        # ---------------------------------------------------------
+        # 2. Delete the user (Parent)
+        # ---------------------------------------------------------
+        conn.execute('DELETE FROM User WHERE UserID = ?', (user_id,))
+        
+        conn.commit()
+        conn.close()
+
+        # 3. Clear the session (Logout)
+        session.clear()
+
+        flash('Your account and all associated data have been deleted.', 'success')
+        return redirect(url_for('home'))
+
+    except Exception as e:
+        print(f"Delete Error: {e}")
+        flash('Error deleting account.', 'danger')
+        return redirect(url_for('userpage'))
+    
+@app.route('/vendor_products/<int:vendor_id>')
+def vendor_products(vendor_id):
+    conn = get_db_connection()
+    
+    # 1. Get the Vendor's details (so you can display their name)
+    vendor = conn.execute('SELECT * FROM Vendor WHERE VendorID = ?', (vendor_id,)).fetchone()
+    
+    # 2. Get the Products for this specific vendor
+    products = conn.execute('SELECT * FROM Product WHERE VendorID = ?', (vendor_id,)).fetchall()
+    
+    conn.close()
+    
+    # 3. Send data to HTML
+    return render_template('products.html', vendor=vendor, products=products)    
+    
 if __name__ == '__main__':
     print("Running Flask app. Ensure 'Mzanzi.db' exists.")
     app.run(debug=True)
