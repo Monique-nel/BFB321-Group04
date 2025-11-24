@@ -196,6 +196,7 @@ def userpage():
 
     # Fetch User
     user = conn.execute("SELECT * FROM User WHERE UserID = ?", (user_id,)).fetchone()
+    vendor = conn.execute("SELECT * FROM Vendor WHERE UserID = ?", (user_id,)).fetchone()
 
     vendor = None
     vendor_products = []
@@ -204,7 +205,10 @@ def userpage():
     if user['Classification'] == 'Vendor':
         vendor = conn.execute("SELECT * FROM Vendor WHERE UserID = ?", (user_id,)).fetchone()
         if vendor:
-            vendor_products = conn.execute("SELECT * FROM Product WHERE VendorID = ?", (vendor['VendorID'],)).fetchall()
+            vendor_products = conn.execute(
+                "SELECT * FROM Product WHERE VendorID = ?",
+                (vendor['VendorID'],)
+            ).fetchall()
 
     # -------------------------
     #           POST
@@ -213,7 +217,9 @@ def userpage():
         action = request.form.get('action')
 
         try:
-            # --- UPDATE VENDOR ---
+            # -------------------------
+            #   UPDATE VENDOR
+            # -------------------------
             if action == 'update_vendor':
                 v_name = request.form.get('vendor_name')
                 v_desc = request.form.get('vendor_description')
@@ -224,11 +230,11 @@ def userpage():
                 v_fb = request.form.get('facebook')
                 v_insta = request.form.get('instagram')
 
-                # If vendor does not exist, create
                 if not vendor:
                     conn.execute("""
-                        INSERT INTO Vendor (UserID, VendorName, VendorStallDescription, VendorOfferingType, 
-                        VendorContactNumber, VendorLocation, VendorWebsite, VendorFacebook, VendorInstagram)
+                        INSERT INTO Vendor 
+                        (UserID, VendorName, VendorStallDescription, VendorOfferingType, 
+                         VendorContactNumber, VendorLocation, VendorWebsite, VendorFacebook, VendorInstagram)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, (user_id, v_name, v_desc, v_type, v_contact, v_loc, v_web, v_fb, v_insta))
 
@@ -245,7 +251,52 @@ def userpage():
                 flash("Vendor profile updated!", "success")
                 return redirect(url_for('userpage'))
 
-            # --- ADD PRODUCT ---
+            # -------------------------
+            #   UPDATE USERNAME
+            # -------------------------
+            elif action == 'update_username':
+                new_username = request.form.get('username')
+
+                conn.execute("UPDATE User SET Username = ? WHERE UserID = ?", (new_username, user_id))
+                conn.commit()
+
+                session['username'] = new_username
+                flash("Username updated successfully!", "success")
+                return redirect(url_for('userpage'))
+
+            # -------------------------
+            #   UPDATE EMAIL
+            # -------------------------
+            elif action == 'update_email':
+                new_email = request.form.get('email')
+
+                conn.execute("UPDATE User SET Email = ? WHERE UserID = ?", (new_email, user_id))
+                conn.commit()
+
+                flash("Email updated successfully!", "success")
+                return redirect(url_for('userpage'))
+
+            # -------------------------
+            #   UPDATE PASSWORD
+            # -------------------------
+            elif action == 'update_password':
+                current_pw = request.form.get('current_password')
+                new_pw = request.form.get('new_password')
+
+                db_user = conn.execute("SELECT Password FROM User WHERE UserID = ?", (user_id,)).fetchone()
+
+                if db_user and db_user['Password'] == current_pw:
+                    conn.execute("UPDATE User SET Password = ? WHERE UserID = ?", (new_pw, user_id))
+                    conn.commit()
+                    flash("Password changed successfully!", "success")
+                else:
+                    flash("Incorrect current password.", "danger")
+
+                return redirect(url_for('userpage'))
+
+            # -------------------------
+            #   ADD PRODUCT
+            # -------------------------
             elif action == 'add_product':
                 p_name = request.form.get('product_name')
                 p_price = request.form.get('product_price')
@@ -259,8 +310,23 @@ def userpage():
                     flash("Product added!", "success")
 
                 return redirect(url_for('userpage'))
+            
+            elif action == 'update_product':
+                product_id = request.form['product_id']
+                name = request.form['product_name']
+                price = request.form['product_price']
 
-            # --- UPDATE MARKET ---
+                conn.execute("""
+                    UPDATE Product SET ProductName=?, ProductPrice=?
+                    WHERE ProductID=? AND VendorID=?
+                """, (name, price, product_id, vendor['VendorID']))
+                conn.commit()
+                flash("Product updated!", "success")
+                return redirect(url_for('userpage'))
+
+            # -------------------------
+            #   UPDATE MARKET
+            # -------------------------
             elif action == 'update_market':
                 name = request.form['market_name']
                 desc = request.form['market_description']
@@ -277,7 +343,10 @@ def userpage():
                     if file.filename:
                         poster_blob = file.read()
 
-                existing = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+                existing = conn.execute(
+                    "SELECT MarketID FROM Market WHERE MarketAdministratorID = ?",
+                    (user_id,)
+                ).fetchone()
 
                 if existing:
                     sql = """UPDATE Market SET 
@@ -297,16 +366,20 @@ def userpage():
 
                 else:
                     conn.execute("""
-                        INSERT INTO Market (MarketAdministratorID, MarketName, MarketDescription, MarketLocation,
-                        MarketLocationLink, MarketEntryFee, MarketDays, MarketInstagram, MarketFacebook, MarketPoster)
+                        INSERT INTO Market 
+                        (MarketAdministratorID, MarketName, MarketDescription, MarketLocation,
+                         MarketLocationLink, MarketEntryFee, MarketDays, MarketInstagram, MarketFacebook, MarketPoster)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, (user_id, name, desc, loc, loc_link, fee, days, insta, fb, poster_blob))
 
                     flash("Market registered successfully!", "success")
 
                 conn.commit()
+                return redirect(url_for('userpage'))
 
-            # --- ADD EVENT ---
+            # -------------------------
+            #   ADD EVENT
+            # -------------------------
             elif action == 'update_event':
                 e_name = request.form['event_name']
                 e_desc = request.form['event_description']
@@ -316,23 +389,32 @@ def userpage():
 
                 e_poster = None
                 if 'event_poster' in request.files:
-                    file = request.files['event_poster']
-                    if file.filename:
-                        e_poster = file.read()
+                    f = request.files['event_poster']
+                    if f.filename:
+                        e_poster = f.read()
 
-                market_row = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+                market_row = conn.execute(
+                    "SELECT MarketID FROM Market WHERE MarketAdministratorID = ?",
+                    (user_id,)
+                ).fetchone()
 
                 if market_row:
                     conn.execute("""
-                        INSERT INTO Events (MarketID, EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster)
+                        INSERT INTO Events 
+                        (MarketID, EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
                     """, (market_row['MarketID'], e_name, e_desc, e_date, e_days, e_link, e_poster))
+
                     conn.commit()
                     flash("Event added successfully!", "success")
                 else:
                     flash("Please create a market profile first.", "warning")
 
-            # --- DELETE PROFILE ---
+                return redirect(url_for('userpage'))
+
+            # -------------------------
+            #   DELETE PROFILE
+            # -------------------------
             elif action == 'delete_profile':
                 conn.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
                 conn.commit()
@@ -344,25 +426,40 @@ def userpage():
             conn.rollback()
             flash(f"Error: {str(e)}", "danger")
             print("Database Error:", e)
-
-        return redirect(url_for("userpage"))
+            return redirect(url_for("userpage"))
 
     # -------------------------
-    #      GET REQUEST DATA
+    #      GET REQUEST
     # -------------------------
     market = None
     events = []
     vendors = []
 
     if user['Classification'] == 'MarketAdministrator':
-        market = conn.execute("SELECT * FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+        market = conn.execute(
+            "SELECT * FROM Market WHERE MarketAdministratorID = ?",
+            (user_id,)
+        ).fetchone()
 
         if market:
-            events = conn.execute("SELECT * FROM Events WHERE MarketID = ?", (market['MarketID'],)).fetchall()
+            events = conn.execute(
+                "SELECT * FROM Events WHERE MarketID = ?",
+                (market['MarketID'],)
+            ).fetchall()
+
             vendors = conn.execute("SELECT * FROM Vendor").fetchall()
 
     conn.close()
-    return render_template("userpage.html", user=user, market=market, events=events, vendors=vendors)
+
+    return render_template(
+        "userpage.html",
+        user=user,
+        market=market,
+        events=events,
+        vendors=vendors,
+        vendor = vendor,
+        vendor_products=vendor_products
+    )
 
 @app.route("/logout")
 def logout():
