@@ -12,7 +12,7 @@
         class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
       >
         <div class="container-fluid px-4">
-          <!-- Left side: Logo + Links -->
+          <!---------------------------- Left side: Logo + Links ---------------->
           <a class="navbar-brand d-flex align-items-center me-3" href="/">
             <img
               src="{{ url_for('static', filename='images/Logo.png') }}"
@@ -21,7 +21,7 @@
               class="me-2"
             />
           </a>
-
+<!---------------------------- Nav bar  ---------------->
           <button
             class="navbar-toggler"
             type="button"
@@ -56,7 +56,7 @@
 
             <!-- Right side: Search + User -->
             <div class="d-flex align-items-center">
-              <!-- Search -->
+              <!-- Search bar  -->
               <form class="d-flex me-3" role="search">
                 <input
                   class="form-control me-2 rounded-pill px-3 py-1 fs-5"
@@ -72,7 +72,7 @@
                 </button>
               </form>
 
-              <!-- User section -->
+              <!------------------- User section------------------- -->
               <ul class="navbar-nav d-flex align-items-center mb-0">
                 <li class="nav-item">
                   
@@ -114,6 +114,7 @@
     </header>
   
   <main>  
+    <!---------------------------- Main body  (FAQ's and answers)--------------------->
     <div class="container my-5">
       <h2 class="text-center mb-4">Frequently Asked Questions</h2>
 
@@ -151,12 +152,12 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!------------------------------------ Footer -------------------------->
   <footer class="border-top py-3" style="background-color: #c8f7c5">
     <div
       class="container d-flex flex-wrap justify-content-between align-items-center"
     >
-      <!-- Left side -->
+      <!------------------------- Left side  (Mzanzi market logo)------------------>
       <div class="d-flex align-items-center mb-3 mb-md-0">
         <img
           src="{{ url_for('static', filename='images/Logo.png') }}"
@@ -166,7 +167,7 @@
         />
         <span class="fw-bold text-success fs-5">Mzanzi Market</span>
       </div>
-    <!-- Right side navigation -->
+    <!-------------------- Right side navigation ( links to other pages) ------------------>
       <ul class="nav col-md-5 justify-content-end">
   <li class="nav-item fw-semibold">
     <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
@@ -184,7 +185,7 @@
     </div>
   </footer>
 
-
+<!---------------------------- Bootstrap ---------------->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
