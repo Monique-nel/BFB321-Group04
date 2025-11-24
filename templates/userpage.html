@@ -118,9 +118,8 @@
 
     <main>
       <div class="container my-5">
-        
         <div class="container py-5">
-            
+
             <div class="row mb-3">
                 <div class="col-12">
                     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -479,49 +478,6 @@
       </div>
     </div>
 
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        
-        <div class="modal-body">
-          <form action="{{ url_for('userpage') }}" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="add_product">
-            
-            <div class="mb-3">
-              <label for="pName" class="form-label">Product Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="pName" name="product_name" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="pPrice" class="form-label">Price (R) <span class="text-danger">*</span></label>
-              <input type="number" class="form-control" id="pPrice" name="product_price" step="0.01" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="pDesc" class="form-label">Description</label>
-              <textarea class="form-control" id="pDesc" name="product_description" rows="3"></textarea>
-            </div>
-
-            <div class="mb-3">
-              <label for="pImage" class="form-label">Product Image</label>
-              <input type="file" class="form-control" id="pImage" name="product_image">
-            </div>
-
-            <div class="d-grid">
-              <button type="submit" class="btn btn-success">Save Product</button>
-            </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-    </div>
-
     <div class="modal fade" id="editPasswordModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -548,6 +504,39 @@
             </form>
           </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+          <form action="{{ url_for('userpage') }}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="add_product">
+            
+            <div class="mb-3">
+              <label for="pName" class="form-label">Product Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="pName" name="product_name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="pPrice" class="form-label">Price (R) <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="pPrice" name="product_price" step="0.01" required>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">Save Product</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
     </div>
 
     <div class="modal fade" id="editMarketModal" tabindex="-1">
