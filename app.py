@@ -2,10 +2,18 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import base64
+import math
 
 # --- Configuration ---
 app = Flask(__name__)
 app.secret_key = "my_super_secret_key_12345" 
+
+# This allows Jinja to handle the image data from the database
+@app.template_filter('b64encode')
+def b64encode_filter(data):
+    if data:
+        return base64.b64encode(data).decode('utf-8')
+    return ""
 
 # --- Jinja Filter for BLOB Images ---
 def convert_blob_to_base64(blob_data):
@@ -43,25 +51,47 @@ def get_db_connection():
 # DEFAULT ROUTE: Still serves the original request (MarketID = 2)
 @app.route("/", methods=["GET"])
 def home():
+    
+    page = request.args.get('page', 1, type=int)
+    per_page = 6
+    offset = (page - 1) * per_page
+    
     conn = get_db_connection()
-    markets = conn.execute("SELECT * FROM Market").fetchall()
-    conn.close()
-    return render_template("home.html", markets=markets)
 
-@app.route("/market/<int:market_id>", methods=["GET"])
-def market_details(market_id):
+    total_markets = conn.execute("SELECT COUNT(*) FROM Market").fetchone()[0]
+    total_pages = math.ceil(total_markets / per_page)
+    
+    markets = conn.execute("SELECT * FROM Market LIMIT ? OFFSET ?", (per_page, offset)).fetchall()
+    conn.close()
+    return render_template("home.html", markets=markets, page=page,total_pages=total_pages)
+
+@app.route("/maps/<int:market_id>")
+def maps(market_id):
     conn = get_db_connection()
+    # Fetch the specific market
     market = conn.execute("SELECT * FROM Market WHERE MarketID = ?", (market_id,)).fetchone()
     conn.close()
-    markets = [market] if market else []
-    return render_template("home.html", markets=markets, current_id=market_id)
+
+    if market is None:
+        return "Market not found", 404
+
+    # Pass 'market' (singular) to the template
+    return render_template("maps.html", market=market)
 
 @app.route("/vendors", methods=["GET"])
 def vendors():
+    page = request.args.get('page', 1, type=int)
+    per_page = 6
+    offset = (page - 1) * per_page
+    
     conn = get_db_connection()
-    vendors = conn.execute("SELECT * FROM Vendor").fetchall()
+
+    total_markets = conn.execute("SELECT COUNT(*) FROM Market").fetchone()[0]
+    total_pages = math.ceil(total_markets / per_page)
+    
+    vendors = conn.execute("SELECT * FROM Vendor LIMIT ? OFFSET ?", (per_page, offset)).fetchall()
     conn.close()
-    return render_template("vendors.html", vendors=vendors)
+    return render_template("vendors.html", vendors=vendors, page=page,total_pages=total_pages)
 
 @app.route("/events", methods=["GET"])
 def events():
@@ -148,16 +178,77 @@ def userpage():
         return redirect(url_for("login"))
 
     conn = get_db_connection()
-    conn.row_factory = sqlite3.Row # Ensure we can access columns by name
+    conn.row_factory = sqlite3.Row
     user_id = session['user_id']
 
+    # Fetch User
+    user = conn.execute("SELECT * FROM User WHERE UserID = ?", (user_id,)).fetchone()
+
+    vendor = None
+    vendor_products = []
+
+    # If user is vendor, load vendor + products
+    if user['Classification'] == 'Vendor':
+        vendor = conn.execute("SELECT * FROM Vendor WHERE UserID = ?", (user_id,)).fetchone()
+        if vendor:
+            vendor_products = conn.execute("SELECT * FROM Product WHERE VendorID = ?", (vendor['VendorID'],)).fetchall()
+
+    # -------------------------
+    #           POST
+    # -------------------------
     if request.method == 'POST':
         action = request.form.get('action')
 
         try:
-            # --- A. UPDATE MARKET DETAILS ---
-            if action == 'update_market':
-                # Text Data
+            # --- UPDATE VENDOR ---
+            if action == 'update_vendor':
+                v_name = request.form.get('vendor_name')
+                v_desc = request.form.get('vendor_description')
+                v_type = request.form.get('vendor_type')
+                v_contact = request.form.get('contact_number')
+                v_loc = request.form.get('vendor_location')
+                v_web = request.form.get('website')
+                v_fb = request.form.get('facebook')
+                v_insta = request.form.get('instagram')
+
+                # If vendor does not exist, create
+                if not vendor:
+                    conn.execute("""
+                        INSERT INTO Vendor (UserID, VendorName, VendorStallDescription, VendorOfferingType, 
+                        VendorContactNumber, VendorLocation, VendorWebsite, VendorFacebook, VendorInstagram)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (user_id, v_name, v_desc, v_type, v_contact, v_loc, v_web, v_fb, v_insta))
+
+                else:
+                    conn.execute("""
+                        UPDATE Vendor 
+                        SET VendorName=?, VendorStallDescription=?, VendorOfferingType=?, 
+                            VendorContactNumber=?, VendorLocation=?, VendorWebsite=?, 
+                            VendorFacebook=?, VendorInstagram=?
+                        WHERE UserID=?
+                    """, (v_name, v_desc, v_type, v_contact, v_loc, v_web, v_fb, v_insta, user_id))
+
+                conn.commit()
+                flash("Vendor profile updated!", "success")
+                return redirect(url_for('userpage'))
+
+            # --- ADD PRODUCT ---
+            elif action == 'add_product':
+                p_name = request.form.get('product_name')
+                p_price = request.form.get('product_price')
+
+                if vendor:
+                    conn.execute("""
+                        INSERT INTO Product (ProductName, ProductPrice, VendorID)
+                        VALUES (?, ?, ?)
+                    """, (p_name, p_price, vendor['VendorID']))
+                    conn.commit()
+                    flash("Product added!", "success")
+
+                return redirect(url_for('userpage'))
+
+            # --- UPDATE MARKET ---
+            elif action == 'update_market':
                 name = request.form['market_name']
                 desc = request.form['market_description']
                 loc = request.form['market_location']
@@ -166,108 +257,96 @@ def userpage():
                 days = request.form['market_days']
                 insta = request.form['market_instagram']
                 fb = request.form['market_facebook']
-                
-                # Image Data (BLOBs)
+
                 poster_blob = None
                 if 'market_poster' in request.files:
                     file = request.files['market_poster']
-                    if file.filename != '':
+                    if file.filename:
                         poster_blob = file.read()
 
-                # Check if market exists for this admin
-                # Note: Assuming UserID matches MarketAdministratorID for simplicity
                 existing = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
 
                 if existing:
-                    # Construct Update Query
                     sql = """UPDATE Market SET 
-                             MarketName=?, MarketDescription=?, MarketLocation=?, MarketLocationLink=?, 
-                             MarketEntryFee=?, MarketDays=?, MarketInstagram=?, MarketFacebook=?"""
+                        MarketName=?, MarketDescription=?, MarketLocation=?, MarketLocationLink=?, 
+                        MarketEntryFee=?, MarketDays=?, MarketInstagram=?, MarketFacebook=?"""
                     params = [name, desc, loc, loc_link, fee, days, insta, fb]
 
-                    # Only update poster if a new one was uploaded
                     if poster_blob:
                         sql += ", MarketPoster=?"
                         params.append(poster_blob)
-                    
+
                     sql += " WHERE MarketAdministratorID=?"
                     params.append(user_id)
-                    
+
                     conn.execute(sql, params)
                     flash("Market details updated!", "success")
+
                 else:
-                    # Insert New
                     conn.execute("""
-                        INSERT INTO Market (MarketAdministratorID, MarketName, MarketDescription, MarketLocation, 
-                        MarketLocationLink, MarketEntryFee, MarketDays, MarketInstagram, MarketFacebook, MarketPoster) 
+                        INSERT INTO Market (MarketAdministratorID, MarketName, MarketDescription, MarketLocation,
+                        MarketLocationLink, MarketEntryFee, MarketDays, MarketInstagram, MarketFacebook, MarketPoster)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, (user_id, name, desc, loc, loc_link, fee, days, insta, fb, poster_blob))
+
                     flash("Market registered successfully!", "success")
-                
+
                 conn.commit()
 
-            # --- B. ADD/UPDATE EVENT ---
+            # --- ADD EVENT ---
             elif action == 'update_event':
                 e_name = request.form['event_name']
                 e_desc = request.form['event_description']
                 e_date = request.form['event_date']
                 e_days = request.form['event_days']
                 e_link = request.form['event_booking_link']
-                
-                # Image Data
+
                 e_poster = None
                 if 'event_poster' in request.files:
                     file = request.files['event_poster']
-                    if file.filename != '':
+                    if file.filename:
                         e_poster = file.read()
 
-                # Get Market ID
                 market_row = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
-                
+
                 if market_row:
                     conn.execute("""
-                        INSERT INTO Events (MarketID, EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster) 
+                        INSERT INTO Events (MarketID, EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
                     """, (market_row['MarketID'], e_name, e_desc, e_date, e_days, e_link, e_poster))
-                    flash("Event added successfully!", "success")
                     conn.commit()
+                    flash("Event added successfully!", "success")
                 else:
                     flash("Please create a market profile first.", "warning")
-            
-            # --- C. DELETE PROFILE ---
+
+            # --- DELETE PROFILE ---
             elif action == 'delete_profile':
                 conn.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
                 conn.commit()
-                session.clear() # Log them out immediately
+                session.clear()
                 flash("Your profile has been permanently deleted.", "info")
                 return redirect(url_for('login'))
 
         except Exception as e:
             conn.rollback()
             flash(f"Error: {str(e)}", "danger")
-            print(f"Database Error: {e}")
+            print("Database Error:", e)
 
-        conn.close()
         return redirect(url_for("userpage"))
 
-    user = conn.execute("SELECT * FROM User WHERE UserID = ?", (user_id,)).fetchone()
-    
+    # -------------------------
+    #      GET REQUEST DATA
+    # -------------------------
     market = None
     events = []
     vendors = []
 
-    if user['Classification'] == 'MarketAdministrator': # Note: No space based on your DB
-        # Fetch Market
+    if user['Classification'] == 'MarketAdministrator':
         market = conn.execute("SELECT * FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
-        
+
         if market:
-            # Fetch Events for this Market
             events = conn.execute("SELECT * FROM Events WHERE MarketID = ?", (market['MarketID'],)).fetchall()
-            
-            # Fetch Vendors (Assuming logic: Fetch all vendors for now, 
-            # normally you would need a linking table like 'MarketVendors' to filter specific ones)
             vendors = conn.execute("SELECT * FROM Vendor").fetchall()
-        
 
     conn.close()
     return render_template("userpage.html", user=user, market=market, events=events, vendors=vendors)

@@ -114,37 +114,36 @@
       </nav>
     </header>
 
-  <main>
-
-      <!-- Market name -->
-      <div class="container my-4 text-center fs-2">
-          <p>{{ market.MarketName }}</p>
+    <main>
+      <div class="container my-5 text-center">
+          <h1 class="display-5 fw-bold text-success">{{ market.MarketName }}</h1>
+          <p class="text-muted fs-5">Official Market Map & Layout</p>
       </div>
 
-      <!-- Image section with fallback -->
-      <div class="container my-4 text-center">
-
-          {% if market.MarketPoster %}
-              <!-- Image exists in DB as BLOB -->
-              <img src="data:image/png;base64,{{ market.MarketPoster | b64encode }}"
-                  alt="{{ market.MarketName }}"
-                  class="img-fluid rounded shadow"
-                  style="max-width:100%; height:auto;">
-          {% else %}
-              <!-- No image found -->
-              <div class="text-center">
-                  <p class="fs-3 fw-bold">Coming Soon</p>
+      <div class="container mb-5 text-center">
+          <div class="card shadow-lg border-0">
+              <div class="card-body p-2">
+                  {% if market.MarketPoster %}
+                      <img src="data:image/png;base64,{{ market.MarketPoster | b64encode }}"
+                          alt="Map of {{ market.MarketName }}"
+                          class="img-fluid rounded"
+                          style="max-height: 600px; width: auto;">
+                  {% else %}
+                      <div class="py-5 bg-light rounded">
+                          <p class="fs-3 fw-bold text-muted">Map Coming Soon</p>
+                          <p>The organizer hasn't uploaded a layout for this market yet.</p>
+                      </div>
+                  {% endif %}
               </div>
-          {% endif %}
+          </div>
       </div>
 
-      <!-- Buttons -->
-      <div class="d-flex justify-content-center gap-3 py-3">
-          <a href="{{ url_for('home') }}" class="btn btn-success btn-lg">Back to Markets</a>
-          <a href="{{ url_for('vendors') }}" class="btn btn-success btn-lg">Vendors</a>
+      <div class="d-flex justify-content-center gap-3 pb-5">
+          <a href="{{ url_for('home') }}" class="btn btn-outline-success btn-lg px-4">Back to Markets</a>
+          <a href="{{ url_for('vendors') }}" class="btn btn-success btn-lg px-4">View Vendors</a>
       </div>
 
-  </main>
+    </main>
 
   <!-- Footer -->
   <footer class="border-top py-3" style="background-color: #c8f7c5">
