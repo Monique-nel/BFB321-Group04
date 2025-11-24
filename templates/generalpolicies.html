@@ -12,7 +12,7 @@
         class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
       >
         <div class="container-fluid px-4">
-          <!-- Left side: Logo + Links -->
+          <!-----------------Left side: Logo + Links --------------->
           <a class="navbar-brand d-flex align-items-center me-3" href="/">
             <img
               src="{{ url_for('static', filename='images/Logo.png') }}"
@@ -21,7 +21,7 @@
               class="me-2"
             />
           </a>
-
+  <!-----------------------------------Navigation bar   ------------------------------>
           <button
             class="navbar-toggler"
             type="button"
@@ -35,7 +35,7 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left-aligned links (next to logo) -->
+            <!------------------- Left-aligned links (next to logo)------------------->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link fw-semibold fs-5 active" href="/"
@@ -54,7 +54,7 @@
               </li>
             </ul>
 
-            <!-- Right side: Search + User -->
+            <!------------------------ Right side: Search + User ----------------->
             <div class="d-flex align-items-center">
               <!-- Search -->
               <form class="d-flex me-3" role="search">
@@ -72,7 +72,7 @@
                 </button>
               </form>
 
-              <!-- User section -->
+              <!------------------- User section------------------- -->
               <ul class="navbar-nav d-flex align-items-center mb-0">
                 <li class="nav-item">
                   
@@ -112,7 +112,7 @@
         </div>
       </nav>
     </header>
-
+  <!-----------------------------------Main body of file ------------------------->
     <main class="bg-light py-5">
   <div class="container">
     
@@ -188,12 +188,12 @@
   </div>
     </main>
 
-  <!-- Footer -->
+  <!----------------------- Footer -------------------->
   <footer class="border-top py-3" style="background-color: #c8f7c5">
     <div
       class="container d-flex flex-wrap justify-content-between align-items-center"
     >
-      <!-- Left side -->
+      <!------------------------- Left side  (Mzanzi market logo)------------------>
       <div class="d-flex align-items-center mb-3 mb-md-0">
         <img
           src="{{ url_for('static', filename='images/Logo.png') }}"
@@ -204,7 +204,7 @@
         <span class="fw-bold text-success fs-5">Mzanzi Market</span>
       </div>
 
-      <!-- Right side navigation -->
+      <!-------------------- Right side navigation ( links to other pages) ------------------>
       <ul class="nav col-md-5 justify-content-end">
   <li class="nav-item fw-semibold">
     <a href="{{ url_for('home') }}" class="nav-link px-2 text-muted">Home</a>
