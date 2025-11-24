@@ -8,6 +8,13 @@ import math
 app = Flask(__name__)
 app.secret_key = "my_super_secret_key_12345" 
 
+# This allows Jinja to handle the image data from the database
+@app.template_filter('b64encode')
+def b64encode_filter(data):
+    if data:
+        return base64.b64encode(data).decode('utf-8')
+    return ""
+
 # --- Jinja Filter for BLOB Images ---
 def convert_blob_to_base64(blob_data):
     """
@@ -58,17 +65,21 @@ def home():
     conn.close()
     return render_template("home.html", markets=markets, page=page,total_pages=total_pages)
 
-@app.route("/market/<int:market_id>", methods=["GET"])
-def market_details(market_id):
+@app.route("/maps/<int:market_id>")
+def maps(market_id):
     conn = get_db_connection()
+    # Fetch the specific market
     market = conn.execute("SELECT * FROM Market WHERE MarketID = ?", (market_id,)).fetchone()
     conn.close()
-    markets = [market] if market else []
-    return render_template("home.html", markets=markets, current_id=market_id)
+
+    if market is None:
+        return "Market not found", 404
+
+    # Pass 'market' (singular) to the template
+    return render_template("maps.html", market=market)
 
 @app.route("/vendors", methods=["GET"])
 def vendors():
-    
     page = request.args.get('page', 1, type=int)
     per_page = 6
     offset = (page - 1) * per_page
