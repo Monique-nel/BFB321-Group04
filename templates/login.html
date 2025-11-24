@@ -8,11 +8,12 @@
 </head>
 <body>
     <header id="pageTop">
-      <nav
+       <!------------------------Navigation bar starts  --------------------->
+      <nav 
         class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
       >
         <div class="container-fluid px-4">
-          <!-- Left side: Logo + Links -->
+          <!------------------------Left side: Logo + Links --------------------->
           <a class="navbar-brand d-flex align-items-center me-3" href="/">
             <img
               src="{{ url_for('static', filename='images/Logo.png') }}"
@@ -35,7 +36,7 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left-aligned links (next to logo) -->
+            <!--------------------- Left-aligned links (next to logo) --------------->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link fw-semibold fs-5 active" href="/"
@@ -56,7 +57,7 @@
 
             <!-- Right side: Search + User -->
             <div class="d-flex align-items-center">
-              <!-- Search -->
+              <!-- Search bar -->
               <form class="d-flex me-3" role="search">
                 <input
                   class="form-control me-2 rounded-pill px-3 py-1 fs-5"
@@ -71,7 +72,7 @@
                   Search
                 </button>
               </form>
-
+ 
               <!-- User section -->
               <ul class="navbar-nav d-flex align-items-center mb-0">
                 <li class="nav-item">
@@ -112,7 +113,8 @@
         </div>
       </nav>
     </header>
-  
+  <!------------------------Navigation bar ends --------------------->
+  <!------------------------Main body for login  --------------------->
     <main>
       <div class="container my-5" style="max-width: 500px;">
         <div class="card shadow-lg border-0">
