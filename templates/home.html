@@ -216,21 +216,22 @@
                       <!-- CARD BODY -->
                       <div class="card-body d-flex flex-column">
                           <ul class="list-unstyled mb-3">
-                              {% if market['MarketDays'] %}
-                              <li>🕰️ {{ market['MarketDays'] }}</li>
-                              {% endif %}
-                              {% if market['MarketDescription'] %}
-                              <li>✅ {{ market['MarketDescription'] }}</li>
-                              {% endif %}
-                              {% if market['MarketEntryFee'] %}
-                              <li>💰 Entry Fee: {{ market['MarketEntryFee'] }}</li>
-                              {% endif %}
+                              <li>✅ Market Description: {{ market['MarketDescription'] or "None" }}</li>
+
+                              <li>🕰️ Market days: {{ market['MarketDays'] or "None" }}</li>
+
+                              <li>💰 Entry Fee: {{ market['MarketEntryFee'] or "None" }}</li>
                           </ul>
 
+
                           {% if market['MarketLocationLink'] %}
-                          <a href="{{ market['MarketLocationLink'] }}" class="text-decoration-none mb-3 fw-semibold">
-                              📌 {{ market['MarketLocation'] or "View on Google Maps" }}
-                          </a>
+                              <a href="{{ market['MarketLocationLink'] }}" target="_blank" class="text-decoration-none mb-3 fw-semibold">
+                                  📌 {{ market['MarketLocation'] or "View on Google Maps" }}
+                              </a>
+                          {% else %}
+                              <span class="mb-3 fw-semibold text-secondary" style="cursor: default;">
+                                  📌 {{ market['MarketLocation'] or "Location not listed" }}
+                              </span>
                           {% endif %}
 
                           <div class="d-grid gap-2 mt-auto">
