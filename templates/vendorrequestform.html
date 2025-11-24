@@ -201,17 +201,19 @@
 
               <!-- Market -->
                 <div class="mb-3">
-                <label for="marketSelect" class="form-label fw-semibold">Market <span class="text-danger">*</span></label>
-                <!-- name="markets" matches Python -->
-                <select class="form-select" id="marketSelect" name="markets" multiple size="5" required>
-                    <option value="Johannesburg Market">Johannesburg Market</option>
-                    <option value="Pretoria Market">Pretoria Market</option>
-                    <option value="Durban Market">Durban Market</option>
-                    <option value="Cape Town Market">Cape Town Market</option>
-                    <option value="Port Elizabeth Market">Port Elizabeth Market</option>
-                </select>
-                <div class="form-text">Hold Ctrl (or Cmd) to select multiple markets</div>
-                </div>
+                  <label for="marketSelect" class="form-label fw-semibold">Market <span class="text-danger">*</span></label>
+                  
+                  <select class="form-select" id="marketSelect" name="market_id" required>
+                      <option selected disabled value="">Select your Primary Market</option>
+                      
+                      {% for market in markets %}
+                          <option value="{{ market['MarketID'] }}">
+                              {{ market['MarketName'] }}
+                          </option>
+                      {% endfor %}
+                      
+                  </select>
+              </div>
               
               <div class="text-center">
                 <a href="/userpage" class="btn btn-outline-danger btn-lg px-4">Back</a>

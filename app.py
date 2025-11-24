@@ -469,7 +469,10 @@ def logout():
 
 @app.route("/vendor_request", methods=["GET", "POST"])
 def vendor_request():
+    conn = get_db_connection()
+
     if 'user_id' not in session:
+        conn.close()
         flash("Please log in to submit a vendor request.", "warning")
         return redirect(url_for("login"))
 
@@ -483,55 +486,62 @@ def vendor_request():
         facebook = request.form.get("facebook")
         instagram = request.form.get("instagram")
         
-        # 2. HANDLE FILE UPLOADS (This was missing!)
+        # Get the Market ID from the dropdown
+        market_id = request.form.get("market_id")
+        
+        # 2. Handle File Uploads
         logo_blob = None
         if 'vendor_logo' in request.files:
             file = request.files['vendor_logo']
             if file.filename:
-                logo_blob = file.read() # Convert to BLOB
+                logo_blob = file.read() 
         
         descriptor_blob = None
-        if 'vendor_picture' in request.files: # Make sure HTML input name matches this
+        if 'vendor_picture' in request.files:
             file = request.files['vendor_picture']
             if file.filename:
-                descriptor_blob = file.read() # Convert to BLOB
+                descriptor_blob = file.read() 
 
         try:
-            conn = get_db_connection()
+            user_id = session['user_id']
             
-            # 3. SQL to Update the User with ALL details + IMAGES
-            # We construct the query carefully to handle cases where user might NOT upload a new image
+            # 3. INSERT into the VENDOR table (Using your specific column names)
             sql = """
-                UPDATE User 
-                SET Classification = ?, 
-                    VendorName = ?, 
-                    VendorDescription = ?, 
-                    VendorOfferingType = ?, 
-                    VendorContactNumber = ?,
-                    VendorWebsite = ?,
-                    VendorFacebook = ?,
-                    VendorInstagram = ?
+                INSERT INTO Vendor (
+                    VendorName, 
+                    VendorStallDescription, 
+                    VendorOfferingType, 
+                    VendorContactNumber, 
+                    VendorWebsite, 
+                    VendorFacebook, 
+                    VendorInstagram, 
+                    VendorLogo, 
+                    VendorDescriptionPicture, 
+                    MarketID, 
+                    UserID
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
-            params = ['Vendor', vendor_name, description, vendor_type, contact, website, facebook, instagram]
-
-            # Only update the logo if a new one was uploaded
-            if logo_blob:
-                sql += ", VendorLogo = ?"
-                params.append(logo_blob)
-
-            # Only update the banner if a new one was uploaded
-            if descriptor_blob:
-                sql += ", VendorDescriptorPicture = ?"
-                params.append(descriptor_blob)
-
-            sql += " WHERE UserID = ?"
-            params.append(session['user_id'])
             
-            # 4. Execute
+            params = (
+                vendor_name, 
+                description, 
+                vendor_type, 
+                contact, 
+                website, 
+                facebook, 
+                instagram, 
+                logo_blob, 
+                descriptor_blob, 
+                market_id, 
+                user_id
+            )
+            
             conn.execute(sql, params)
-            conn.commit()
-            conn.close()
             
+            # Optional: Also update User table to say they are now a 'Vendor'
+            conn.execute("UPDATE User SET Classification = 'Vendor' WHERE UserID = ?", (user_id,))
+            
+            conn.commit()
             flash("Congratulations! You are now a registered Vendor.", "success")
             return redirect(url_for('userpage'))
             
@@ -539,8 +549,15 @@ def vendor_request():
             print(f"Error processing vendor request: {e}")
             flash(f"An error occurred: {e}", "danger")
             return redirect(url_for('vendor_request'))
+        finally:
+            conn.close()
 
-    return render_template("vendorrequestform.html")
+    # --- GET REQUEST ---
+    # Fetch markets for the dropdown
+    markets = conn.execute("SELECT * FROM Market").fetchall()
+    conn.close()
+    
+    return render_template("vendorrequestform.html", markets=markets)
 
 @app.route("/market_request", methods=["GET", "POST"])
 def market_request():
