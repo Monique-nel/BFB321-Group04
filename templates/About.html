@@ -11,111 +11,78 @@
 </head>
 
 <body class="bg-light">
-<!--------------------------------- NAVBAR  -------------------------->
-    <header id="pageTop">
-      <nav
-        class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top py-2"
-      >
-        <div class="container-fluid px-4">
-          <!-- Left side: Logo + Links -->
-          <a class="navbar-brand d-flex align-items-center me-3" href="/">
-            <img
-              src="{{ url_for('static', filename='images/Logo.png') }}"
-              alt="Mzanzi Market"
-              height="100"
-              class="me-2"
-            />
-          </a>
+    <!--------------------------------- NAVBAR  -------------------------->
+    <header id="pageTop" class="sticky-top shadow-sm">
+    
+    <div class="bg-white py-3">
+        <div class="container px-4 d-flex justify-content-between align-items-center">
+        
+        <a class="text-decoration-none d-flex align-items-center flex-shrink-0" href="/">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Mzanzi Market" height="85" class="me-3">
+            <div>
+                <h1 class="m-0 text-dark fw-bold text-uppercase ls-1 d-none d-sm-block" style="font-size: 2rem;">Mzanzi Market</h1>
+            </div>
+        </a>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+        <form class="d-none d-lg-flex flex-grow-1 mx-5" role="search">
+            <div class="input-group">
+                <input class="form-control border-secondary bg-light rounded-pill rounded-end-0 px-3" type="search" placeholder="Search vendors, events..." aria-label="Search">
+                <button class="btn btn-success rounded-pill rounded-start-0 px-4" type="submit">
+                    Search
+                </button>
+            </div>
+        </form>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left-aligned links (next to logo) -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5 active" href="/"
-                  >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="events"
-                  >Upcoming Events</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-semibold fs-5" href="vendors"
-                  >Vendor Community</a
-                >
-              </li>
+        <div class="d-none d-lg-block flex-shrink-0">
+            {% if session.get('user_id') %}
+            <a href="{{ url_for('userpage') }}" class="d-flex align-items-center text-dark text-decoration-none bg-light rounded-pill p-2 pe-4 border">
+                <img src="{{ url_for('static', filename='images/usericon.png')}}" height="40" class="rounded-circle me-2">
+                <div>
+                    <small class="d-block text-muted lh-1" style="font-size: 0.7rem;">Hello,</small>
+                    <span class="fw-bold">{{ session['username'] }}</span>
+                </div>
+            </a>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="btn btn-outline-success px-4 fw-bold rounded-pill">Sign In</a>
+            {% endif %}
+        </div>
+
+        <button class="navbar-toggler d-lg-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navSplit">
+            <i class="bi bi-list fs-1 text-dark"></i>
+        </button>
+
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0">
+        <div class="container px-4">
+        <div class="collapse navbar-collapse" id="navSplit">
+            
+            <form class="d-lg-none my-3" role="search">
+                <input class="form-control" type="search" placeholder="Search...">
+            </form>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold text-uppercase ls-1">
+            <li class="nav-item"><a class="nav-link link-light active py-3 px-4 bg-success" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link link-light py-3 px-4" href="events">Upcoming Events</a></li>
+            <li class="nav-item"><a class="nav-link link-light py-3 px-4" href="vendors">Vendor Community</a></li>
             </ul>
 
-            <!-- Right side: Search + User -->
-            <div class="d-flex align-items-center">
-              <!-- Search -->
-              <form class="d-flex me-3" role="search">
-                <input
-                  class="form-control me-2 rounded-pill px-3 py-1 fs-5"
-                  type="search"
-                  placeholder="Search..."
-                  aria-label="Search"
-                />
-                <button
-                  class="btn btn-outline-light rounded-pill px-3 py-1 fs-5"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
-
-              <!-- User section -->
-              <ul class="navbar-nav d-flex align-items-center mb-0">
-                <li class="nav-item">
-                  
-                  {% if session.get('user_id') %}
-                    <a
-                      class="nav-link d-flex align-items-center fw-semibold fs-5"
-                      href="{{ url_for('userpage') }}"
-                    >
-                      <img
-                        src="{{ url_for('static', filename='images/usericon.png')}}"
-                        alt="User"
-                        height="30"
-                        class="me-1 rounded-circle border border-light p-1"
-                      />
-                      <span>{{ session['username'] }}</span>
-                    </a>
-
-                  {% else %}
-                    <a
-                      class="nav-link d-flex align-items-center fw-semibold fs-5"
-                      href="{{ url_for('login') }}"
-                    >
-                      <img
-                        src="{{ url_for('static', filename='images/usericon.png')}}"
-                        alt="User"
-                        height="30"
-                        class="me-1 rounded-circle border border-light p-1"
-                      />
-                      <span>Sign In</span>
-                    </a>
-                  {% endif %}
-
-                </li>
-              </ul>
+            <div class="d-lg-none py-3 border-top border-secondary">
+                {% if session.get('user_id') %}
+                <a href="{{ url_for('userpage') }}" class="text-white text-decoration-none d-flex align-items-center">
+                    <img src="{{ url_for('static', filename='images/usericon.png')}}" height="30" class="rounded-circle me-2">
+                    <span class="fw-bold">{{ session['username'] }}</span>
+                </a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-success w-100">Sign In</a>
+                {% endif %}
             </div>
-          </div>
+
         </div>
-      </nav>
+        </div>
+    </nav>
+
     </header>
 
 <!-- ========================= MAIN CONTENT  ========================= -->
