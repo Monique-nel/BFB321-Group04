@@ -25,7 +25,6 @@ The project workload was distributed as follows:
 
 * **Lana van Rooyen**
     * *Core Responsibilities:* Documentation, database design
-- 
 ## Features
 - User authentication, registration and management
 - User detail pages
@@ -207,7 +206,7 @@ Setting up the Mzanzi Market Application locally consists of the following steps
 
 ## Tech Stack
 - **Frontend:** HTML5, CSS3, Bootstrap 5  
-- **Backend:** Flask (Python) *(in progress)*  
+- **Backend:** Flask (Python) 
 - **Database:** SQLite  
 - **Design Tools:** Figma, MySQL Workbench
 
@@ -218,6 +217,10 @@ The application works with all modern browsers that support HTML5 and CSS3, incl
 - Firefox 88+
 - Safari 14+
 - Edge 90+
+
+## Render Website link
+The Mzansi Market web application is publicly accessible via its deployment on the Render hosting platform. The relevant access link is provided below.
+https://mzanzi-market.onrender.com/
 
 ## License
 Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria.
