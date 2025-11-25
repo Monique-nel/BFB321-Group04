@@ -445,6 +445,23 @@ def userpage():
                 
                 return redirect(url_for('user_page'))
             
+            elif action == 'delete_vendor_profile':
+                # 1. Delete products associated with this vendor
+                vendor_entry = conn.execute("SELECT VendorID FROM Vendor WHERE UserID = ?", (user_id,)).fetchone()
+                if vendor_entry:
+                    conn.execute("DELETE FROM Product WHERE VendorID = ?", (vendor_entry['VendorID'],))
+                
+                # 2. Delete the Vendor profile
+                conn.execute("DELETE FROM Vendor WHERE UserID = ?", (user_id,))
+                
+                # 3. FIX: Change 'User' to 'Customer' (or your database's valid default role)
+                conn.execute("UPDATE User SET Classification = 'Customer' WHERE UserID = ?", (user_id,))
+                
+                conn.commit()
+                flash("Vendor profile and products deleted. You are now a standard Customer.", "info")
+                return redirect(url_for('userpage'))
+        
+        
         except Exception as e:
             conn.rollback()
             flash(f"Error: {str(e)}", "danger")
