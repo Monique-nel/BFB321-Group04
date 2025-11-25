@@ -497,7 +497,15 @@ def userpage():
                 (market['MarketID'],)
             ).fetchall()
 
-            vendors = conn.execute("SELECT * FROM Vendor").fetchall()
+            vendors = conn.execute(
+                "SELECT * FROM Vendor WHERE MarketID = ?", 
+                (market['MarketID'],)
+            ).fetchall()
+            
+        else:
+            # If they are an admin but haven't created a market yet
+            events = []
+            vendors = []
 
     conn.close()
 
