@@ -661,29 +661,36 @@ def market_request():
 
 @app.route("/Eventform", methods=["GET", "POST"])
 def Eventform():
-    # 1. Security Check: Must be logged in
+    # 1. Security Check
     if 'user_id' not in session:
         flash("Please log in to add an event.", "warning")
         return redirect(url_for("login"))
 
     conn = get_db_connection()
+    
+    # 2. AUTOMATICALLY FIND THE MARKET
+    # FIX: Changed 'MarketID' to 'MarketAdministratorID' based on your userpage code
+    market = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (session['user_id'],)).fetchone()
+
+    # 3. Validation: Ensure the user actually owns a market
+    if not market:
+        flash("You must be a Market Administrator to create an event.", "danger")
+        conn.close()
+        return redirect(url_for('userpage')) 
+
+    market_id = market['MarketID'] # We now have the ID automatically
 
     if request.method == "POST":
-        # 2. Get Text Data
         name = request.form.get("event_name")
         description = request.form.get("event_description")
-        date = request.form.get("event_date") # Returns string "YYYY-MM-DDTHH:MM"
+        date = request.form.get("event_date") 
         days = request.form.get("event_days")
         link = request.form.get("booking_link")
-        market_id = request.form.get("market_id")
 
-        # 3. Handle File Upload (BLOB)
         poster_file = request.files.get("event_poster")
-        # Read the file data into binary (BLOB) format if a file was selected
         poster_blob = poster_file.read() if poster_file else None
 
         try:
-            # 4. Insert into Database
             conn.execute("""
                 INSERT INTO Events (EventName, EventDescription, EventDate, EventDays, EventBookingLink, EventPoster, MarketID)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -691,18 +698,15 @@ def Eventform():
             
             conn.commit()
             flash("Event created successfully!", "success")
-            return redirect(url_for('events')) # Redirect to events list after success
+            return redirect(url_for('events')) # Or redirect back to userpage if you prefer
         except Exception as e:
             print(f"Error saving event: {e}")
-            flash("Error saving event. Please try again.", "danger")
+            flash("Error saving event.", "danger")
         finally:
             conn.close()
-
-    # GET Request: Fetch markets for the dropdown so the user can select one
-    markets = conn.execute("SELECT * FROM Market").fetchall()
-    conn.close()
     
-    return render_template("Eventform.html", markets=markets)
+    conn.close()
+    return render_template("Eventform.html")
 
 @app.route('/general-policies')
 def general_policies():

@@ -157,8 +157,8 @@
 
             <!-- Event Date -->
             <div class="mb-3">
-              <label for="eventDate" class="form-label fw-semibold">Event Date <span class="text-danger">*</span></label>
-              <input type="datetime-local" class="form-control" id="eventDate" name="event_date" required>
+                <label for="eventDate" class="form-label fw-semibold">Event Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="eventDate" name="event_date" required>
             </div>
 
             <!-- Event Days -->
@@ -175,17 +175,6 @@
                 <option value="Sunday">Sunday</option>
                 <option value="Weekend">Weekend (Sat & Sun)</option>
               </select>
-            </div>
-
-            <!-- NEW: Market Selection (Required by Database) -->
-            <div class="mb-3">
-                <label for="marketSelect" class="form-label fw-semibold">Select Market <span class="text-danger">*</span></label>
-                <select class="form-select" id="marketSelect" name="market_id" required>
-                    <option selected disabled value="">-- Choose a Market --</option>
-                    {% for market in markets %}
-                        <option value="{{ market['MarketID'] }}">{{ market['MarketName'] }}</option>
-                    {% endfor %}
-                </select>
             </div>
 
             <!-- Event Booking Link -->
