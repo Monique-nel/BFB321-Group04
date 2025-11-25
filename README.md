@@ -2,12 +2,29 @@
 
 The Mzanzi Market project, completed in accordance with the BFB 321 module requirements, is a web application that addresses the communication gap between Farmers Markets, Vendors and Customers in the South African Supply chain context. This repository contains the code and resources for the project, demonstrating core marketplace features: product listing, browsing, and user interactions.
 
-## Project owners
+## Team members and roles
 The application was developed in accordance with the BFB 321 module requirements, for **Mr Ibrahim Akanbi** and Mr **Thabang Ngwenya** by **Project Group 04.** The developers are:
-- **Monique Nel** (Project lead): u23614057
-- **Beate du Plessis** : u04659075
-- **Izé Rautenbach** : u23539489
-- **Lana van Rooyen** : u23524342 
+| Name | Student ID | Role | GitHub Username |
+| :--- | :--- | :--- | :--- |
+| **Monique Nel** | u23614057 | Project Lead | Monique-nel | 
+| **Beate du Plessis** | u04659075 | Developer | BeateDuP |
+| **Izé Rautenbach** | u23539489 | Developer | izerautenbach |
+| **Lana van Rooyen** | u23524342 | Developer | Ivr-code |
+
+## Task Allocation
+The project workload was distributed as follows:
+
+* **Monique Nel**
+    * *Core Responsibilities:* Project management, frontend design, backend logic and coding, Jinja coding, route management
+    
+* **Beate du Plessis**
+    * *Core Responsibilities:* Database setup, database Management and Database integration
+
+* **Izé Rautenbach**
+    * *Core Responsibilities:* CSS Styling, Error handeling
+
+* **Lana van Rooyen**
+    * *Core Responsibilities:* Documentation, database design
 ## Features
 - User authentication, registration and management
 - User detail pages
@@ -189,7 +206,7 @@ Setting up the Mzanzi Market Application locally consists of the following steps
 
 ## Tech Stack
 - **Frontend:** HTML5, CSS3, Bootstrap 5  
-- **Backend:** Flask (Python) *(in progress)*  
+- **Backend:** Flask (Python) 
 - **Database:** SQLite  
 - **Design Tools:** Figma, MySQL Workbench
 
@@ -200,6 +217,10 @@ The application works with all modern browsers that support HTML5 and CSS3, incl
 - Firefox 88+
 - Safari 14+
 - Edge 90+
+
+## Render Website link
+The Mzansi Market web application is publicly accessible via its deployment on the Render hosting platform. The relevant access link is provided below.
+https://mzanzi-market.onrender.com/
 
 ## License
 Please note this project is currently only for academic use and is the Intellectual Property of the Application Developers and the University of Pretoria.
