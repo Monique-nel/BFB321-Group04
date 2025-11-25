@@ -639,6 +639,46 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <!-- Account Management Section -->
+                                    <div class="card mt-5 shadow-sm border-0">
+                                    <div class="card-header bg-secondary text-white py-3">
+                                        <h5 class="mb-0 fw-semibold"><i class="bi bi-gear-fill me-2"></i>Account Management</h5>
+                                    </div>
+
+                                    <div class="card-body p-4">
+                                        <div class="row g-4 align-items-center">
+                                            
+                                            <div class="col-lg-6">
+                                                <h5 class="fw-bold text-dark">Role & Permissions</h5>
+                                                <p class="text-muted mb-0">
+                                                    Manage your administrative access. You can upgrade your account to host events or remove your current vendor profile if you wish to stop selling.
+                                                </p>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="d-flex flex-column gap-3">                                                   
+                                                    <div class="p-3 rounded bg-danger-subtle border border-danger-subtle d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6 class="fw-bold text-danger mb-1">Market Profile</h6>
+                                                            <small class="text-danger-emphasis d-block">Permanently delete data.</small>
+                                                        </div>
+                                                        
+                                                        <form action="{{ url_for('userpage') }}" method="POST" onsubmit="return confirm('WARNING: This will permanently delete your Market Page and ALL associated Events. Are you sure?');">
+                                                            <input type="hidden" name="action" value="delete_market_profile">
+                                                            
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                                                <i class="bi bi-trash"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
 

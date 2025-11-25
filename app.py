@@ -178,7 +178,7 @@ def login():
         if user and check_password_hash(user['Password'], password):
             session['user_id'] = user['UserID']
             session['username'] = user['Username']
-            
+            session.permanent = False
             flash(f"Welcome back, {user['Username']}!", "success")
             return redirect(url_for('userpage')) 
         else:
@@ -490,35 +490,63 @@ def userpage():
 
             # --- UPDATE EVENT ---
             elif action == 'update_event_details':
-                e_id = request.form.get('event_id')
-                e_name = request.form.get('event_name')
-                e_date = request.form.get('event_date')
-                e_days = request.form.get('event_days')
-                e_desc = request.form.get('event_description')
-                e_link = request.form.get('booking_link')
+                    # 1. Get Data from Modal Form
+                    e_id = request.form.get('event_id')
+                    e_name = request.form.get('event_name')
+                    e_date = request.form.get('event_date')
+                    e_days = request.form.get('event_days')
+                    e_desc = request.form.get('event_description')
+                    e_link = request.form.get('booking_link')
 
-                try:
-                    # 1. Update text fields
-                    conn.execute("""
-                        UPDATE Events 
-                        SET EventName=?, EventDate=?, EventDays=?, EventDescription=?, EventBookingLink=?
-                        WHERE EventID=?
-                    """, (e_name, e_date, e_days, e_desc, e_link, e_id))
+                    try:
+                        # 2. Update text fields
+                        conn.execute("""
+                            UPDATE Events 
+                            SET EventName=?, EventDate=?, EventDays=?, EventDescription=?, EventBookingLink=?
+                            WHERE EventID=?
+                        """, (e_name, e_date, e_days, e_desc, e_link, e_id))
 
-                    # 2. Update Poster (Only if a new file is uploaded)
-                    poster_file = request.files.get('event_poster')
-                    if poster_file and poster_file.filename != '':
-                        poster_blob = poster_file.read()
-                        conn.execute("UPDATE Events SET EventPoster=? WHERE EventID=?", (poster_blob, e_id))
+                        # 3. Update Poster (Only if a new file is uploaded)
+                        poster_file = request.files.get('event_poster')
+                        if poster_file and poster_file.filename != '':
+                            poster_blob = poster_file.read()
+                            conn.execute("UPDATE Events SET EventPoster=? WHERE EventID=?", (poster_blob, e_id))
 
-                    conn.commit()
-                    flash("Event updated successfully!", "success")
-                except Exception as e:
-                    print(f"Error updating event: {e}")
-                    flash("Error updating event details.", "danger")
-                
-                return redirect(url_for('userpage'))
-            
+                        conn.commit()
+                        flash("Event updated successfully!", "success")
+                    except Exception as e:
+                        print(f"Error updating event: {e}")
+                        flash("Error updating event details.", "danger")
+                    
+                    return redirect(url_for('userpage'))
+
+            elif action == 'delete_market_profile':
+                    try:
+                        # 1. Find the Market ID first
+                        market_row = conn.execute("SELECT MarketID FROM Market WHERE MarketAdministratorID = ?", (user_id,)).fetchone()
+                        
+                        if market_row:
+                            market_id = market_row['MarketID']
+                            
+                            # 2. Delete all EVENTS associated with this market
+                            conn.execute("DELETE FROM Events WHERE MarketID = ?", (market_id,))
+                            
+                            # 3. Delete the MARKET profile itself
+                            conn.execute("DELETE FROM Market WHERE MarketID = ?", (market_id,))
+
+                        # 4. Reset User Classification 
+                        conn.execute("UPDATE User SET Classification = 'Customer' WHERE UserID = ?", (user_id,))
+                        
+                        conn.commit()
+                        flash("Your Market and Events have been deleted. You are now a standard Customer.", "info")
+                        return redirect(url_for('userpage'))
+
+                    except Exception as e:
+                        conn.rollback()
+                        print(f"Error deleting market profile: {e}")
+                        flash("An error occurred while deleting your profile.", "danger")
+                        return redirect(url_for('userpage'))
+                    
         except Exception as e:
             conn.rollback()
             flash(f"Error: {str(e)}", "danger")
