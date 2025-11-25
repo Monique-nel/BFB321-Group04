@@ -413,51 +413,53 @@ def userpage():
                 return redirect(url_for('userpage'))
             
             elif action == 'update_market':
-                # 1. Get data from the form
-                market_name = request.form.get('market_name')
-                market_location = request.form.get('market_location')
+                # 1. Get Text Data from Form
+                name = request.form.get('market_name')
+                location = request.form.get('market_location')
+                location_link = request.form.get('location_link')
                 entry_fee = request.form.get('entry_fee')
-                
-                # 2. Handle the file upload (Market Logo)
-                logo_file = request.files.get('market_logo')
+                days = request.form.get('market_days')
+                description = request.form.get('market_description')
+                instagram = request.form.get('instagram')
+                facebook = request.form.get('facebook')
 
                 try:
-                    # Check if the user actually has a market to edit
-                    existing_market = conn.execute("SELECT MarketID FROM Market WHERE AdminID = ?", (user_id,)).fetchone()
-                    
-                    if existing_market:
-                        # SCENARIO A: User uploaded a NEW logo
-                        if logo_file and logo_file.filename != '':
-                            # Convert image to Base64 string for database storage
-                            image_data = logo_file.read()
-                            encoded_logo = base64.b64encode(image_data).decode('utf-8')
+                    # 2. Update Text Fields First
+                    # We use 'MarketAdministratorID' to find the correct market
+                    conn.execute("""
+                        UPDATE Market 
+                        SET MarketName = ?, 
+                            MarketLocation = ?, 
+                            MarketLocationLink = ?, 
+                            MarketEntryFee = ?, 
+                            MarketDays = ?, 
+                            MarketDescription = ?, 
+                            MarketInstagram = ?, 
+                            MarketFacebook = ?
+                        WHERE MarketAdministratorID = ?
+                    """, (name, location, location_link, entry_fee, days, description, instagram, facebook, user_id))
 
-                            conn.execute("""
-                                UPDATE Market 
-                                SET MarketName = ?, MarketLocation = ?, MarketEntryFee = ?, MarketLogo = ?
-                                WHERE AdminID = ?
-                            """, (market_name, market_location, entry_fee, encoded_logo, user_id))
+                    # 3. Handle Poster Upload (Only update if file provided)
+                    poster_file = request.files.get('market_poster')
+                    if poster_file and poster_file.filename != '':
+                        poster_blob = poster_file.read() # Store as Raw Bytes (BLOB)
+                        conn.execute("UPDATE Market SET MarketPoster = ? WHERE MarketAdministratorID = ?", (poster_blob, user_id))
 
-                        # SCENARIO B: User is only updating text (Keep existing logo)
-                        else:
-                            conn.execute("""
-                                UPDATE Market 
-                                SET MarketName = ?, MarketLocation = ?, MarketEntryFee = ?
-                                WHERE AdminID = ?
-                            """, (market_name, market_location, entry_fee, user_id))
+                    # 4. Handle Map Upload (Only update if file provided)
+                    map_file = request.files.get('market_map')
+                    if map_file and map_file.filename != '':
+                        map_blob = map_file.read() # Store as Raw Bytes (BLOB)
+                        conn.execute("UPDATE Market SET MarketMap = ? WHERE MarketAdministratorID = ?", (map_blob, user_id))
 
-                        conn.commit()
-                        flash("Market details updated successfully!", "success")
-                    
-                    else:
-                        # Should not happen if button is only shown to Admins, but good for safety
-                        flash("No market found linked to this account.", "warning")
+                    conn.commit()
+                    flash("Market details updated successfully!", "success")
+                    return redirect(url_for('userpage'))
 
                 except Exception as e:
                     conn.rollback()
-                    flash(f"Error updating market: {e}", "danger")
-                
-                return redirect(url_for('user_page'))
+                    print(f"Error updating market: {e}")
+                    flash("Error updating market details.", "danger")
+                    return redirect(url_for('userpage'))
             
             elif action == 'delete_vendor_profile':
                 # 1. Delete products associated with this vendor

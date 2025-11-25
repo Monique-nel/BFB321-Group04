@@ -780,39 +780,78 @@
 
     <div class="modal fade" id="editMarketModal" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-            <h5 class="modal-title">Edit Market Details</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <form action="" method="POST" enctype="multipart/form-data"> 
-                <input type="hidden" name="action" value="update_market">
-                <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Market Name</label>
-                            <input type="text" class="form-control" name="market_name" value="{{ market['MarketName'] if market }}" required>
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Edit Market Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                
+                <form action="{{ url_for('userpage') }}" method="POST" enctype="multipart/form-data"> 
+                    <input type="hidden" name="action" value="update_market">
+                    
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Market Name</label>
+                                <input type="text" class="form-control" name="market_name" value="{{ market['MarketName'] if market }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Physical Location</label>
+                                <input type="text" class="form-control" name="market_location" value="{{ market['MarketLocation'] if market }}">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Location Link (Google Maps)</label>
+                                <input type="url" class="form-control" name="location_link" placeholder="https://maps.google.com/..." value="{{ market['MarketLocationLink'] if market }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Entry Fee</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">R</span>
+                                    <input type="text" class="form-control" name="entry_fee" value="{{ market['MarketEntryFee'] if market }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Operating Days</label>
+                                <input type="text" class="form-control" name="market_days" placeholder="e.g. Saturdays, First Sunday" value="{{ market['MarketDays'] if market }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Instagram Handle/Link</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+                                    <input type="text" class="form-control" name="instagram" value="{{ market['MarketInstagram'] if market }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Facebook Handle/Link</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-facebook"></i></span>
+                                    <input type="text" class="form-control" name="facebook" value="{{ market['MarketFacebook'] if market }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Description</label>
+                                <textarea class="form-control" name="market_description" rows="3">{{ market['MarketDescription'] if market }}</textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Update Poster</label>
+                                <input type="file" class="form-control" name="market_poster" accept="image/*">
+                                <small class="text-muted">Leave empty to keep current.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Update Map</label>
+                                <input type="file" class="form-control" name="market_map" accept="image/*">
+                                <small class="text-muted">Leave empty to keep current.</small>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Location</label>
-                            <input type="text" class="form-control" name="market_location" value="{{ market['MarketLocation'] if market }}">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" name="market_description">{{ market['MarketDescription'] if market }}</textarea>
-                        </div>
-                         <div class="col-md-6">
-                             <label class="form-label">Upload Poster</label>
-                             <input type="file" class="form-control" name="market_poster">
-                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save Details</button>
-                </div>
-            </form>
-        </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
