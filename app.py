@@ -212,9 +212,6 @@ def userpage():
                 (vendor['VendorID'],)
             ).fetchall()
 
-    # -------------------------
-    #           POST
-    # -------------------------
     if request.method == 'POST':
         action = request.form.get('action')
 
@@ -478,16 +475,12 @@ def userpage():
                 flash("Vendor profile and products deleted. You are now a standard Customer.", "info")
                 return redirect(url_for('userpage'))
         
-        
         except Exception as e:
             conn.rollback()
             flash(f"Error: {str(e)}", "danger")
             print("Database Error:", e)
             return redirect(url_for("userpage"))
 
-    # -------------------------
-    #      GET REQUEST
-    # -------------------------
     market = None
     events = []
     vendors = []
