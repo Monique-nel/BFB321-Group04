@@ -546,6 +546,25 @@ def userpage():
                         print(f"Error deleting market profile: {e}")
                         flash("An error occurred while deleting your profile.", "danger")
                         return redirect(url_for('userpage'))
+             
+            elif action == 'delete_product':
+                product_id = request.form.get('product_id')
+                
+                # Safety Check: Ensure the user is actually a vendor
+                if vendor:
+                    try:
+                        # Delete the product ONLY if it belongs to this logged-in vendor
+                        conn.execute("DELETE FROM Product WHERE ProductID = ? AND VendorID = ?", 
+                                   (product_id, vendor['VendorID']))
+                        conn.commit()
+                        flash("Product deleted successfully.", "info")
+                    except Exception as e:
+                        print(f"Error deleting product: {e}")
+                        flash("Could not delete product.", "danger")
+                else:
+                    flash("Access denied. Vendor profile not found.", "danger")
+                
+                return redirect(url_for('userpage')) 
                     
         except Exception as e:
             conn.rollback()
