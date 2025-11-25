@@ -123,8 +123,8 @@
       <div class="container mb-5 text-center">
           <div class="card shadow-lg border-0">
               <div class="card-body p-2">
-                  {% if market.MarketPoster %}
-                      <img src="data:image/png;base64,{{ market.MarketPoster | b64encode }}"
+                  {% if market.MarketMap %}
+                      <img src="data:image/png;base64,{{ market.MarketMap | b64encode }}"
                           alt="Map of {{ market.MarketName }}"
                           class="img-fluid rounded"
                           style="max-height: 600px; width: auto;">
