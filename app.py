@@ -476,7 +476,49 @@ def userpage():
                 conn.commit()
                 flash("Vendor profile and products deleted. You are now a standard Customer.", "info")
                 return redirect(url_for('userpage'))
-        
+
+            elif action == 'delete_event':
+                event_id = request.form.get('event_id')
+                try:
+                    conn.execute("DELETE FROM Events WHERE EventID = ?", (event_id,))
+                    conn.commit()
+                    flash("Event deleted successfully.", "info")
+                except Exception as e:
+                    print(f"Error deleting event: {e}")
+                    flash("Could not delete event.", "danger")
+                return redirect(url_for('userpage'))
+
+            # --- UPDATE EVENT ---
+            elif action == 'update_event_details':
+                e_id = request.form.get('event_id')
+                e_name = request.form.get('event_name')
+                e_date = request.form.get('event_date')
+                e_days = request.form.get('event_days')
+                e_desc = request.form.get('event_description')
+                e_link = request.form.get('booking_link')
+
+                try:
+                    # 1. Update text fields
+                    conn.execute("""
+                        UPDATE Events 
+                        SET EventName=?, EventDate=?, EventDays=?, EventDescription=?, EventBookingLink=?
+                        WHERE EventID=?
+                    """, (e_name, e_date, e_days, e_desc, e_link, e_id))
+
+                    # 2. Update Poster (Only if a new file is uploaded)
+                    poster_file = request.files.get('event_poster')
+                    if poster_file and poster_file.filename != '':
+                        poster_blob = poster_file.read()
+                        conn.execute("UPDATE Events SET EventPoster=? WHERE EventID=?", (poster_blob, e_id))
+
+                    conn.commit()
+                    flash("Event updated successfully!", "success")
+                except Exception as e:
+                    print(f"Error updating event: {e}")
+                    flash("Error updating event details.", "danger")
+                
+                return redirect(url_for('userpage'))
+            
         except Exception as e:
             conn.rollback()
             flash(f"Error: {str(e)}", "danger")
