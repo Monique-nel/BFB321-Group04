@@ -24,15 +24,6 @@
             </div>
         </a>
 
-        <form class="d-none d-lg-flex flex-grow-1 mx-5" role="search">
-            <div class="input-group">
-                <input class="form-control border-secondary bg-light rounded-pill rounded-end-0 px-3" type="search" placeholder="Search vendors, events..." aria-label="Search">
-                <button class="btn btn-success rounded-pill rounded-start-0 px-4" type="submit">
-                    Search
-                </button>
-            </div>
-        </form>
-
         <div class="d-none d-lg-block flex-shrink-0">
             {% if session.get('user_id') %}
             <a href="{{ url_for('userpage') }}" class="d-flex align-items-center text-dark text-decoration-none bg-light rounded-pill p-2 pe-4 border">
