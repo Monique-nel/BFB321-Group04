@@ -8,6 +8,8 @@ import math
 app = Flask(__name__)
 app.secret_key = "my_super_secret_key_12345" 
 
+
+
 # --- UNIVERSAL IMAGE FILTER ---
 @app.template_filter('b64encode')
 def b64encode_filter(data):
