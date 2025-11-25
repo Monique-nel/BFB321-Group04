@@ -7,21 +7,21 @@ The application was developed in accordance with the BFB 321 module requirements
 | Name | Student ID | Role | GitHub Username |
 | :--- | :--- | :--- | :--- |
 | **Monique Nel** | u23614057 | Project Lead | Monique-nel | 
-| **Beate du Plessis** | u04659075 | Developer | B |
-| **Izé Rautenbach** | u23539489 | Developer | I |
-| **Lana van Rooyen** | u23524342 | Developer | L |
+| **Beate du Plessis** | u04659075 | Developer | BeateDuP |
+| **Izé Rautenbach** | u23539489 | Developer | izerautenbach |
+| **Lana van Rooyen** | u23524342 | Developer | Ivr-code |
 
 ## Task Allocation
 The project workload was distributed as follows:
 
 * **Monique Nel**
-    * *Core Responsibilities:* Project management, frontend design, backend logic, Jinja coding, route management
+    * *Core Responsibilities:* Project management, frontend design, backend logic and coding, Jinja coding, route management
     
 * **Beate du Plessis**
     * *Core Responsibilities:* Database setup, database Management and Database integration
 
 * **Izé Rautenbach**
-    * *Core Responsibilities:* CSS Styling, Vendors page
+    * *Core Responsibilities:* CSS Styling, Error handeling
 
 * **Lana van Rooyen**
     * *Core Responsibilities:* Documentation, database design
