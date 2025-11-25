@@ -74,7 +74,7 @@ def maps(market_id):
 
     # Pass 'market' (singular) to the template
     return render_template("Maps.html", market=market)
-
+# Vendor Listing Route
 @app.route("/vendors", methods=["GET"])
 def vendors():
     page = request.args.get('page', 1, type=int)
@@ -89,7 +89,7 @@ def vendors():
     vendors = conn.execute("SELECT * FROM Vendor LIMIT ? OFFSET ?", (per_page, offset)).fetchall()
     conn.close()
     return render_template("vendors.html", vendors=vendors, page=page,total_pages=total_pages)
-
+#Events Listing Route
 @app.route("/events", methods=["GET"])
 def events():
     # 1. Pagination setup
@@ -114,7 +114,7 @@ def events():
     conn.close()
 
     return render_template("events.html", events=events, page=page, total_pages=total_pages)
-
+# Registration Route
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -160,7 +160,7 @@ def register():
             return redirect(url_for("register"))
 
     return render_template("register.html")
-
+#Login Route
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -185,7 +185,7 @@ def login():
             flash("Login Unsuccessful. Please check email and password", "danger")
             
     return render_template("login.html")
-
+#userpage Route
 @app.route("/userpage", methods=['GET', 'POST'])
 def userpage():
     if 'user_id' not in session:
