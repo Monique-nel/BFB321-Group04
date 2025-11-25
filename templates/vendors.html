@@ -123,8 +123,8 @@
         <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden hover-shadow">
           
           <div class="position-relative bg-light">
-              {% if vendor['VendorDescriptorPicture'] %}
-                  <img src="data:image;base64,{{ vendor['VendorDescriptorPicture'] | b64encode }}"
+              {% if vendor['VendorDescriptionPicture'] %}
+                  <img src="data:image/png;base64,{{ vendor['VendorDescriptionPicture'] | b64encode }}"
                       class="card-img-top"
                       style="height: 160px; object-fit: cover;"
                       alt="Storefront">
@@ -187,9 +187,11 @@
               </a>
               {% endif %}
 
+              {% if vendor.VendorContactNumber %}
               <a href="tel:{{ vendor.VendorContactNumber }}" class="text-success fs-5" data-bs-toggle="tooltip" title="Call">
                 <i class="bi bi-whatsapp"></i>
               </a>
+              {% endif %}
             </div>
 
           </div>
