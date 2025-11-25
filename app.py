@@ -299,16 +299,31 @@ def userpage():
                 return redirect(url_for('userpage'))
             
             elif action == 'update_product':
-                product_id = request.form['product_id']
-                name = request.form['product_name']
-                price = request.form['product_price']
+                # 1. Use .get() to prevent crashes if fields are missing
+                product_id = request.form.get('product_id')
+                name = request.form.get('product_name')
+                price = request.form.get('product_price')
 
-                conn.execute("""
-                    UPDATE Product SET ProductName=?, ProductPrice=?
-                    WHERE ProductID=? AND VendorID=?
-                """, (name, price, product_id, vendor['VendorID']))
-                conn.commit()
-                flash("Product updated!", "success")
+                # 2. SAFETY CHECK: Ensure 'vendor' is actually loaded
+                # If 'vendor' is None, we fetch it quickly to avoid the crash
+                if not vendor:
+                    vendor = conn.execute("SELECT VendorID FROM Vendor WHERE UserID = ?", (user_id,)).fetchone()
+
+                if vendor and product_id:
+                    try:
+                        conn.execute("""
+                            UPDATE Product SET ProductName=?, ProductPrice=?
+                            WHERE ProductID=? AND VendorID=?
+                        """, (name, price, product_id, vendor['VendorID']))
+                        
+                        conn.commit()
+                        flash("Product updated successfully!", "success")
+                    except Exception as e:
+                        print(f"Error updating product: {e}")
+                        flash("Database error occurred while updating.", "danger")
+                else:
+                    flash("Error: Could not verify vendor identity or missing product ID.", "danger")
+
                 return redirect(url_for('userpage'))
 
             elif action == 'update_event':
